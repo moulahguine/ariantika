@@ -1,9 +1,1 @@
 export { default as Hero } from "./Hero/Hero";
-export { default as Services } from "./Services/Services";
-export { default as Projects } from "./Projects/Projects";
-export { default as Blog } from "./Blog/Blog";
-export { default as About } from "./About/About";
-export { default as EducationExperience } from "./EducationExperience/EducationExperience";
-export { default as Testimonials } from "./Testimonials/Testimonials";
-export { default as FAQ } from "./FAQ/FAQ";
-export { default as Contact } from "./Contact/Contact";

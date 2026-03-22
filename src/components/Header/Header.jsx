@@ -1,80 +1,94 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Button from "@/components/Button/Button";
-import { site, nav } from "@/data";
+import Link from "next/link";
 import styles from "./Header.module.scss";
 
+const NAV_LINKS = [
+  { label: "Research", href: "#research" },
+  { label: "Experience", href: "#experience" },
+  { label: "Publications", href: "#publications" },
+  { label: "Contact", href: "#contact" },
+];
+
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
+
+  const closeMobileNav = () => {
+    setIsMobileNavOpen(false);
+  };
 
   return (
-    <motion.header
-      className={styles.header}
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <header className={styles.header}>
       <div className={styles.container}>
-        <a href="#" className={styles.logo}>
-          {site.name.split(" ")[0]}
-        </a>
+        {/* Logo */}
+        <div className={styles.logo}>
+          <Link href="/">Ariantika</Link>
+        </div>
 
+        {/* Desktop Navigation */}
         <nav className={styles.nav}>
-          {nav.map((item) => (
+          {NAV_LINKS.map((link) => (
             <a
-              key={item.label}
-              href={item.href}
+              key={link.href}
+              href={link.href}
               className={styles.navLink}
+              onClick={closeMobileNav}
             >
-              {item.label}
+              {link.label}
             </a>
           ))}
         </nav>
 
+        {/* CTA / Actions */}
         <div className={styles.actions}>
-          <Button href="#contact" variant="secondary">
-            Work with me!
-          </Button>
+          <Link href="#contact" className="btn btn-primary">
+            Get in Touch
+          </Link>
         </div>
 
+        {/* Mobile Menu Toggle */}
         <button
           className={styles.mobileToggle}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          onClick={toggleMobileNav}
+          aria-label="Toggle mobile menu"
         >
-          <span />
-          <span />
-          <span />
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </div>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className={styles.mobileNav}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {nav.map((item) => (
+      {/* Mobile Navigation */}
+      {isMobileNavOpen && (
+        <nav className={styles.mobileNav}>
+          <div className={styles.mobileNavLinks}>
+            {NAV_LINKS.map((link) => (
               <a
-                key={item.label}
-                href={item.href}
+                key={link.href}
+                href={link.href}
                 className={styles.mobileNavLink}
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobileNav}
               >
-                {item.label}
+                {link.label}
               </a>
             ))}
-            <Button href="#contact" variant="primary" className={styles.mobileCta}>
-              Work with me!
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+            <div className={styles.mobileCta}>
+              <Link
+                href="#contact"
+                className="btn btn-primary"
+                onClick={closeMobileNav}
+              >
+                Get in Touch
+              </Link>
+            </div>
+          </div>
+        </nav>
+      )}
+    </header>
   );
 }

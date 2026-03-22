@@ -24,41 +24,44 @@
 
 .content {
   @include flex-column;
-  gap: $space-24;
+  gap: $space-16;
 }
 
-.title {
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-8 $space-16;
+  font-size: $font-size-12;
+  font-weight: $fw-medium;
+  color: $accent-from;
+  background: rgba($accent-from, 0.1);
+  border-radius: $radius-lg;
+  width: fit-content;
+}
+
+.name {
   font-size: clamp($font-size-32, 4vw, $font-size-48);
   font-weight: $fw-bold;
   line-height: $line-height-tight;
   color: $black;
 }
 
-.highlight {
-  background: $accent-gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.tagline {
+  font-size: $font-size-18;
+  font-weight: $fw-medium;
+  color: $gray-400;
+  width: 400px;
+  line-height: 1.6;
 }
 
-.subheadline {
-  font-size: $font-size-18;
+.intro {
+  font-size: $font-size-16;
   line-height: $line-height-relaxed;
   color: $gray-600;
-  max-width: 540px;
+  max-width: 480px;
 
   @media (max-width: $breakpoint-lg) {
     margin: 0 auto;
-  }
-}
-
-.actions {
-  display: flex;
-  gap: $space-16;
-  flex-wrap: wrap;
-
-  @media (max-width: $breakpoint-lg) {
-    justify-content: center;
   }
 }
 
@@ -75,7 +78,7 @@
 .imageBg {
   position: absolute;
   inset: -20px -20px 20px 20px;
-  background: $black;
+  background: rgb($black, 0.05);
   border-radius: $radius-xl;
   z-index: 0;
 }
