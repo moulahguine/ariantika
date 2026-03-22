@@ -1,0 +1,107 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.footer {
+  background: $black;
+  color: $white;
+  padding: $space-40 0 $space-32;
+}
+
+.container {
+  @include container;
+}
+
+.cta {
+  text-align: center;
+  margin-bottom: $space-40;
+
+  h2 {
+    font-size: clamp($font-size-28, 4vw, $font-size-40);
+    font-weight: $fw-bold;
+    line-height: $line-height-tight;
+  }
+}
+
+.ctaHighlight {
+  background: $accent-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $space-40;
+  padding-bottom: $space-40;
+  border-bottom: 1px solid $gray-800;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: $space-32;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: $space-12;
+}
+
+.logo {
+  font-size: $font-size-20;
+  font-weight: $fw-bold;
+  color: $white;
+}
+
+.email {
+  color: $gray-400;
+  font-size: $font-size-14;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-32;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column {
+  h4 {
+    font-size: $font-size-14;
+    font-weight: $fw-semibold;
+    margin-bottom: $space-16;
+    color: $white;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $space-8;
+  }
+
+  a {
+    font-size: $font-size-14;
+    color: $gray-400;
+
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+.bottom {
+  padding-top: $space-24;
+
+  p {
+    font-size: $font-size-12;
+    color: $gray-600;
+  }
+}

@@ -1,0 +1,86 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.about {
+  background: $white;
+  padding: $space-40 0;
+}
+
+.container {
+  @include container;
+}
+
+.title {
+  font-size: clamp($font-size-32, 4vw, $font-size-48);
+  font-weight: $fw-bold;
+  color: $black;
+  margin-bottom: $space-32;
+}
+
+.titleHighlight {
+  background: $accent-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: $space-40;
+  align-items: start;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bio {
+  font-size: $font-size-16;
+  line-height: $line-height-relaxed;
+  color: $gray-600;
+  position: sticky;
+  top: 120px;
+
+  @media (max-width: $breakpoint-lg) {
+    position: static;
+  }
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 140px;
+  gap: $space-16;
+
+  .large {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 100px;
+
+    .large {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+  }
+}
+
+.imageWrap {
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+
+  .imageWrap:hover & {
+    transform: scale(1.05);
+  }
+}

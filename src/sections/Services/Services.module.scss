@@ -1,0 +1,86 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.services {
+  background: $white;
+  padding: $space-40 0;
+}
+
+.container {
+  @include container;
+}
+
+.title {
+  font-size: clamp($font-size-28, 4vw, $font-size-40);
+  font-weight: $fw-bold;
+  text-align: center;
+  color: $black;
+  margin-bottom: $space-40;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-32;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  padding: $space-32;
+  background: $white;
+  border: 1px solid $gray-200;
+  border-radius: $radius-lg;
+  transition: box-shadow 0.3s, border-color 0.3s;
+
+  &:hover {
+    box-shadow: 0 20px 40px rgba($black, 0.08);
+    border-color: transparent;
+  }
+}
+
+.iconWrap {
+  width: 56px;
+  height: 56px;
+  @include flex-center;
+  background: rgba($accent-from, 0.1);
+  color: $accent-from;
+  border-radius: $radius-md;
+  margin-bottom: $space-20;
+}
+
+.card h3 {
+  font-size: $font-size-20;
+  font-weight: $fw-semibold;
+  color: $black;
+  margin-bottom: $space-12;
+}
+
+.card p {
+  font-size: $font-size-14;
+  line-height: $line-height-relaxed;
+  color: $gray-600;
+  margin-bottom: $space-20;
+}
+
+.card ul {
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+
+  li {
+    font-size: $font-size-14;
+    color: $gray-800;
+    padding-left: $space-16;
+    position: relative;
+
+    &::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: $accent-from;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.blog {
+  background: $black;
+  color: $white;
+  padding: $space-40 0;
+}
+
+.container {
+  @include container;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $space-32;
+
+  h2 {
+    font-size: clamp($font-size-24, 3vw, $font-size-32);
+    font-weight: $fw-bold;
+  }
+}
+
+.viewAll {
+  font-size: $font-size-14;
+  font-weight: $fw-medium;
+  color: $gray-400;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  padding: $space-20 0;
+  border-bottom: 1px solid $gray-800;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.date {
+  display: block;
+  font-size: $font-size-12;
+  color: $gray-600;
+  margin-bottom: $space-4;
+}
+
+.link {
+  display: block;
+
+  h3 {
+    font-size: $font-size-18;
+    font-weight: $fw-semibold;
+    margin-bottom: $space-8;
+    color: $white;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $gray-200;
+    }
+  }
+}
+
+.cta {
+  font-size: $font-size-14;
+  color: $accent-from;
+
+  .link:hover & {
+    text-decoration: underline;
+  }
+}

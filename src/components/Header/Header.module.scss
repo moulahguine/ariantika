@@ -1,0 +1,95 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba($white, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $gray-200;
+}
+
+.container {
+  @include flex-between;
+  @include container;
+  padding-top: $space-16;
+  padding-bottom: $space-16;
+}
+
+.logo {
+  font-size: $font-size-20;
+  font-weight: $fw-bold;
+  color: $black;
+}
+
+.nav {
+  display: flex;
+  gap: $space-32;
+
+  @media (max-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+.navLink {
+  font-size: $font-size-14;
+  font-weight: $fw-medium;
+  color: $gray-800;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $black;
+  }
+}
+
+.actions {
+  @media (max-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+.mobileToggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: $space-8;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  @media (max-width: $breakpoint-lg) {
+    display: flex;
+  }
+
+  span {
+    width: 24px;
+    height: 2px;
+    background: $black;
+  }
+}
+
+.mobileNav {
+  background: $white;
+  border-top: 1px solid $gray-200;
+  padding: $space-24;
+  display: flex;
+  flex-direction: column;
+  gap: $space-16;
+
+  @media (min-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+.mobileNavLink {
+  font-size: $font-size-16;
+  font-weight: $fw-medium;
+  color: $black;
+}
+
+.mobileCta {
+  margin-top: $space-8;
+}

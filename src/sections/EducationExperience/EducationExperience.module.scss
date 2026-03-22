@@ -1,0 +1,82 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.section {
+  background: $white;
+  padding: $space-40 0;
+}
+
+.container {
+  @include container;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-40;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column {
+  h2 {
+    font-size: $font-size-20;
+    font-weight: $fw-semibold;
+    color: $black;
+    margin-bottom: $space-24;
+    display: flex;
+    align-items: center;
+    gap: $space-8;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: $accent-from;
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $space-24;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $space-16;
+    padding-bottom: $space-24;
+    border-bottom: 1px solid $gray-200;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  strong {
+    font-size: $font-size-16;
+    font-weight: $fw-semibold;
+    color: $black;
+  }
+
+  span {
+    font-size: $font-size-14;
+    color: $gray-600;
+  }
+}
+
+.period {
+  font-size: $font-size-12;
+  color: $gray-600;
+  white-space: nowrap;
+}

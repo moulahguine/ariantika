@@ -1,0 +1,34 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.faq {
+  background: $black;
+  color: $white;
+  padding: $space-40 0;
+}
+
+.container {
+  @include container;
+}
+
+.title {
+  font-size: clamp($font-size-28, 4vw, $font-size-40);
+  font-weight: $fw-bold;
+  text-align: center;
+  color: $white;
+  margin-bottom: $space-40;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 $space-32;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+
+  & + .grid {
+    margin-top: 0;
+  }
+}

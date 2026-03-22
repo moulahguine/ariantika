@@ -1,0 +1,90 @@
+@use "../../assets/style/variables" as *;
+@use "../../assets/style/mixins" as *;
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+  background: $white;
+}
+
+.container {
+  @include container;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: $space-40;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.content {
+  @include flex-column;
+  gap: $space-24;
+}
+
+.title {
+  font-size: clamp($font-size-32, 4vw, $font-size-48);
+  font-weight: $fw-bold;
+  line-height: $line-height-tight;
+  color: $black;
+}
+
+.highlight {
+  background: $accent-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subheadline {
+  font-size: $font-size-18;
+  line-height: $line-height-relaxed;
+  color: $gray-600;
+  max-width: 540px;
+
+  @media (max-width: $breakpoint-lg) {
+    margin: 0 auto;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: $space-16;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-lg) {
+    justify-content: center;
+  }
+}
+
+.imageWrap {
+  position: relative;
+
+  @media (max-width: $breakpoint-lg) {
+    order: -1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+.imageBg {
+  position: absolute;
+  inset: -20px -20px 20px 20px;
+  background: $black;
+  border-radius: $radius-xl;
+  z-index: 0;
+}
+
+.image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  border-radius: $radius-lg;
+  object-fit: cover;
+}
