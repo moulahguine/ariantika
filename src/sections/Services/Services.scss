@@ -1,0 +1,167 @@
+@use "../../assets/styles" as *;
+
+.services {
+  @include section;
+  padding: clamp(3.25rem, 7vw, 5rem) 0;
+  background-color: $white;
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    @include flex-between;
+    align-items: flex-end;
+    gap: $space-24;
+    margin-bottom: clamp($space-24, 4vw, 2.25rem);
+  }
+
+  &__title-wrap {
+    @include flex-column;
+    gap: $space-8;
+  }
+
+  &__eyebrow {
+    width: fit-content;
+    font-size: $font-size-18;
+    font-weight: $fw-medium;
+    color: $gray-600;
+  }
+
+  &__title {
+    font-size: clamp($font-size-32, 4.8vw, 3.25rem);
+    font-weight: $fw-bold;
+    color: $gray-900;
+    line-height: 1.1;
+  }
+
+  &__title-highlight {
+    color: #f2bc1b;
+  }
+
+  &__cta {
+    @include flex-center;
+    gap: $space-8;
+    padding: $space-8 $space-8 $space-8 $space-16;
+    border-radius: $radius-1xl;
+    background-color: #1f4b44;
+    border: 3px solid #f2bc1b;
+    color: $white;
+    // transition: $transition-base;
+
+    @media (hover: hover) {
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-1px);
+        background-color: #173a35;
+      }
+    }
+  }
+
+  &__cta-text {
+    font-size: $font-size-16;
+    font-weight: $fw-semibold;
+    white-space: nowrap;
+  }
+
+  &__cta-icon {
+    @include flex-center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: $white;
+    color: $gray-900;
+
+    svg {
+      font-size: $font-size-20;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp($space-16, 2.5vw, $space-24);
+    list-style: none;
+  }
+
+  &__card {
+    @include flex-column;
+    gap: $space-12;
+    padding: clamp($space-16, 2.6vw, $space-24);
+    border: 1px solid $gray-200;
+    border-radius: $radius-md;
+    background-color: $white;
+    box-shadow: 0 6px 16px rgba($gray-900, 0.05);
+  }
+
+  &__card-icon {
+    @include flex-center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background-color: $gray-100;
+    color: #f2bc1b;
+
+    svg {
+      font-size: $font-size-28;
+    }
+  }
+
+  &__card-title {
+    font-size: clamp($font-size-20, 2.4vw, $font-size-24);
+    font-weight: $fw-semibold;
+    color: $gray-800;
+  }
+
+  &__card-description {
+    font-size: clamp($font-size-14, 1.9vw, $font-size-18);
+    line-height: 1.6;
+    color: $gray-600;
+    flex: 1;
+  }
+
+  &__card-link {
+    @include flex-center;
+    justify-content: flex-start;
+    width: fit-content;
+    gap: $space-8;
+    font-size: $font-size-20;
+    font-weight: $fw-semibold;
+    color: #1f4b44;
+
+    svg {
+      color: #f2bc1b;
+      transition: transform 0.25s ease-in-out;
+    }
+
+    @media (hover: hover) {
+      &:hover,
+      &:focus-visible {
+        svg {
+          transform: translateX(3px);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .services {
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .services {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

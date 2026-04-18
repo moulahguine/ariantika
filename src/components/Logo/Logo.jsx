@@ -1,34 +1,19 @@
-import Image from "next/image";
-import styles from "./Logo.module.scss";
 import Link from "next/link";
+import Image from "next/image";
+import logoSrc from "@/assets/images/logo/logo.png";
+import "./Logo.scss";
 
-export default function Logo({
-  src,
-  alt,
-  href = "#",
-  width = 120,
-  height = 40,
-  priority = false,
-  className = "",
-}) {
-  const content = (
-    <Image
-      src={src}
-      alt={alt || "Logo"}
-      width={width}
-      height={height}
-      priority={priority}
-      className={`${styles.logo} ${className}`.trim()}
-    />
+export default function Logo() {
+  return (
+    <Link href="/" className="logo__wrapper" title="Home" aria-label="Home">
+      <Image
+        src={logoSrc}
+        alt="logo "
+        width={150}
+        height={55}
+        priority
+        className="logo__wrapper-image"
+      />
+    </Link>
   );
-
-  if (href) {
-    return (
-      <Link href={href} className={styles.link} aria-label={alt || "Home"}>
-        {content}
-      </Link>
-    );
-  }
-
-  return content;
 }

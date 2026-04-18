@@ -1,0 +1,14 @@
+@use "../../assets/styles" as *;
+
+.menu {
+  @include flex-column;
+  justify-content: space-between;
+  position: fixed;
+  inset: 0;
+  top: var(--header-height, 0px);
+  height: calc(100dvh - var(--header-height, 0px));
+  padding: $space-24 $space-24 $space-32;
+  background-color: var(--surface);
+  overflow-y: auto;
+  z-index: $z-menu;
+}

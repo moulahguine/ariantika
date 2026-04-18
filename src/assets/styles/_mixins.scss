@@ -1,0 +1,162 @@
+@use "./variables" as *;
+
+// Subtitle
+@mixin subtitle {
+  font-size: clamp($font-size-12, 2.5vw, $font-size-16);
+  font-weight: $fw-regular;
+  color: $color-text-light;
+  line-height: $line-height-relaxed;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flexbox between mixin
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Flexbox column mixin
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Container mixin
+@mixin container {
+  max-width: $container-width;
+  width: 100%;
+  margin: 0 auto;
+  padding: $space-32 0;
+  position: relative;
+  border-radius: $radius-lg;
+
+  @media (max-width: $breakpoint-md) {
+    width: 100%;
+    max-width: 100%;
+    padding: $space-8;
+  }
+}
+
+// Section mixin
+@mixin section {
+  width: 100%;
+  background-color: var(--white);
+}
+
+// Header section mixin
+@mixin header_section {
+  width: fit-content;
+  padding: $space-4 $space-8;
+  border-radius: $radius-sm;
+  background-color: var(--gray-200);
+  font-size: clamp($font-size-12, 1vw, $font-size-14);
+  cursor: default;
+
+  h3 {
+    font-size: clamp($font-size-12, 1vw, $font-size-14);
+    color: var(--gray-600);
+    font-weight: $fw-bold;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+// Next button style mixin
+@mixin next-button-style {
+  @include flex-center;
+  gap: clamp($space-4, 1.5vw, $space-8);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  color: var(--gray-600);
+  font-size: clamp($font-size-12, 1.5vw, $font-size-14);
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: clamp(-3px, 1.5vw, -2px);
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--gray-600);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  svg {
+    all: unset;
+    transition: all 0.3s ease-in-out;
+
+    @media (max-width: $breakpoint-md) {
+      scale: 0.8;
+    }
+  }
+
+  &:hover {
+    color: var(--gray-700);
+
+    &::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    svg {
+      transform: translateX(clamp(-3px, 1.5vw, -2px));
+      rotate: 45deg;
+      color: inherit !important;
+    }
+  }
+}
+
+// Glass background mixin
+@mixin glass-bg($bg: rgba($white, 0.7), $blur: 50px) {
+  background-color: $bg;
+  backdrop-filter: blur($blur);
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $gray-500 !important;
+    outline-offset: 2px !important;
+  }
+}
+
+@mixin ripple-effect($color: $gray-500) {
+  position: relative;
+  overflow: hidden;
+
+  &:active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: $color;
+    opacity: 0.5;
+    border-radius: 50%;
+    animation: ripple 1s infinite ease-in-out;
+    z-index: -1;
+  }
+}
+
+@keyframes ripple {
+  100% {
+    transform: translate(-50%, -50%) scale(10);
+    opacity: 0;
+  }
+}

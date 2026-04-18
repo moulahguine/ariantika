@@ -1,0 +1,73 @@
+@use "../../assets/styles" as *;
+
+.banner {
+  position: relative;
+  isolation: isolate;
+  width: calc(100% + $space-20);
+  overflow: visible;
+  transform: rotate(-2.5deg);
+  transform-origin: center;
+  left: -$space-4;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--primary);
+    transform: rotate(2.5deg) scale(1.03);
+    transform-origin: center;
+    pointer-events: none;
+  }
+
+  &__surface {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    background-color: var(--primary-soft);
+    color: var(--text);
+  }
+
+  &__track {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    will-change: transform;
+  }
+
+  &__group {
+    @include flex-center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    gap: clamp($space-20, 3vw, $space-40);
+    padding: clamp($space-16, 2vw, $space-20) clamp($space-32, 4vw, $space-40);
+    list-style: none;
+  }
+
+  &__item {
+    @include flex-center;
+    gap: clamp($space-12, 2vw, $space-20);
+    white-space: nowrap;
+
+    &-label {
+      font-size: clamp($font-size-14, 2vw, $font-size-20);
+      font-weight: $fw-semibold;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--text);
+      padding-inline: $space-4;
+    }
+
+    &-separator {
+      @include flex-center;
+      font-size: clamp($font-size-16, 2vw, $font-size-18);
+      color: var(--accent);
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .banner {
+    transform: rotate(-1.5deg);
+  }
+}

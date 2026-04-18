@@ -1,6 +1,6 @@
 {
   "name": "ariantika",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,13 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "framer-motion": "^12.25.0",
+    "motion": "^12.38.0",
     "next": "16.1.1",
     "next-seo": "^7.0.1",
     "react": "19.2.3",
+    "react-aria": "^3.48.0",
     "react-dom": "19.2.3",
     "react-icons": "^5.6.0",
-    "sass": "^1.97.2"
+    "react-remove-scroll": "^2.7.2",
+    "react-responsive": "^10.0.1",
+    "sass": "^1.99.0"
   },
   "devDependencies": {
     "babel-plugin-react-compiler": "1.0.0",

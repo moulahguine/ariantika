@@ -1,0 +1,220 @@
+@use "../../../assets/styles" as *;
+
+// ============================================================================
+// Button
+// ----------------------------------------------------------------------------
+// Shared styling for:
+//   <Button />          — renders <button>
+//   <ButtonLink />      — renders Next.js <Link>
+//   <ButtonDownload />  — renders native <a download>
+//
+// Structure:
+//   .btn                              — base element
+//     .btn__content                   — flex row of label + icon
+//       .btn__icon                    — optional icon
+//       .btn__label                   — text label
+//     .btn__loading                   — overlay shown while loading
+//       .btn__spinner                 — animated spinner (uses currentColor)
+//
+// Modifiers:
+//   Sizes    : .btn--small | .btn--default | .btn--large
+//   Variants : .btn--primary | .btn--secondary | .btn--destructive
+//              .btn--ghost   | .btn--link
+//
+// States (driven by react-aria via data-* attributes):
+//   [data-hovered]        — pointer hover
+//   [data-focus-visible]  — keyboard focus ring
+//   [data-pressed]        — press (mouse/touch/keyboard)
+//   [data-disabled]       — disabled or loading
+//   [data-loading]        — spinner visible
+// ============================================================================
+
+.btn {
+  // ---- Base ----
+  @include flex-center;
+  position: relative;
+  gap: $space-8;
+  width: fit-content;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: $radius-lg;
+  outline: none;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, border-radius 0.25s ease, transform 0.15s ease,
+    box-shadow 0.2s ease;
+
+  // ---- Global states ----
+  &[data-disabled],
+  &:disabled,
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &[data-pressed] {
+    transform: scale(0.96);
+  }
+
+  &[data-focus-visible],
+  &:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  // ---- Sizes ----
+  &--small {
+    font-size: $font-size-14;
+    padding: $space-4 $space-16;
+  }
+
+  &--default {
+    font-size: clamp($font-size-14, 1vw, $font-size-18);
+    padding: clamp($space-12, 1vw, $space-16);
+  }
+
+  &--large {
+    font-size: $font-size-18;
+    padding: $space-12 $space-40;
+  }
+
+  // ---- Variants ----
+  &--primary {
+    background-color: var(--primary);
+    color: var(--primary-on);
+    border-color: var(--primary);
+
+    &[data-hovered] {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+      border-radius: $radius-xl;
+    }
+
+    &[data-pressed] {
+      background-color: var(--primary-active);
+      border-color: var(--primary-active);
+    }
+  }
+
+  &--secondary {
+    background-color: var(--surface);
+    color: var(--primary);
+    border-color: var(--border);
+
+    &[data-hovered] {
+      background-color: var(--surface-muted);
+      border-color: var(--border-strong);
+      border-radius: $radius-xl;
+    }
+
+    &[data-pressed] {
+      background-color: var(--primary-softer);
+      border-color: var(--primary);
+    }
+  }
+
+  &--destructive {
+    background-color: var(--danger);
+    color: var(--danger-on);
+    border-color: var(--danger);
+
+    &[data-hovered] {
+      background-color: var(--danger-hover);
+      border-color: var(--danger-hover);
+    }
+
+    &[data-pressed] {
+      background-color: var(--danger-active);
+      border-color: var(--danger-active);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: var(--text);
+    border-color: transparent;
+
+    &[data-hovered] {
+      background-color: var(--primary-softer);
+      color: var(--primary);
+    }
+
+    &[data-pressed] {
+      background-color: var(--primary-soft);
+    }
+  }
+
+  &--link {
+    background-color: transparent;
+    color: var(--secondary);
+    border-color: transparent;
+    border-radius: 0;
+    padding-inline: 0;
+
+    &[data-hovered] {
+      color: var(--secondary-hover);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    &[data-pressed] {
+      color: var(--secondary-active);
+      transform: none; // no scale for inline link
+    }
+  }
+
+  // ---- Elements ----
+  &__content {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-8;
+    transition: opacity 0.2s ease;
+
+    &.is-hidden {
+      opacity: 0;
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+
+    svg {
+      font-size: clamp($font-size-18, 1vw, $font-size-24);
+    }
+  }
+
+  &__label {
+    display: inline-block;
+  }
+
+  &__loading {
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &__spinner {
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.7s linear infinite;
+  }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
