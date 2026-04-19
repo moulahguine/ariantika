@@ -8,6 +8,7 @@
   transform: rotate(-2.5deg);
   transform-origin: center;
   left: -$space-4;
+  z-index: $z-elevated;
 
   &::before {
     content: "";

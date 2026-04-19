@@ -3,6 +3,7 @@ export default function ButtonContent({
   icon,
   iconPosition = "left",
   loading = false,
+  classNameContent = "",
 }) {
   const showLeftIcon = icon && iconPosition === "left";
   const showRightIcon = icon && iconPosition === "right";
@@ -15,7 +16,11 @@ export default function ButtonContent({
         </span>
       )}
 
-      <span className={`btn__content${loading ? " is-hidden" : ""}`}>
+      <span
+        className={`btn__content ${
+          loading ? " is-hidden" : ""
+        } ${classNameContent}`}
+      >
         {showLeftIcon && (
           <span className="btn__icon" aria-hidden="true">
             {icon}

@@ -20,62 +20,32 @@
 
     &-item {
       border-radius: $radius-xl;
-      transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
-
-      .navigation__list--mobile & {
-        width: 100%;
-        text-align: center;
-      }
-
-      &.active {
-        background-color: var(--primary);
-
-        .navigation__list-item--link-text {
-          color: var(--primary-on);
-        }
-
-        &:hover {
-          background-color: var(--primary-hover);
-        }
-      }
-
-      &:active {
-        @include ripple-effect(var(--primary-focus-ring));
-      }
-
-      @media (hover: hover) {
-        &:not(.active):hover,
-        &:not(.active):focus-within {
-          background-color: var(--primary-soft);
-
-          .navigation__list-item--link-text {
-            color: var(--primary);
-          }
-        }
-      }
 
       &--link {
-        @include flex-center;
         padding: clamp($space-12, 2vw, $space-16)
           clamp($space-12, 2vw, $space-20);
         border-radius: inherit;
 
+        &.active {
+          background-color: var(--primary);
+
+          .navigation__list-item--link-text {
+            color: var(--primary-on);
+          }
+        }
+
         .navigation__list--mobile & {
           width: 100%;
-          justify-content: center;
-          padding-block: $space-18;
+          padding-block: $space-20;
+
+          .navigation__list-item--link-text {
+            font-size: $font-size-16;
+            font-weight: $fw-medium;
+          }
         }
 
         &-text {
-          font-size: clamp($font-size-14, 1.5vw, $font-size-16);
-          font-weight: $fw-medium;
-          color: var(--text-muted);
-          transition: color 0.2s ease-in-out;
-
-          &.active {
-            color: var(--primary-on);
-            font-weight: $fw-bold;
-          }
+          color: var(--primary);
         }
       }
     }

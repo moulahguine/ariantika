@@ -12,15 +12,6 @@ import {
 } from "./useButtonBase";
 import "./Button.scss";
 
-/**
- * ButtonLink
- *
- * Renders a Next.js <Link> styled like a button — for in-app navigation.
- *
- * Does NOT use useButton (anchors already handle activation natively).
- * When disabled, we render a non-interactive <span role="link"> instead of
- * neutering an <a href="#">, which is a common a11y anti-pattern.
- */
 const ButtonLink = forwardRef(function ButtonLink(
   {
     children,
@@ -35,6 +26,7 @@ const ButtonLink = forwardRef(function ButtonLink(
     rel,
     onPress,
     className = "",
+    classNameContent = "",
     ...rest
   },
   forwardedRef
@@ -68,6 +60,7 @@ const ButtonLink = forwardRef(function ButtonLink(
           icon={icon}
           iconPosition={iconPosition}
           loading={loading}
+          classNameContent={classNameContent}
         >
           {children}
         </ButtonContent>
@@ -89,6 +82,7 @@ const ButtonLink = forwardRef(function ButtonLink(
         icon={icon}
         iconPosition={iconPosition}
         loading={loading}
+        classNameContent={classNameContent}
       >
         {children}
       </ButtonContent>

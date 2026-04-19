@@ -1,34 +1,5 @@
 @use "../../../assets/styles" as *;
 
-// ============================================================================
-// Button
-// ----------------------------------------------------------------------------
-// Shared styling for:
-//   <Button />          — renders <button>
-//   <ButtonLink />      — renders Next.js <Link>
-//   <ButtonDownload />  — renders native <a download>
-//
-// Structure:
-//   .btn                              — base element
-//     .btn__content                   — flex row of label + icon
-//       .btn__icon                    — optional icon
-//       .btn__label                   — text label
-//     .btn__loading                   — overlay shown while loading
-//       .btn__spinner                 — animated spinner (uses currentColor)
-//
-// Modifiers:
-//   Sizes    : .btn--small | .btn--default | .btn--large
-//   Variants : .btn--primary | .btn--secondary | .btn--destructive
-//              .btn--ghost   | .btn--link
-//
-// States (driven by react-aria via data-* attributes):
-//   [data-hovered]        — pointer hover
-//   [data-focus-visible]  — keyboard focus ring
-//   [data-pressed]        — press (mouse/touch/keyboard)
-//   [data-disabled]       — disabled or loading
-//   [data-loading]        — spinner visible
-// ============================================================================
-
 .btn {
   // ---- Base ----
   @include flex-center;
@@ -42,9 +13,7 @@
   border: 1px solid transparent;
   border-radius: $radius-lg;
   outline: none;
-  transition: background-color 0.25s ease, color 0.25s ease,
-    border-color 0.25s ease, border-radius 0.25s ease, transform 0.15s ease,
-    box-shadow 0.2s ease;
+  transition: all 0.3s ease-in-out;
 
   // ---- Global states ----
   &[data-disabled],
@@ -56,19 +25,20 @@
   }
 
   &[data-pressed] {
-    transform: scale(0.96);
+    transform: scale(0.95);
+    border-radius: $radius-xl;
   }
 
   &[data-focus-visible],
   &:focus-visible {
-    outline: 2px solid var(--ring);
+    outline: 2px solid var(--secondary-focus-ring);
     outline-offset: 2px;
   }
 
   // ---- Sizes ----
   &--small {
-    font-size: $font-size-14;
-    padding: $space-4 $space-16;
+    font-size: clamp($font-size-14, 1vw, $font-size-16);
+    padding: clamp($space-8, 1vw, $space-12) clamp($space-12, 1vw, $space-16);
   }
 
   &--default {
@@ -77,8 +47,8 @@
   }
 
   &--large {
-    font-size: $font-size-18;
-    padding: $space-12 $space-40;
+    font-size: clamp($font-size-18, 1vw, $font-size-24);
+    padding: clamp($space-12, 1vw, $space-20) clamp($space-32, 1vw, $space-40);
   }
 
   // ---- Variants ----
@@ -91,6 +61,7 @@
       background-color: var(--primary-hover);
       border-color: var(--primary-hover);
       border-radius: $radius-xl;
+      scale: 0.97;
     }
 
     &[data-pressed] {
@@ -102,17 +73,17 @@
   &--secondary {
     background-color: var(--surface);
     color: var(--primary);
-    border-color: var(--border);
+    border-color: var(--primary-border);
 
     &[data-hovered] {
-      background-color: var(--surface-muted);
-      border-color: var(--border-strong);
+      background-color: var(--primary-softer);
       border-radius: $radius-xl;
+      scale: 0.97;
     }
 
     &[data-pressed] {
-      background-color: var(--primary-softer);
-      border-color: var(--primary);
+      background-color: var(--primary-focus-ring);
+      border-color: var(--primary-focus-ring);
     }
   }
 
@@ -124,6 +95,8 @@
     &[data-hovered] {
       background-color: var(--danger-hover);
       border-color: var(--danger-hover);
+      border-radius: $radius-xl;
+      scale: 0.97;
     }
 
     &[data-pressed] {
@@ -140,6 +113,7 @@
     &[data-hovered] {
       background-color: var(--primary-softer);
       color: var(--primary);
+      border-radius: $radius-xl;
     }
 
     &[data-pressed] {
@@ -162,7 +136,7 @@
 
     &[data-pressed] {
       color: var(--secondary-active);
-      transform: none; // no scale for inline link
+      transform: none;
     }
   }
 
@@ -180,9 +154,7 @@
   }
 
   &__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     line-height: 0;
 
     svg {
@@ -195,11 +167,9 @@
   }
 
   &__loading {
+    @include flex-center;
     position: absolute;
     inset: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     pointer-events: none;
   }
 

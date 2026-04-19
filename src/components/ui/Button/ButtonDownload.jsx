@@ -37,6 +37,7 @@ const ButtonDownload = forwardRef(function ButtonDownload(
     rel,
     onPress,
     className = "",
+    classNameContent = "",
     ...rest
   },
   forwardedRef
@@ -72,6 +73,7 @@ const ButtonDownload = forwardRef(function ButtonDownload(
           icon={icon}
           iconPosition={iconPosition}
           loading={loading}
+          classNameContent={classNameContent}
         >
           {children}
         </ButtonContent>
@@ -94,6 +96,7 @@ const ButtonDownload = forwardRef(function ButtonDownload(
         icon={icon}
         iconPosition={iconPosition}
         loading={loading}
+        classNameContent={classNameContent}
       >
         {children}
       </ButtonContent>

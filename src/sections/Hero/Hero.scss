@@ -170,6 +170,7 @@
       @media (max-width: $breakpoint-2md) {
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
       }
     }
   }

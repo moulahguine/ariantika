@@ -23,6 +23,7 @@ const Button = forwardRef(function Button(
     type = "button",
     onPress,
     className = "",
+    classNameContent = "",
     ...rest
   },
   forwardedRef
@@ -53,7 +54,12 @@ const Button = forwardRef(function Button(
       {...mergeProps(mergedProps, rest)}
       {...dataState}
     >
-      <ButtonContent icon={icon} iconPosition={iconPosition} loading={loading}>
+      <ButtonContent
+        icon={icon}
+        iconPosition={iconPosition}
+        loading={loading}
+        classNameContent={classNameContent}
+      >
         {children}
       </ButtonContent>
     </button>

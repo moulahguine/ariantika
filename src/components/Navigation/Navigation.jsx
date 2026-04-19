@@ -1,26 +1,17 @@
 "use client";
 
-import Link from "next/link";
-import "./Navigation.scss";
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
-
-const MotionLink = motion.create(Link);
+import { ButtonLink } from "@/components";
+import "./Navigation.scss";
 
 const links = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Research", href: "/research" },
   { label: "Experience", href: "/experience" },
-  { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navigation({
-  className = "",
-  variant = "desktop",
-  onNavigate,
-}) {
+export default function Navigation({ className = "", variant = "desktop" }) {
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
   const isMobile = variant === "mobile";
@@ -44,24 +35,17 @@ export default function Navigation({
             }`}
             key={link.href}
           >
-            <MotionLink
+            <ButtonLink
               href={link.href}
-              className="navigation__list-item--link"
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                duration: 0.2,
-                ease: "easeInOut",
-              }}
-              onClick={() => onNavigate()}
+              variant="ghost"
+              className={`navigation__list-item--link ${
+                isActive(link.href) ? "active" : ""
+              }`}
+              classNameContent="navigation__list-item--link-text"
+              size="small"
             >
-              <span
-                className={`navigation__list-item--link-text ${
-                  isActive(link.href) ? "active" : ""
-                }`}
-              >
-                {link.label}
-              </span>
-            </MotionLink>
+              {link.label}
+            </ButtonLink>
           </li>
         ))}
       </ul>

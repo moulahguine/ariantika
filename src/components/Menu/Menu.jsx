@@ -40,7 +40,6 @@ export default function Menu({ isOpen, onClose, headerHeight = 0 }) {
                 isOpen ? "menu__navigation--open" : ""
               }`}
               variant="mobile"
-              onNavigate={onClose}
             />
 
             <SocialLinks

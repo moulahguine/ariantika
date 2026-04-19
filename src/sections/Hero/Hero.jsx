@@ -12,6 +12,7 @@ const actionLinks = [
     href: "/contact",
     icon: <GoArrowUpRight aria-hidden="true" />,
     variant: "primary",
+    size: "default",
   },
   {
     label: "Resume",
@@ -19,6 +20,7 @@ const actionLinks = [
     icon: <FaFileAlt aria-hidden="true" />,
     variant: "secondary",
     download: true,
+    size: "default",
   },
 ];
 
@@ -77,11 +79,11 @@ export default function Hero() {
               return (
                 <Button
                   key={link.href}
+                  className="hero__content--actions-button"
                   variant={link.variant}
-                  size="default"
+                  size={link.size}
                   href={link.href}
                   icon={link.icon}
-                  className="hero__content--actions-button"
                 >
                   {link.label}
                 </Button>
