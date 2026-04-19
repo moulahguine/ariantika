@@ -11,7 +11,11 @@ const links = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Navigation({ className = "", variant = "desktop" }) {
+export default function Navigation({
+  className = "",
+  variant = "desktop",
+  onNavigate,
+}) {
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
   const isMobile = variant === "mobile";
@@ -43,6 +47,7 @@ export default function Navigation({ className = "", variant = "desktop" }) {
               }`}
               classNameContent="navigation__list-item--link-text"
               size="small"
+              onPress={onNavigate}
             >
               {link.label}
             </ButtonLink>

@@ -122,11 +122,18 @@
   }
 
   &--link {
+    display: inline;
+    width: auto;
+    padding: 0;
     background-color: transparent;
     color: var(--secondary);
     border-color: transparent;
     border-radius: 0;
-    padding-inline: 0;
+
+    .btn__content,
+    .btn__label {
+      display: inline;
+    }
 
     &[data-hovered] {
       color: var(--secondary-hover);

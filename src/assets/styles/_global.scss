@@ -31,7 +31,7 @@ html,
 body {
   overflow-x: clip;
   font-family: $font-primary;
-  background-color: $white;
+  background-color: var(--background);
   -webkit-overflow-scrolling: touch;
 }
 

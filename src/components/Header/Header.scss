@@ -4,7 +4,7 @@
   position: fixed;
   width: 100%;
   z-index: $z-header;
-  background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+  background-color: color-mix(in srgb, var(--background) 80%, transparent);
   backdrop-filter: blur(8px);
 
   @media (max-width: $breakpoint-2md) {

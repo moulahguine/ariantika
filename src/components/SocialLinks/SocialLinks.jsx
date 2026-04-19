@@ -37,7 +37,9 @@ export default function SocialLinks({
             key={link.id}
             className={`social-links__item social-links__item--${link.id}`}
             style={{ "--color-link": link.color }}
-            animate={{ backgroundColor: isActive ? link.color : "#0f4c81" }}
+            animate={{
+              backgroundColor: isActive ? link.color : "var(--primary)",
+            }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             onHoverStart={() => setActiveId(link.id)}
             onHoverEnd={() => setActiveId(null)}

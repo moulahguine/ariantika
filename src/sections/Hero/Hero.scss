@@ -27,8 +27,8 @@
 
   // hero content
   &__content {
-    width: 50%;
     @include flex-column;
+    width: 50%;
     justify-content: center;
     gap: clamp($space-10, 1.5vw, $space-12);
 
@@ -40,7 +40,7 @@
 
     // greeting
     &--greeting {
-      font-family: var(--font-sour-gummy);
+      font-family: $font-brush;
       font-size: clamp($font-size-16, 2vw, $font-size-20);
       font-weight: $fw-medium;
       color: var(--accent);
@@ -254,6 +254,7 @@
 
         @media (max-width: $breakpoint-2md) {
           filter: blur(16px);
+          scale: 1.05;
         }
       }
 

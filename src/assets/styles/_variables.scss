@@ -1,5 +1,7 @@
 // ----------------------- FONT -----------------------
 $font-primary: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+$font-display: var(--font-sour-gummy), "Sour Gummy", ui-sans-serif, sans-serif;
+$font-brush: var(--font-caveat-brush), "Caveat Brush", cursive;
 
 // ----------------------- TYPOGRAPHY -----------------------
 $base-font-size: 16px;
@@ -16,6 +18,9 @@ $font-size-32: 2rem;
 $font-size-36: 2.25rem;
 $font-size-40: 2.5rem;
 $font-size-48: 3rem;
+$font-size-64: 4rem;
+$font-size-72: 4.5rem;
+$font-size-96: 6rem;
 
 $line-height-tight: 1.25;
 $line-height-normal: 1.5;
@@ -37,6 +42,11 @@ $space-20: 1.25rem;
 $space-24: 1.5rem;
 $space-32: 2rem;
 $space-40: 2.5rem;
+$space-48: 3rem;
+$space-64: 4rem;
+$space-72: 4.5rem;
+$space-96: 6rem;
+$space-128: 8rem;
 
 // ----------------------- RADIUS -----------------------
 $radius-sm: 0.25rem;
@@ -103,6 +113,8 @@ $gray-50: #fafafa;
 // navy = science/trust, teal = health/data, amber = highlight, slate = neutral UI
 $src-primary: #0f4c81; // navy
 $src-secondary: #0f766e; // teal
+$src-tertiary: #a5f9b3; // lime
+$src-quaternary: #66deef; // sky
 $src-accent: #f59e0b; // amber (highlighter / callouts)
 $src-info: #0284c7; // cyan-blue (links, info)
 $src-success: #16a34a; // emerald
@@ -134,6 +146,8 @@ $src-neutral: #334155; // slate (UI chrome)
 :root {
   @include color-scale("primary", $src-primary);
   @include color-scale("secondary", $src-secondary);
+  @include color-scale("tertiary", $src-tertiary);
+  @include color-scale("quaternary", $src-quaternary);
   @include color-scale("accent", $src-accent, #0f172a); // amber needs dark text
   @include color-scale("info", $src-info);
   @include color-scale("success", $src-success);
@@ -143,7 +157,7 @@ $src-neutral: #334155; // slate (UI chrome)
 
   // Surfaces & text (semantic)
   --background: #f8fafc;
-  --surface: #ffffff;
+  --surface: #fff;
   --surface-muted: #f1f5f9;
   --text: #0f172a;
   --text-muted: #64748b;
@@ -173,6 +187,9 @@ $success: var(--success);
 $warning: var(--warning);
 $danger: var(--danger);
 $error: var(--danger); // legacy alias
+
+$tertiary: var(--tertiary);
+$quaternary: var(--quaternary);
 
 $background: var(--background);
 $surface: var(--surface);

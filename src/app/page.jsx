@@ -14,8 +14,8 @@ export default function Home() {
       <main style={{ overflowX: "hidden" }}>
         <Hero />
         <Banner />
+        <About />
         {/* <Services /> */}
-        {/* <About /> */}
       </main>
     </>
   );
