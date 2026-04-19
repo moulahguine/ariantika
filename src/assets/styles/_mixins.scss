@@ -89,9 +89,4 @@
   margin: 0 auto;
   padding: clamp($space-16, 7vw, $space-32) 0;
   position: relative;
-
-  @media (max-width: $breakpoint-2md) {
-    width: 100%;
-    max-width: 600px;
-  }
 }

@@ -19,6 +19,7 @@
     @media (max-width: $breakpoint-2md) {
       grid-template-columns: 1fr;
       grid-template-rows: auto;
+      max-width: 550px;
     }
 
     // media
