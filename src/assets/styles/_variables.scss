@@ -36,6 +36,7 @@ $space-4: 0.25rem;
 $space-8: 0.5rem;
 $space-10: 0.625rem;
 $space-12: 0.75rem;
+$space-14: 0.875rem;
 $space-16: 1rem;
 $space-18: 1.125rem;
 $space-20: 1.25rem;
@@ -67,11 +68,13 @@ $container-width: 1200px;
 // Breakpoints
 $breakpoint-sm: 640px;
 $breakpoint-md: 768px;
-$breakpoint-2md: 960px;
+$breakpoint-2md: 1024px;
 $breakpoint-lg: 1280px;
 $breakpoint-xl: 1536px;
 
 // ----------------------- Z-INDEX -----------------------
+
+$z-below: -1;
 $z-base: 1;
 $z-above: 2;
 $z-elevated: 10;
@@ -93,27 +96,11 @@ $modal-max-height-desktop: 85dvh;
 $modal-max-height-mobile: 65dvh;
 
 // ----------------------- COLORS -----------------------
-// Static neutrals (kept as SCSS vars because some components read them directly)
-$black: #0f0f10;
-$white: #ffffff;
-$gray-950: #0e0e10;
-$gray-900: #141518;
-$gray-800: #1e1f23;
-$gray-700: #2a2b30;
-$gray-600: #515256;
-$gray-500: #6f7074;
-$gray-400: #a6a7a9;
-$gray-300: #d2d3d5;
-$gray-200: #e6e7e9;
-$gray-100: #f3f3f4;
-$gray-50: #fafafa;
 
-// ----------------------- BRAND SOURCES (single source of truth) -----------------------
-// Tuned for an Epidemiology & Biostatistics portfolio:
-// navy = science/trust, teal = health/data, amber = highlight, slate = neutral UI
-$src-primary: #0f4c81; // navy
-$src-secondary: #0f766e; // teal
+$src-primary: #1563a7; // navy
+$src-secondary: #1ba79b; // teal
 $src-tertiary: #a5f9b3; // lime
+$src-tertiary-light: #e7fbce; // lime-light
 $src-quaternary: #66deef; // sky
 $src-accent: #f59e0b; // amber (highlighter / callouts)
 $src-info: #0284c7; // cyan-blue (links, info)
@@ -122,11 +109,6 @@ $src-warning: #d97706; // burnt amber
 $src-danger: #dc2626; // red (alerts only)
 $src-neutral: #334155; // slate (UI chrome)
 
-// ----------------------- COLOR SCALE GENERATOR -----------------------
-// Emits all interaction states as CSS custom properties from one source color,
-// using color-mix() in OKLAB (perceptually uniform → nicer hovers/tints).
-// Usage: @include color-scale('primary', $src-primary);
-//        @include color-scale('accent',  $src-accent, #0f172a); // dark "on" text
 @mixin color-scale($name, $source, $on: #ffffff) {
   --#{$name}: #{$source};
   --#{$name}-hover: color-mix(in oklab, #{$source} 88%, black);
@@ -141,63 +123,32 @@ $src-neutral: #334155; // slate (UI chrome)
   --#{$name}-on: #{$on};
 }
 
-// Emit CSS custom properties once at the root.
-// Sass only executes a @use'd module once, so this stays a single :root block.
 :root {
   @include color-scale("primary", $src-primary);
   @include color-scale("secondary", $src-secondary);
   @include color-scale("tertiary", $src-tertiary);
+  @include color-scale("tertiary-light", $src-tertiary-light);
   @include color-scale("quaternary", $src-quaternary);
-  @include color-scale("accent", $src-accent, #0f172a); // amber needs dark text
+  @include color-scale("accent", $src-accent);
   @include color-scale("info", $src-info);
   @include color-scale("success", $src-success);
-  @include color-scale("warning", $src-warning, #0f172a);
+  @include color-scale("warning", $src-warning);
   @include color-scale("danger", $src-danger);
   @include color-scale("neutral", $src-neutral);
 
-  // Surfaces & text (semantic)
+  // Surfaces
   --background: #f8fafc;
   --surface: #fff;
   --surface-muted: #f1f5f9;
+  --surface-dark: #1e293b;
+  --surface-dark-muted: #334155;
+  --surface-dark-softer: #475569;
+
+  // Text
   --text: #0f172a;
+  --text-light: #334155;
   --text-muted: #64748b;
   --text-inverse: #ffffff;
   --border: #e2e8f0;
   --ring: var(--primary-focus-ring);
 }
-
-// ----------------------- SCSS ALIASES (pass-through to CSS vars) -----------------------
-// Keeps existing usages working; authors can use either `$primary` or `var(--primary)`.
-$primary: var(--primary);
-$primary-hover: var(--primary-hover);
-$primary-disabled: var(--primary-disabled);
-$primary-border: var(--primary-border);
-$primary-soft: var(--primary-soft);
-$primary-on: var(--primary-on);
-
-$secondary: var(--secondary);
-$secondary-hover: var(--secondary-hover);
-$secondary-disabled: var(--secondary-disabled);
-$secondary-border: var(--secondary-border);
-$secondary-soft: var(--secondary-soft);
-$secondary-on: var(--secondary-on);
-$accent: var(--accent);
-$info: var(--info);
-$success: var(--success);
-$warning: var(--warning);
-$danger: var(--danger);
-$error: var(--danger); // legacy alias
-
-$tertiary: var(--tertiary);
-$quaternary: var(--quaternary);
-
-$background: var(--background);
-$surface: var(--surface);
-$main-text: var(--text);
-$muted-text: var(--text-muted);
-$borders: var(--border);
-
-// Neutral semantic aliases
-$color-primary: $gray-900;
-$color-primary-500: $gray-700;
-$color-text-light: $gray-500;

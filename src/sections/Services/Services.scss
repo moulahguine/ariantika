@@ -2,166 +2,225 @@
 
 .services {
   @include section;
-  padding: clamp(3.25rem, 7vw, 5rem) 0;
-  background-color: $white;
+  border-radius: $radius-2xl;
+  background-image: linear-gradient(
+    to top,
+    rgb(from var(--secondary) r g b / 0.05) 0%,
+    rgb(from var(--secondary) r g b / 0.1) 50%,
+    rgb(from var(--secondary) r g b / 0.2) 100%
+  );
 
   &__container {
     @include container;
-  }
+    max-width: 1500px;
+    width: 100%;
 
-  &__header {
-    @include flex-between;
-    align-items: flex-end;
-    gap: $space-24;
-    margin-bottom: clamp($space-24, 4vw, 2.25rem);
-  }
+    padding-block: clamp($space-40, 4vw, $space-64);
 
-  &__title-wrap {
-    @include flex-column;
-    gap: $space-8;
-  }
+    @media (max-width: $breakpoint-2md) {
+      max-width: 850px;
+    }
 
-  &__eyebrow {
-    width: fit-content;
-    font-size: $font-size-18;
-    font-weight: $fw-medium;
-    color: $gray-600;
-  }
-
-  &__title {
-    font-size: clamp($font-size-32, 4.8vw, 3.25rem);
-    font-weight: $fw-bold;
-    color: $gray-900;
-    line-height: 1.1;
-  }
-
-  &__title-highlight {
-    color: #f2bc1b;
-  }
-
-  &__cta {
-    @include flex-center;
-    gap: $space-8;
-    padding: $space-8 $space-8 $space-8 $space-16;
-    border-radius: $radius-1xl;
-    background-color: #1f4b44;
-    border: 3px solid #f2bc1b;
-    color: $white;
-    // transition: $transition-base;
-
-    @media (hover: hover) {
-      &:hover,
-      &:focus-visible {
-        transform: translateY(-1px);
-        background-color: #173a35;
-      }
+    @media (max-width: $breakpoint-md) {
+      max-width: 600px;
     }
   }
 
-  &__cta-text {
-    font-size: $font-size-16;
-    font-weight: $fw-semibold;
-    white-space: nowrap;
-  }
+  &__header {
+    @include section-header;
 
-  &__cta-icon {
-    @include flex-center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background-color: $white;
-    color: $gray-900;
-
-    svg {
-      font-size: $font-size-20;
+    &-subtitle {
+      color: var(--text-light);
     }
   }
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp($space-16, 2.5vw, $space-24);
-    list-style: none;
+    grid-template-columns: repeat(3, minmax(auto, 1fr));
+    gap: clamp($space-20, 2.4vw, $space-32);
+    margin-top: $space-40;
+    width: 100%;
+
+    @media (max-width: $breakpoint-2md) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__card {
-    @include flex-column;
-    gap: $space-12;
-    padding: clamp($space-16, 2.6vw, $space-24);
-    border: 1px solid $gray-200;
-    border-radius: $radius-md;
-    background-color: $white;
-    box-shadow: 0 6px 16px rgba($gray-900, 0.05);
-  }
+    position: relative;
+    isolation: isolate;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: $radius-xl;
+    will-change: transform;
+    transition: all 0.3s ease-in-out;
 
-  &__card-icon {
-    @include flex-center;
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background-color: $gray-100;
-    color: #f2bc1b;
-
-    svg {
-      font-size: $font-size-28;
+    @media (max-width: $breakpoint-md) {
+      max-width: 400px;
     }
-  }
 
-  &__card-title {
-    font-size: clamp($font-size-20, 2.4vw, $font-size-24);
-    font-weight: $fw-semibold;
-    color: $gray-800;
-  }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        cursor: none;
 
-  &__card-description {
-    font-size: clamp($font-size-14, 1.9vw, $font-size-18);
-    line-height: 1.6;
-    color: $gray-600;
-    flex: 1;
-  }
+        .services__card-link,
+        .services__card-link * {
+          cursor: none;
+        }
+      }
+    }
 
-  &__card-link {
-    @include flex-center;
-    justify-content: flex-start;
-    width: fit-content;
-    gap: $space-8;
-    font-size: $font-size-20;
-    font-weight: $fw-semibold;
-    color: #1f4b44;
+    &-cursor {
+      @include flex-center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: clamp(50px, 6vw, 70px);
+      height: clamp(50px, 6vw, 70px);
+      margin-left: calc(clamp(50px, 6vw, 70px) / -2);
+      margin-top: calc(clamp(50px, 6vw, 70px) / -2);
+      border-radius: 50%;
+      background-color: rgb(from var(--primary) r g b / 0.5);
+      backdrop-filter: blur(3px);
+      color: var(--text-inverse);
+      font-size: $font-size-18;
+      font-weight: $fw-bold;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      z-index: $z-card;
+      font-family: $font-brush;
 
-    svg {
-      color: #f2bc1b;
-      transition: transform 0.25s ease-in-out;
+      @media (hover: none), (pointer: coarse) {
+        display: none;
+      }
+    }
+
+    &-link {
+      @include flex-column;
+      gap: clamp($space-16, 2.4vw, $space-18);
+      width: 100%;
+      height: 100%;
+      background-color: var(--background);
+      border: none;
+      border-radius: inherit;
+      padding: clamp($space-16, 1vw, $space-20);
+      margin: 0;
+      position: relative;
+      z-index: $z-base;
+
+      @media ((min-width: $breakpoint-md) and (max-width: $breakpoint-2md)) {
+        flex-direction: row;
+      }
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      z-index: $z-below;
+      scale: 1.01;
+      transition: all 0.3s ease-in-out;
+    }
+    &::after {
+      background-color: rgb(from var(--primary) r g b / 0.1);
+      rotate: -2deg;
+    }
+    &::before {
+      background-color: rgb(from var(--primary) r g b / 0.4);
+      rotate: 2deg;
     }
 
     @media (hover: hover) {
-      &:hover,
-      &:focus-visible {
-        svg {
-          transform: translateX(3px);
+      &:hover {
+        &::before {
+          rotate: -2deg;
+        }
+        &::after {
+          rotate: 2deg;
         }
       }
     }
   }
-}
 
-@media (max-width: $breakpoint-lg) {
-  .services {
-    &__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  // Media
+  &__card-media {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: rgb(from var(--primary) r g b / 0.1);
+    border-radius: $radius-xl $radius-xl $radius-lg $radius-lg;
+
+    @media ((min-width: $breakpoint-md) and (max-width: $breakpoint-2md)) {
+      flex-basis: 50%;
+      height: 100%;
+      border-radius: $radius-xl $radius-lg $radius-lg $radius-xl;
     }
   }
-}
 
-@media (max-width: $breakpoint-md) {
-  .services {
-    &__header {
-      flex-direction: column;
-      align-items: flex-start;
+  &__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    translate: 0 10px;
+    scale: 1.3;
+
+    @media (max-width: $breakpoint-2md) and (min-width: $breakpoint-md) {
+      scale: 1.1;
+      translate: 0 0;
     }
+  }
 
-    &__grid {
-      grid-template-columns: 1fr;
+  &__card-body {
+    @include flex-column;
+    gap: clamp($space-8, 1.6vw, $space-14);
+    padding: clamp($space-4, 2.4vw, $space-8);
+  }
+
+  &__card-title {
+    font-size: clamp($font-size-18, 1vw, $font-size-20);
+    font-weight: $fw-bold;
+    color: var(--primary);
+    text-wrap: nowrap;
+  }
+
+  &__card-description {
+    font-size: clamp($font-size-14 - 1px, 1vw, $font-size-16);
+    line-height: 1.5;
+    color: var(--text-light);
+    text-wrap: pretty;
+    word-break: keep-all;
+  }
+
+  &__card-bullets {
+    @include flex-column;
+    gap: clamp($space-8, 1vw, $space-12);
+    justify-content: flex-start;
+  }
+
+  &__card-bullet {
+    display: flex;
+    gap: clamp($space-4, 0.8vw, $space-8);
+    font-size: clamp($font-size-12 - 1px, 1vw, $font-size-14 - 1px);
+    line-height: 1.6;
+    color: var(--text-muted);
+    word-break: keep-all;
+    width: 100%;
+    text-wrap: nowrap;
+
+    &-icon {
+      @include flex-center;
+      width: fit-content;
+
+      svg {
+        font-size: clamp($font-size-10 + 1px, 1.3vw, $font-size-12);
+        color: var(--primary);
+      }
     }
   }
 }

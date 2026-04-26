@@ -5,7 +5,7 @@ import {
   useAnimationFrame,
   useMotionValue,
   useReducedMotion,
-} from "framer-motion";
+} from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { BiSolidVirus } from "react-icons/bi";
 
@@ -22,7 +22,7 @@ const bannerItems = [
 ];
 
 const REPEAT_COUNT = 2;
-const SCROLL_SPEED = 70;
+const SCROLL_SPEED = 80;
 
 // Repeat the banner items to create a loop
 const repeatedItems = Array.from(
@@ -49,7 +49,6 @@ function BannerGroup({ itemKeyPrefix, groupRef }) {
 // Main banner component
 export default function Banner() {
   const prefersReducedMotion = useReducedMotion();
-  const [isPaused, setIsPaused] = useState(false);
   const [loopWidth, setLoopWidth] = useState(0);
   const firstGroupRef = useRef(null);
   const x = useMotionValue(0);
@@ -69,7 +68,7 @@ export default function Banner() {
   }, []);
 
   useAnimationFrame((_, delta) => {
-    if (prefersReducedMotion || isPaused || loopWidth === 0) return;
+    if (prefersReducedMotion || loopWidth === 0) return;
 
     const moveBy = (SCROLL_SPEED * delta) / 1000;
     const next = x.get() - moveBy;
@@ -77,14 +76,7 @@ export default function Banner() {
   });
 
   return (
-    <section
-      className="banner"
-      aria-label="Research expertise marquee"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocusCapture={() => setIsPaused(true)}
-      onBlurCapture={() => setIsPaused(false)}
-    >
+    <section className="banner" aria-label="Research expertise marquee">
       <div className="banner__surface">
         <motion.div
           className="banner__track"

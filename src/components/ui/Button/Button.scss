@@ -25,7 +25,7 @@
   }
 
   &[data-pressed] {
-    transform: scale(0.95);
+    transform: scale(0.97);
     border-radius: $radius-xl;
   }
 
@@ -76,7 +76,7 @@
     border-color: var(--primary-border);
 
     &[data-hovered] {
-      background-color: var(--primary-softer);
+      background-color: rgb(from var(--primary) r g b / 0.2);
       border-radius: $radius-xl;
       scale: 0.97;
     }
@@ -122,7 +122,6 @@
   }
 
   &--link {
-    display: inline;
     width: auto;
     padding: 0;
     background-color: transparent;
@@ -133,6 +132,16 @@
     .btn__content,
     .btn__label {
       display: inline;
+    }
+
+    .btn__icon {
+      display: inline;
+      vertical-align: middle;
+      margin-inline: $space-4;
+
+      svg {
+        font-size: clamp($font-size-14, 1vw, $font-size-16);
+      }
     }
 
     &[data-hovered] {
@@ -162,7 +171,6 @@
 
   &__icon {
     @include flex-center;
-    line-height: 0;
 
     svg {
       font-size: clamp($font-size-18, 1vw, $font-size-24);

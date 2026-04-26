@@ -16,7 +16,7 @@ const actionLinks = [
   },
   {
     label: "Resume",
-    href: "/resume.pdf",
+    href: "/documents/Ariantika_Public_Health_CV.pdf",
     icon: <FaFileAlt aria-hidden="true" />,
     variant: "secondary",
     download: true,
@@ -66,10 +66,19 @@ export default function Hero() {
 
           {/* description */}
           <p className="hero__content--description">
-            I study how diseases spread and evolve through data&#8209;driven
-            research, focusing on cancer, infectious, and non&#8209;communicable
-            diseases. I aim to turn these insights into meaningful strategies
-            that improve and strengthen public health systems.
+            Conducting research in cancer, infectious, and
+            non&#8209;communicable diseases. Experienced in research design,
+            statistical analysis using{" "}
+            <abbr
+              title="Statistical Package for the Social Sciences"
+              className="hero__content--description-abbreviation"
+              tabIndex={0}
+              data-tooltip="Statistical Package for the Social Sciences"
+            >
+              SPSS
+            </abbr>
+            , and translating data into insights that strengthen public health
+            systems.
           </p>
 
           {/* actions */}
@@ -97,14 +106,44 @@ export default function Hero() {
           {/* hero image */}
           <figure className="hero__media--images">
             <Image
-              className="hero__media--images-image-1"
+              className="hero__media--images-image"
               src={heroPortrait}
-              alt="Portrait of Ariantika smiling in a softly lit studio"
+              alt="Ariantika smiling at the camera, wearing a cream hijab, round eyeglasses, and a white Genomic Science Day T-shirt with a light-blue lanyard, raising her right hand in a peace sign at an indoor research event."
               width={520}
               height={520}
               priority
               sizes="(max-width: 778px) 100vw, min(520px, 45vw)"
             />
+
+            {/* experience badge */}
+            <span
+              className="hero__media--badge"
+              role="img"
+              aria-label="8 plus years of research experience"
+            >
+              <svg
+                className="hero__media--badge-svg"
+                viewBox="0 0 200 200"
+                aria-hidden="true"
+              >
+                <defs>
+                  <path
+                    id="hero-badge-curve"
+                    d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
+                  />
+                </defs>
+                <text className="hero__media--badge-text">
+                  <textPath href="#hero-badge-curve" startOffset="0">
+                    Research Experience • Researcher • Public Health •
+                  </textPath>
+                </text>
+              </svg>
+
+              <div className="hero__media--badge-center">
+                <span className="hero__media--badge-number">8+</span>
+                <span className="hero__media--badge-label">Years</span>
+              </div>
+            </span>
 
             <figcaption className="hero__media--image-caption">
               photo by @ariantika

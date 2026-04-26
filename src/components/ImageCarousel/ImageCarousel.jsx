@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "motion/react";
 
 import "./ImageCarousel.scss";
@@ -10,18 +10,47 @@ const AUTOPLAY_MS = 3000;
 const SWIPE_THRESHOLD = 75;
 const SPRING = { type: "spring", stiffness: 260, damping: 30, mass: 0.9 };
 
-/**
- * Maps a slide index to its offset from the active slide, wrapping
- * around so -N/2..N/2 represents the nearest route to each card.
- */
-function getRelativeOffset(index, active, total) {
-  let offset = index - active;
-  const half = total / 2;
-  if (offset > half) offset -= total;
-  if (offset < -half) offset += total;
-  return offset;
+// Each visible slide can only be in one of four positions on the stage.
+const SLIDE_STATES = {
+  active: {
+    x: "0%",
+    scale: 1,
+    opacity: 1,
+    filter: "blur(0px) brightness(1)",
+    zIndex: 3,
+  },
+  prev: {
+    x: "-62%",
+    scale: 0.82,
+    opacity: 0.75,
+    filter: "blur(3px) brightness(0.75)",
+    zIndex: 2,
+  },
+  next: {
+    x: "62%",
+    scale: 0.82,
+    opacity: 0.75,
+    filter: "blur(3px) brightness(0.75)",
+    zIndex: 2,
+  },
+  hidden: {
+    x: "0%",
+    scale: 0.7,
+    opacity: 0,
+    filter: "blur(6px) brightness(0.6)",
+    zIndex: 1,
+  },
+};
+
+// Get the role of the slide based on the index, active slide, and total slides
+function getSlideRole(index, active, total) {
+  if (index === active) return "active";
+  if (index === (active - 1 + total) % total) return "prev";
+  if (index === (active + 1) % total) return "next";
+  return "hidden";
 }
 
+// Image Carousel Component
 export default function ImageCarousel({
   images = [],
   ariaLabel = "Photo carousel",
@@ -30,72 +59,72 @@ export default function ImageCarousel({
   const [active, setActive] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Go to the next or previous slide
   const goTo = useCallback(
     (next) => setActive(((next % total) + total) % total),
     [total]
   );
-  const goNext = useCallback(() => goTo(active + 1), [active, goTo]);
-  const goPrev = useCallback(() => goTo(active - 1), [active, goTo]);
 
+  // Autoplay the carousel
   useEffect(() => {
     if (isPaused || total <= 1) return undefined;
-    const id = window.setTimeout(goNext, AUTOPLAY_MS);
+    const id = window.setTimeout(() => goTo(active + 1), AUTOPLAY_MS);
     return () => window.clearTimeout(id);
-  }, [active, isPaused, total, goNext]);
+  }, [active, isPaused, total, goTo]);
 
+  // Handle the drag end event
   const handleDragEnd = (_event, info) => {
     const projected = info.offset.x + info.velocity.x * 0.2;
-    if (projected < -SWIPE_THRESHOLD) goNext();
-    else if (projected > SWIPE_THRESHOLD) goPrev();
+    if (projected < -SWIPE_THRESHOLD) goTo(active + 1);
+    else if (projected > SWIPE_THRESHOLD) goTo(active - 1);
   };
 
+  // Handle the key down event
+  const handleKeyDown = (event) => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goTo(active + 1);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goTo(active - 1);
+    }
+  };
+
+  // If there are no images, return null
   if (total === 0) return null;
 
   return (
+    // Image Carousel Component
     <div
       className="image-carousel"
       role="region"
       aria-roledescription="carousel"
       aria-label={ariaLabel}
+      tabIndex={0}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
+      onKeyDown={handleKeyDown}
     >
       <div className="image-carousel__stage">
         {images.map((img, idx) => {
-          const offset = getRelativeOffset(idx, active, total);
-          const abs = Math.abs(offset);
-          const isActive = offset === 0;
-          const isVisible = abs <= 2;
-
-          const slideKey = img.alt ?? `slide-${idx}`;
+          const role = getSlideRole(idx, active, total);
+          const isActive = role === "active";
 
           return (
-            <motion.div
-              key={slideKey}
+            <motion.figure
+              key={img.alt ?? `slide-${idx}`}
               className={`image-carousel__card${
                 isActive ? " image-carousel__card--active" : ""
               }`}
-              style={{ zIndex: 10 - abs }}
-              animate={{
-                x: `${offset * 62}%`,
-                scale: isActive ? 1 : 0.7 - (abs - 1) * 0.08,
-                // opacity: !isVisible ? 0 : isActive ? 1 : 1 - (abs - 1) * 0.2,
-                filter: isActive
-                  ? "blur(0px) brightness(1)"
-                  : `blur(${3 + (abs - 1) * 3}px) brightness(0.75)`,
-                rotateY: offset * -6,
-                pointerEvents: isVisible ? "auto" : "none",
-              }}
+              animate={SLIDE_STATES[role]}
               transition={SPRING}
               drag={isActive ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.22}
+              dragElastic={0}
               onDragStart={() => setIsPaused(true)}
               onDragEnd={handleDragEnd}
-              whileHover={isActive ? { scale: 1.02 } : undefined}
-              whileTap={isActive ? { cursor: "grabbing" } : undefined}
               onClick={() => !isActive && goTo(idx)}
               role="group"
               aria-roledescription="slide"
@@ -113,7 +142,15 @@ export default function ImageCarousel({
                 priority={idx === 0}
                 loading={idx === 0 ? "eager" : "lazy"}
               />
-            </motion.div>
+              {img.caption && (
+                <>
+                  <span className="image-carousel__caption">{img.caption}</span>
+                  <figcaption className="image-carousel__figcaption">
+                    {img.caption}
+                  </figcaption>
+                </>
+              )}
+            </motion.figure>
           );
         })}
       </div>
@@ -126,10 +163,9 @@ export default function ImageCarousel({
         >
           {images.map((img, idx) => {
             const isCurrent = idx === active;
-            const dotKey = img.alt ?? `dot-${idx}`;
             return (
               <button
-                key={dotKey}
+                key={img.alt ?? `dot-${idx}`}
                 type="button"
                 role="tab"
                 aria-selected={isCurrent}
@@ -141,8 +177,8 @@ export default function ImageCarousel({
               >
                 {isCurrent && !isPaused && (
                   <motion.span
-                    className="image-carousel__dot-progress"
                     key={`progress-${active}`}
+                    className="image-carousel__dot-progress"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{

@@ -6,9 +6,10 @@ import "./Navigation.scss";
 
 const links = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Experience", href: "/experience" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/aboutme" },
+  { label: "Services", href: "/services" },
+  // { label: "Experience", href: "/experience" },
+  // { label: "Contact", href: "/contact" },
 ];
 
 export default function Navigation({

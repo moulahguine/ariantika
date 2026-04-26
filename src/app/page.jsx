@@ -11,11 +11,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main style={{ overflowX: "hidden" }}>
+      <main style={{ overflowX: "clip", position: "relative" }}>
         <Hero />
         <Banner />
         <About />
-        {/* <Services /> */}
+        <Services />
       </main>
     </>
   );

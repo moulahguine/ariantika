@@ -1,13 +1,10 @@
 @use "../../assets/styles" as *;
 
 .banner {
-  position: relative;
-  isolation: isolate;
-  width: calc(100% + $space-20);
-  overflow: visible;
+  width: 100%;
   transform: rotate(-2.5deg);
   transform-origin: center;
-  left: -$space-4;
+  position: relative;
   z-index: $z-elevated;
 
   &::before {
@@ -19,10 +16,11 @@
     transform: rotate(2.5deg) scale(1.03);
     transform-origin: center;
     pointer-events: none;
+    overflow: hidden;
   }
 
   &__surface {
-    width: 100%;
+    width: 100svw;
     position: relative;
     z-index: 1;
     background-color: var(--primary-soft);

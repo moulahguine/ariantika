@@ -3,6 +3,8 @@
 .social-links {
   list-style: none;
 
+  border-radius: $radius-xl;
+
   &--vertical {
     @include flex-column;
     gap: $space-12;
@@ -27,7 +29,7 @@
     justify-content: flex-start;
     width: clamp(28px, 3vw, 36px);
     aspect-ratio: 1 / 1;
-    border-radius: $radius-xl;
+    border-radius: inherit;
     overflow: visible;
   }
 
@@ -41,11 +43,13 @@
     text-decoration: none;
     color: var(--surface);
     transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    border-radius: inherit;
 
     svg {
       font-size: clamp($font-size-14, 1.5vw, $font-size-18);
       color: inherit;
       flex-shrink: 0;
+      border-radius: $radius-sm;
     }
   }
 

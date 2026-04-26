@@ -11,84 +11,77 @@
     @include container;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    justify-content: center;
     align-items: center;
     gap: clamp($space-16, 5vw, $space-32);
-    // height: 100%;
 
     @media (max-width: $breakpoint-2md) {
       grid-template-columns: 1fr;
-      grid-template-rows: auto;
-      max-width: 550px;
+      max-width: 570px;
+    }
+  }
+
+  // media
+  &__media {
+    position: relative;
+    width: 100%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      z-index: $z-base;
+      pointer-events: none;
+      background: linear-gradient(
+        to left,
+        transparent 65%,
+        var(--background) 100%
+      );
+      -webkit-box-reflect: right;
+      border-radius: $radius-xl;
+    }
+  }
+
+  // paragraphs + link
+  &__content {
+    @include flex-column;
+    gap: clamp($space-8, 2.4vw, $space-18);
+    padding: 0 $space-12;
+
+    @media (max-width: $breakpoint-md) {
+      padding: 0;
     }
 
-    // media
-    &-media {
-      position: relative;
-      min-width: 0;
+    &-paragraph {
+      font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-wrap: pretty;
+      word-break: keep-all;
 
-      &::after,
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 20%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
+      &-space {
+        display: block;
+        height: clamp($space-12, 2.4vw, $space-18);
       }
 
-      &::after {
-        right: 0;
-        background: linear-gradient(to right, transparent, var(--background));
-      }
+      &-link {
+        display: inline;
+        color: inherit;
+        text-decoration: underline solid var(--text-muted);
+        text-underline-offset: 3px;
+        border-radius: $radius-sm;
+        transition: all 0.3s ease-in-out;
 
-      &::before {
-        left: 0;
-        background: linear-gradient(to left, transparent, var(--background));
-      }
-    }
+        &:hover {
+          color: var(--primary);
+          text-decoration-color: var(--primary);
+        }
 
-    // paragraphs + link
-    &-text {
-      @include flex-column;
-      gap: clamp($space-8, 2.4vw, $space-18);
-      padding: 0 $space-12;
-
-      &-paragraph:first-of-type::first-letter {
-        font-size: 1rem;
-        color: var(--primary);
-        font-weight: $fw-semibold;
-      }
-
-      &-paragraph {
-        font-size: clamp($font-size-14, 1.5vw, $font-size-16);
-        color: var(--text-muted);
-        line-height: 1.65;
-        text-wrap: pretty;
-        word-break: keep-all;
-      }
-
-      &-paragraph {
-        &-link {
-          font-size: inherit;
-          color: inherit;
-          line-height: inherit;
-          text-wrap: inherit;
-          word-break: inherit;
-          text-decoration: underline;
-          text-underline-offset: 3px;
-          text-decoration-thickness: 1px;
-          text-decoration-color: var(--text-muted);
-          text-decoration-style: solid;
-          text-decoration-skip-ink: none;
-          text-decoration-skip-ink: none;
-          transition: all 0.3s ease-in-out;
-
-          &:hover {
-            color: var(--primary);
-            text-decoration-color: var(--primary);
-          }
+        svg {
+          transform: translateY(5px);
         }
       }
     }
