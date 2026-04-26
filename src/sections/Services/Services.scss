@@ -2,18 +2,18 @@
 
 .services {
   @include section;
-  border-radius: $radius-2xl;
-  background-image: linear-gradient(
-    to top,
-    rgb(from var(--secondary) r g b / 0.05) 0%,
-    rgb(from var(--secondary) r g b / 0.1) 50%,
-    rgb(from var(--secondary) r g b / 0.2) 100%
-  );
 
   &__container {
     @include container;
     max-width: 1500px;
     width: 100%;
+    border-radius: clamp($radius-xl, 2.4vw, $radius-2xl);
+    background-image: linear-gradient(
+      to top,
+      rgb(from var(--secondary) r g b / 0.05) 0%,
+      rgb(from var(--secondary) r g b / 0.1) 50%,
+      rgb(from var(--secondary) r g b / 0.2) 100%
+    );
 
     padding-block: clamp($space-40, 4vw, $space-64);
 
@@ -84,11 +84,12 @@
       backdrop-filter: blur(3px);
       color: var(--text-inverse);
       font-size: $font-size-18;
+      font-family: $font-brush;
       font-weight: $fw-bold;
+      text-transform: uppercase;
       letter-spacing: 0.1em;
       pointer-events: none;
       z-index: $z-card;
-      font-family: $font-brush;
 
       @media (hover: none), (pointer: coarse) {
         display: none;
