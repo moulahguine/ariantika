@@ -54,6 +54,7 @@
     border-radius: $radius-xl;
     will-change: transform;
     transition: all 0.3s ease-in-out;
+    border: 2px solid var(--primary-border);
 
     @media (max-width: $breakpoint-md) {
       max-width: 400px;

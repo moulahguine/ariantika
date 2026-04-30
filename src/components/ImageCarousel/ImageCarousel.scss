@@ -10,7 +10,6 @@
   gap: $space-24;
   perspective: 1400px;
   overflow-x: clip;
-  outline: none;
 
   &__stage {
     position: relative;
@@ -120,12 +119,6 @@
 
     &--active {
       width: clamp(25px, 2.4vw, 30px);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--primary-focus-ring, var(--secondary));
-      outline-offset: 3px;
-      border-radius: $radius-2xl;
     }
   }
 

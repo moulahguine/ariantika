@@ -36,11 +36,19 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-button,
-input,
-select,
-textarea {
-  outline: none;
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+abbr:focus-visible,
+[role="region"]:focus-visible,
+[data-state="tap"]:focus-visible {
+  outline: 2px solid var(--secondary-focus-ring);
+  outline-offset: 4px;
+  border-radius: $radius-xl;
 }
 
 ul,
