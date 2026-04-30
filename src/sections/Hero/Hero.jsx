@@ -16,7 +16,7 @@ const actionLinks = [
   },
   {
     label: "Resume",
-    href: "/documents/Ariantika_Public_Health_CV.pdf",
+    href: "/documents/ARIANTIKA_Public_Health_RESUME.pdf",
     icon: <FaFileAlt aria-hidden="true" />,
     variant: "secondary",
     download: true,
