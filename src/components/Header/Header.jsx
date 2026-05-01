@@ -25,7 +25,7 @@ export default function Header() {
   // hide on scroll down, show on scroll up
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
-    if (latest > previous && latest > 50) {
+    if (latest > previous && latest > 150) {
       setHidden(true);
     } else {
       setHidden(false);

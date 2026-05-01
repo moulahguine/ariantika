@@ -5,7 +5,7 @@
 
   &__container {
     @include container;
-    max-width: 1500px;
+    max-width: 1350px;
     width: 100%;
     border-radius: clamp($radius-xl, 2.4vw, $radius-2xl);
     background-image: linear-gradient(
@@ -54,7 +54,7 @@
     border-radius: $radius-xl;
     will-change: transform;
     transition: all 0.3s ease-in-out;
-    border: 2px solid var(--primary-border);
+    box-shadow: 0 0 10px 0 var(--primary-border);
 
     @media (max-width: $breakpoint-md) {
       max-width: 400px;
@@ -105,7 +105,7 @@
       background-color: var(--background);
       border: none;
       border-radius: inherit;
-      padding: clamp($space-16, 1vw, $space-20);
+      padding: clamp($space-12, 1vw, $space-14);
       margin: 0;
       position: relative;
       z-index: $z-base;
@@ -115,37 +115,32 @@
       }
     }
 
-    &::before,
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      z-index: $z-below;
-      scale: 1.01;
-      transition: all 0.3s ease-in-out;
-    }
-    &::after {
-      background-color: rgb(from var(--primary) r g b / 0.1);
-      rotate: -2deg;
-    }
-    &::before {
-      background-color: rgb(from var(--primary) r g b / 0.4);
-      rotate: 2deg;
+    @media (min-width: $breakpoint-2md) {
+      &:nth-child(1) {
+        rotate: -2deg;
+      }
+
+      &:nth-child(2) {
+        scale: 1.07;
+      }
+
+      &:nth-child(3) {
+        rotate: 2deg;
+      }
     }
 
     @media (hover: hover) {
       &:hover {
-        &::before {
-          rotate: -2deg;
-        }
-        &::after {
-          rotate: 2deg;
-        }
+        scale: 1.1;
+        rotate: 0deg;
+        z-index: $z-elevated;
       }
+    }
+
+    &:active {
+      scale: 1.05;
+      rotate: 0deg;
+      z-index: $z-elevated;
     }
   }
 
@@ -208,7 +203,7 @@
   &__card-bullet {
     display: flex;
     gap: clamp($space-4, 0.8vw, $space-8);
-    font-size: clamp($font-size-12 - 1px, 1vw, $font-size-14 - 1px);
+    font-size: clamp($font-size-12 - 1px, 1vw, $font-size-14);
     line-height: 1.6;
     color: var(--text-muted);
     word-break: keep-all;
