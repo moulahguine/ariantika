@@ -1,4 +1,4 @@
-const SITE_URL = "https://ariantika.com";
+const SITE_URL = "https://ariantika.me";
 
 const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -7,7 +7,7 @@ const metadata = {
     template: "%s | Ariantika",
   },
   description:
-    "Portfolio of Ariantika, an Epidemiology & Biostatistics Researcher based in North Sumatra, Indonesia. Research in cancer, infectious, and non-communicable diseases, with expertise in research design, SPSS statistical analysis, and translating data into public health insights.",
+    "I'm Ariantika, an Epidemiology & Biostatistics Researcher. Explore my research, publications, and work in public health and data analysis.",
   keywords: [
     "Ariantika",
     "Ariantika researcher",
@@ -50,16 +50,16 @@ const metadata = {
     title:
       "Ariantika | Epidemiology & Biostatistics Researcher | Portfolio Website",
     description:
-      "Epidemiology & Biostatistics researcher focused on cancer, infectious, and non-communicable diseases. Research design, SPSS analysis, and public health insights from North Sumatra, Indonesia.",
+      "Portfolio of Ariantika, an Epidemiology & Biostatistics researcher focused on public health and disease research.",
   },
   twitter: {
     card: "summary_large_image",
     title:
       "Ariantika | Epidemiology & Biostatistics Researcher | Portfolio Website",
     description:
-      "Research in cancer, infectious, and non-communicable diseases. Research design, SPSS analysis, and public health insights.",
-    site: "@ms.ariantikaef",
-    creator: "@ms.ariantikaef",
+      "Explore Ariantika's research, publications, and work in public health and data analysis.",
+    site: SITE_URL,
+    creator: "Ariantika",
   },
   alternates: {
     canonical: SITE_URL,
