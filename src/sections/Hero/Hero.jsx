@@ -10,14 +10,14 @@ const actionLinks = [
   {
     label: "Contact",
     href: "/contact",
-    icon: <GoArrowUpRight aria-hidden="true" />,
+    icon: <GoArrowUpRight />,
     variant: "primary",
     size: "default",
   },
   {
     label: "Resume",
     href: "/documents/ARIANTIKA_Public_Health_RESUME.pdf",
-    icon: <FaFileAlt aria-hidden="true" />,
+    icon: <FaFileAlt />,
     variant: "secondary",
     download: true,
     size: "default",
@@ -46,7 +46,7 @@ export default function Hero() {
 
             <span className="hero__content--title-line">
               <span className="hero__content--title-highlight-sronly">
-                and I&apos;m a
+                , an
               </span>
               <mark className="hero__content--title-highlight">
                 Epidemiology &amp; Biostatistics Researcher.
@@ -57,7 +57,7 @@ export default function Hero() {
           {/* location */}
           <address className="hero__content--location">
             <span className="hero__content--location-icon">
-              <FaMapMarkerAlt aria-label="Location" />
+              <FaMapMarkerAlt aria-label="Location" aria-hidden="true" />
             </span>
             <span className="hero__content--location-text">
               based in North Sumatra, Indonesia.
