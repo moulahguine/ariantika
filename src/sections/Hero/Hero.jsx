@@ -25,6 +25,8 @@ const actionLinks = [
 ];
 
 export default function Hero() {
+  const experienceYears = new Date().getFullYear() - 2018;
+
   return (
     // hero section
     <section className="hero" aria-labelledby="hero-heading">
@@ -140,7 +142,9 @@ export default function Hero() {
               </svg>
 
               <div className="hero__media--badge-center">
-                <span className="hero__media--badge-number">8+</span>
+                <span className="hero__media--badge-number">
+                  {experienceYears}
+                </span>
                 <span className="hero__media--badge-label">Years</span>
               </div>
             </span>
