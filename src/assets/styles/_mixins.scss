@@ -27,11 +27,19 @@
   padding: clamp($space-40, 10vw, $space-64) 0;
 }
 
+// page
+
+@mixin page {
+  width: 100%;
+  background-color: var(--background);
+  padding-block: clamp($space-16, 7vh, $space-64);
+}
+
 // Section header
 @mixin section-header {
   @include flex-column;
   align-items: center;
-  padding: 0 0 clamp($space-18, 7vw, $space-32) 0;
+  padding: clamp($space-18, 7vw, $space-32) 0;
   margin: 0 auto;
   width: 100%;
   gap: $space-4;
@@ -56,6 +64,14 @@
     mask-size: cover;
   }
 
+  &-eyebrow {
+    font-family: $font-brush;
+    font-size: clamp($font-size-18, 2vw, $font-size-24);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: $space-8;
+  }
+
   &-title {
     font-size: clamp($font-size-48, 8vw, $font-size-72);
     font-weight: $fw-bold;
@@ -76,6 +92,37 @@
     font-family: $font-brush;
     text-wrap: pretty;
     text-align: center;
+    max-width: 70ch;
+  }
+}
+
+@mixin grid-backdrop($size: 48px, $opacity: 0.35) {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+        to right,
+        rgb(from var(--primary) r g b / 0.1) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(from var(--primary) r g b / 0.1) 1px,
+        transparent 1px
+      );
+    background-size: $size $size;
+    -webkit-mask-image: radial-gradient(
+      ellipse at center,
+      black 0%,
+      transparent 75%
+    );
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    opacity: $opacity;
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
