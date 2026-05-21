@@ -1,36 +1,8 @@
 import { ButtonLink, ImageCarousel } from "@/components";
-
-import about1 from "@/assets/images/about/about_1.jpeg";
-import about2 from "@/assets/images/about/about_2.jpeg";
-import about3 from "@/assets/images/about/about_3.jpeg";
-import about4 from "@/assets/images/about/about_4.jpeg";
-
 import { TfiArrowTopRight } from "react-icons/tfi";
+import { aboutCarousel } from "@/data";
 
 import "./About.scss";
-
-const carouselImages = [
-  {
-    src: about1,
-    alt: "Ariantika in graduation cap and gown at the Universitas Sumatera Utara Faculty of Public Health commencement ceremony, April 2025",
-    caption: "Graduation Ceremony",
-  },
-  {
-    src: about2,
-    alt: "Ariantika exploring a microbiology exhibit on bacteria and foraminifera at a science museum",
-    caption: "Science Museum",
-  },
-  {
-    src: about3,
-    alt: "Ariantika holding a bouquet in front of the Faculty of Public Health wall at Universitas Sumatera Utara after her master's graduation",
-    caption: "Master's Graduation",
-  },
-  {
-    src: about4,
-    alt: "Ariantika attending the 9th MABIP 2025 conference (Malaysian Association for Bronchology and Interventional Pulmonology)",
-    caption: "MABIP 2025 Conference",
-  },
-];
 
 export default function About() {
   return (
@@ -52,7 +24,7 @@ export default function About() {
       <div className="about__container">
         <div className="about__media">
           <ImageCarousel
-            images={carouselImages}
+            images={aboutCarousel}
             caption={true}
             ariaLabel="A glimpse into my research and teaching"
           />
