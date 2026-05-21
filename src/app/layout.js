@@ -1,5 +1,6 @@
 import { Inter, Sour_Gummy, Caveat_Brush } from "next/font/google";
 import { generateMetadata } from "./metadata";
+
 import "@/assets/styles/main.scss";
 
 export { generateMetadata };
@@ -24,6 +25,7 @@ const personJsonLd = {
     sameAs: [
       "https://www.linkedin.com/in/ariantikaa",
       "https://www.instagram.com/ms.ariantikaef",
+      "https://www.facebook.com/aryantica.effendy",
       "https://mohamedoulahguine.com",
     ],
     address: {

@@ -10,6 +10,8 @@ const metadata = {
     "I'm Ariantika, an Epidemiology & Biostatistics Researcher. Explore my research, publications, and work in public health and data analysis.",
   keywords: [
     "Ariantika",
+    "Ariantikaa",
+    "ariantika effendi",
     "Ariantika researcher",
     "epidemiology researcher",
     "biostatistics researcher",
@@ -47,15 +49,13 @@ const metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Ariantika • Epidemiology & Biostatistics Researcher",
-    title:
-      "Ariantika | Epidemiology & Biostatistics Researcher | Portfolio Website",
+    title: "Ariantika",
     description:
       "Portfolio of Ariantika, an Epidemiology & Biostatistics researcher focused on public health and disease research.",
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Ariantika | Epidemiology & Biostatistics Researcher | Portfolio Website",
+    title: "Ariantika | Epidemiology & Biostatistics Researcher ",
     description:
       "Explore Ariantika's research, publications, and work in public health and data analysis.",
     site: SITE_URL,

@@ -3,8 +3,6 @@
 .about__me {
   @include section;
   @include grid-backdrop;
-  padding-block: clamp($space-32, 14vw, $space-96);
-  background-color: var(--background);
 
   // --------- header ---------
   &-header {
@@ -32,7 +30,7 @@
   &-step {
     @include flex-center;
     gap: $space-32;
-    padding: clamp($space-24, 14vw, $space-48) clamp($space-8, 14vw, $space-12);
+    padding: clamp($space-24, 14vw, $space-48) clamp($space-4, 14vw, $space-8);
     width: 100%;
 
     // image LEFT / content RIGHT
@@ -105,7 +103,7 @@
     aspect-ratio: 1/1;
     background-color: var(--surface);
     border-radius: $radius-md;
-    box-shadow: 0 0 5px rgb(from var(--primary) r g b / 0.5);
+    box-shadow: 5px 5px 5px rgb(from black r g b / 0.1);
     padding: clamp($space-8, 6vw, $space-10) clamp($space-8, 6vw, $space-10)
       clamp($space-24, 6vw, $space-48);
 
@@ -127,7 +125,7 @@
       position: absolute;
       top: 0px;
       height: clamp(20px, 6vw, 40px);
-      width: clamp(30px, 6vw, 70px);
+      width: clamp(50px, 6vw, 70px);
       box-shadow: 0 2px 4px rgb(15 23 42 / 0.1);
       opacity: 0.85;
       background: repeating-linear-gradient(
