@@ -1,14 +1,355 @@
 @use "../../assets/styles" as *;
 
 .services__page {
-  @include section;
-  @include flex-center;
-  width: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
-  font-size: clamp($font-size-24, 1.2vw, $font-size-32);
-  font-weight: $fw-medium;
-  font-family: $font-brush;
-  color: var(--text-muted);
-  background-color: var(--background);
+  @include page;
+  @include grid-backdrop;
+
+  // --------- page header ---------
+  &-header {
+    @include section-header;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  // --------- container ---------
+  &-container {
+    @include container;
+    @include flex-column;
+    gap: clamp($space-40, 4vw, $space-64);
+    padding-block: clamp($space-24, 4vw, $space-32);
+  }
+
+  // --------- service section ---------
+  &-section {
+    --accent-color: var(--primary);
+    @include flex-column;
+    position: relative;
+    gap: clamp($space-20, 3vw, $space-32);
+    padding-block: clamp($space-16, 4vw, $space-32);
+    scroll-margin-top: clamp($space-48, 12vh, $space-96);
+
+    view-timeline-name: --section-progress;
+    view-timeline-axis: block;
+
+    // ---- section theme ----
+    &--primary {
+      --accent-color: var(--primary);
+    }
+    &--secondary {
+      --accent-color: var(--secondary);
+    }
+    &--accent {
+      --accent-color: var(--accent);
+    }
+
+    // ---- section heading ----
+    &-head {
+      @include flex-center;
+      justify-content: flex-start;
+      gap: clamp($space-8, 1vw, $space-12);
+      background-color: rgb(from var(--accent-color) r g b / 0.05);
+      padding: clamp($space-8, 1vw, $space-12);
+      border-radius: $radius-lg;
+      box-shadow: -5px 0 0 0 rgb(from var(--accent-color) r g b);
+    }
+
+    // ---- section number ----
+    &-number {
+      font-family: $font-brush;
+      font-size: clamp($font-size-24, 2vw, $font-size-32);
+      font-weight: $fw-bold;
+      color: rgb(from var(--accent-color) r g b / 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    // ---- section title ----
+    &-title {
+      font-family: $font-brush;
+      font-size: clamp($font-size-20, 2vw, $font-size-32);
+      font-weight: $fw-bold;
+      color: var(--accent-color);
+    }
+
+    // ---- section intro ----
+    &-intro {
+      @include flex-between;
+      align-items: flex-start;
+      position: relative;
+
+      @media (max-width: $breakpoint-2md) {
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+    }
+
+    // ---- section description ----
+    &-description {
+      font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+      color: var(--text);
+      line-height: 1.75;
+      text-wrap: balance;
+      word-break: keep-all;
+      max-width: 70ch;
+      text-indent: clamp($space-12, 3vw, $space-16);
+    }
+
+    // ---- section figure ----
+    &-figure {
+      @include flex-center;
+      gap: clamp($space-8, 1vw, $space-12);
+      width: clamp(250px, 25vw, 350px);
+      aspect-ratio: 1 / 1;
+      background-color: rgb(from var(--accent-color) r g b / 0.02);
+      border-radius: 50%;
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      &-caption {
+        display: none;
+      }
+
+      @media (max-width: $breakpoint-2md) {
+        position: static;
+        margin-bottom: clamp($space-12, 2vw, $space-16);
+      }
+    }
+
+    // ---- section image ----
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translatey(40px);
+
+      @media (max-width: $breakpoint-2md) {
+        transform: translateY(15px);
+        scale: 0.9;
+        object-fit: contain;
+      }
+    }
+
+    // ---- section block ----
+    &-block {
+      @include flex-column;
+      gap: clamp($space-12, 1.5vw, $space-20);
+
+      &:has(.services__page-section-process-items) {
+        position: relative;
+      }
+    }
+
+    // ---- section list subhead ----
+    &-subhead {
+      font-family: $font-brush;
+      font-size: clamp($font-size-24, 2vw, $font-size-28);
+      font-weight: $fw-bold;
+      color: rgb(from var(--text) r g b / 0.8);
+      margin: 0;
+      letter-spacing: 0.5px;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: clamp(100px, 10vw, 120px);
+        height: clamp(8px, 1vw, 10px);
+        background-color: var(--accent-color);
+        $squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'%3E%3Cpath d='M0 4 Q5 0 10 4 T20 4 T30 4 T40 4 T50 4 T60 4 T70 4 T80 4 T90 4 T100 4 T110 4 T120 4' stroke='black' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+        mask: $squiggle repeat-x;
+        mask-size: contain;
+        -webkit-mask: $squiggle repeat-x;
+        -webkit-mask-size: contain;
+      }
+    }
+
+    // ---- section list items ----
+    &-list-items {
+      @include flex-column;
+      gap: clamp($space-8, 1vw, $space-12);
+    }
+
+    // ---- section list item ----
+    &-list-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: clamp($space-4, 1vw, $space-8);
+      font-size: clamp($font-size-12, 1.05vw, $font-size-14);
+      color: var(--text-muted);
+      line-height: 1.75;
+
+      &-icon {
+        @include flex-center;
+        margin-left: clamp($space-4, 1vw, $space-8);
+        margin-top: -2px;
+        overflow: hidden;
+        height: 1.75em;
+        flex-shrink: 0;
+
+        svg {
+          color: var(--accent-color);
+        }
+      }
+    }
+
+    // ---- section process ----
+
+    &-process-items {
+      --process-gap: clamp(#{$space-32}, 1.5vw, #{$space-48});
+      --process-marker-size: clamp(55px, 2.5vw, 70px);
+
+      position: relative;
+      padding-block: clamp($space-16, 4vw, $space-24);
+      @include flex-center;
+      gap: var(--process-gap);
+
+      @media (max-width: $breakpoint-2md) {
+        flex-direction: column;
+        margin-inline: auto;
+        width: clamp(350px, 25vw, 450px);
+
+        > .services__page-section-process-item:nth-of-type(even) {
+          align-self: flex-end;
+        }
+        > .services__page-section-process-item:nth-of-type(odd) {
+          align-self: flex-start;
+        }
+      }
+    }
+
+    // ---- section process connectors ----
+    &-process-connector-layer {
+      pointer-events: none;
+    }
+
+    &-process-connector-track,
+    &-process-connector-fill {
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &-process-connector-fill {
+      opacity: 0.92;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 0;
+
+      @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+          stroke-dashoffset: 1;
+          animation: connector-fill linear forwards;
+          animation-timeline: --section-progress;
+          animation-range: cover calc(43% + var(--i) * 7%) cover
+            calc(40% + (var(--i) + 1) * 7%);
+
+          @media (max-width: $breakpoint-2md) {
+            animation-range: cover calc(63% + var(--i) * 7%) cover
+              calc(60% + (var(--i) + 1) * 7%);
+          }
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        stroke-dashoffset: 0;
+        animation: none;
+      }
+    }
+
+    // ---- section process item ----
+    &-process-item {
+      flex: 1;
+      @include flex-column;
+      align-items: center;
+      gap: clamp($space-4, 1vw, $space-8);
+      position: relative;
+      z-index: $z-base + 1;
+    }
+
+    // ---- section process marker ----
+    &-process-marker {
+      @include flex-center;
+      width: var(--process-marker-size);
+      height: var(--process-marker-size);
+      background-color: rgb(from var(--accent-color) r g b / 0.07);
+      border-radius: 50%;
+      position: relative;
+
+      --color: var(--accent-color);
+      svg {
+        position: relative;
+        z-index: 2;
+        color: var(--color);
+        font-size: clamp($font-size-16, 2vw, $font-size-20);
+      }
+
+      --scale: 0;
+      --opacity: 0;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        opacity: var(--opacity);
+        scale: var(--scale);
+        transition: scale 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
+
+      @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+          animation: marker-fill linear forwards;
+          animation-timeline: --section-progress;
+          animation-range: cover calc(40% + var(--i) * 7%) cover
+            calc(43% + var(--i) * 7%);
+
+          @media (max-width: $breakpoint-2md) {
+            animation-range: cover calc(60% + var(--i) * 7%) cover
+              calc(63% + var(--i) * 7%);
+          }
+        }
+      }
+    }
+
+    @keyframes marker-fill {
+      to {
+        --scale: 1;
+        --opacity: 1;
+        --color: white;
+      }
+    }
+
+    @keyframes connector-fill {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    // ---- section process number ----
+    &-process-number {
+      font-size: clamp($font-size-18, 1.05vw, $font-size-20);
+      font-weight: $fw-bold;
+      font-family: $font-brush;
+      color: rgb(from var(--text-muted) r g b / 0.8);
+      text-align: center;
+    }
+
+    // ---- section process title ----
+    &-process-title {
+      font-size: clamp($font-size-12, 1.05vw, $font-size-16);
+      color: rgb(from var(--text-muted) r g b);
+      text-wrap: nowrap;
+      text-align: center;
+    }
+  }
 }
