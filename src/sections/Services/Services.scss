@@ -7,14 +7,8 @@
     @include container;
     max-width: 1350px;
     width: 100%;
-    border-radius: clamp($radius-xl, 2.4vw, $radius-2xl);
-    background-image: linear-gradient(
-      to top,
-      rgb(from var(--secondary) r g b / 0.05) 0%,
-      rgb(from var(--secondary) r g b / 0.1) 50%,
-      rgb(from var(--secondary) r g b / 0.2) 100%
-    );
 
+    border-radius: clamp($radius-xl, 2.4vw, $radius-2xl);
     padding-block: clamp($space-40, 4vw, $space-64);
 
     @media (max-width: $breakpoint-2md) {
@@ -54,10 +48,10 @@
     border-radius: $radius-xl;
     will-change: transform;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 0 10px 0 var(--primary-border);
+    box-shadow: 0 0 3px 0 var(--primary-border);
 
     @media (max-width: $breakpoint-md) {
-      max-width: 400px;
+      max-width: 350px;
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -74,8 +68,7 @@
     &-cursor {
       @include flex-center;
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: clamp(40px, 6vw, 60px);
       height: clamp(40px, 6vw, 60px);
       margin-left: calc(clamp(40px, 6vw, 60px) / -2);
@@ -193,8 +186,6 @@
     font-size: clamp($font-size-14 - 1px, 1vw, $font-size-16);
     line-height: 1.5;
     color: var(--text-light);
-    text-wrap: pretty;
-    word-break: keep-all;
   }
 
   &__card-bullets {
@@ -206,7 +197,7 @@
   &__card-bullet {
     display: flex;
     gap: clamp($space-4, 0.8vw, $space-8);
-    font-size: clamp($font-size-12 - 1px, 1vw, $font-size-14);
+    font-size: clamp($font-size-12, 1vw, $font-size-14);
     line-height: 1.6;
     color: var(--text-muted);
     word-break: keep-all;
@@ -218,8 +209,9 @@
       width: fit-content;
 
       svg {
-        font-size: clamp($font-size-10 + 1px, 1.3vw, $font-size-12);
+        font-size: clamp($font-size-12, 1.3vw, $font-size-14);
         color: var(--primary);
+        margin-top: -2px;
       }
     }
   }

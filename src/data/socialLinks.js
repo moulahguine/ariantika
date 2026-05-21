@@ -1,4 +1,4 @@
-import { FaGlobe, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaEnvelope, FaGlobe, FaLinkedin } from "react-icons/fa";
 
 export const socialLinks = [
   {
@@ -9,11 +9,11 @@ export const socialLinks = [
     color: "#0077B5",
   },
   {
-    label: "Instagram",
-    id: "instagram",
-    href: "https://www.instagram.com/ms.ariantikaef",
-    icon: <FaInstagram aria-hidden="true" />,
-    color: "#E1306C",
+    label: "Email",
+    id: "email",
+    href: "mailto:ariantikaeffendi@gmail.com",
+    icon: <FaEnvelope aria-hidden="true" />,
+    color: "red",
   },
   {
     label: "EJournal",

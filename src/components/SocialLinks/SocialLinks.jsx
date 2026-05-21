@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -8,7 +7,7 @@ import { socialLinks } from "@/data/socialLinks";
 
 import "./SocialLinks.scss";
 
-const MotionLink = motion.create(Link);
+const MotionAnchor = motion.a;
 
 const MOBILE_NAV_MEDIA = "(max-width: 767px)";
 
@@ -31,6 +30,7 @@ export default function SocialLinks({
       {socialLinks.map((link) => {
         const isActive = activeId === link.id;
         const shouldShowLabel = showLabel || (!isMobile && isActive);
+        const isMailto = link.href.startsWith("mailto:");
 
         return (
           <motion.li
@@ -46,11 +46,12 @@ export default function SocialLinks({
             onFocusCapture={() => setActiveId(link.id)}
             onBlurCapture={() => setActiveId(null)}
           >
-            <MotionLink
+            <MotionAnchor
               className="social-links__link"
               href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(isMailto
+                ? {}
+                : { target: "_blank", rel: "noopener noreferrer" })}
               onClick={() => onItemClick?.()}
               animate={{
                 gap: useFloatingLabel ? "0px" : shouldShowLabel ? "8px" : "0px",
@@ -71,7 +72,7 @@ export default function SocialLinks({
               >
                 {link.label}
               </motion.span>
-            </MotionLink>
+            </MotionAnchor>
           </motion.li>
         );
       })}

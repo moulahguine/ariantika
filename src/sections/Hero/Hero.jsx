@@ -16,7 +16,7 @@ const actionLinks = [
   },
   {
     label: "Resume",
-    href: "/documents/ARIANTIKA_Public_Health_RESUME.pdf",
+    href: "/documents/ARIANTIKA_Public Health_RESUME.pdf",
     icon: <FaFileAlt />,
     variant: "secondary",
     download: true,
@@ -25,7 +25,9 @@ const actionLinks = [
 ];
 
 export default function Hero() {
-  const experienceYears = new Date().getFullYear() - 2018;
+  const now = new Date();
+  const totalMonths = (now.getFullYear() - 2017) * 12 + now.getMonth() - 8;
+  const experienceYears = Math.floor(totalMonths / 12);
 
   return (
     // hero section
@@ -121,7 +123,7 @@ export default function Hero() {
             <span
               className="hero__media--badge"
               role="img"
-              aria-label="8 plus years of research experience"
+              aria-label={`${experienceYears}years plus of research experience`}
             >
               <svg
                 className="hero__media--badge-svg"
@@ -143,7 +145,7 @@ export default function Hero() {
 
               <div className="hero__media--badge-center">
                 <span className="hero__media--badge-number">
-                  {experienceYears}
+                  +{experienceYears}
                 </span>
                 <span className="hero__media--badge-label">Years</span>
               </div>

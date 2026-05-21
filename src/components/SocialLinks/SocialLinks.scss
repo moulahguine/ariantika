@@ -1,21 +1,17 @@
 @use "../../assets/styles" as *;
 
 .social-links {
-  list-style: none;
-
   border-radius: $radius-xl;
 
   &--vertical {
     @include flex-column;
     gap: $space-12;
-    width: 100%;
   }
 
   &--horizontal {
     @include flex-center;
     flex-wrap: wrap;
     gap: $space-12;
-    width: 100%;
 
     .social-links__item {
       width: fit-content;
