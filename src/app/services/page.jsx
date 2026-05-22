@@ -125,7 +125,6 @@ export default function ServicesPage() {
                       >
                         <Icon />
                       </span>
-
                       <h4 className="services__page-section-process-title">
                         {title}
                       </h4>
