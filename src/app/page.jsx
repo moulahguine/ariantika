@@ -1,5 +1,5 @@
 import { Header } from "@/components";
-import { About, Banner, Hero, Journey, Services } from "@/sections";
+import { About, Banner, Hero, Services } from "@/sections";
 
 import "./page.scss";
 
@@ -27,7 +27,7 @@ export default function Home() {
           <Services />
 
           {/* journey section */}
-          <Journey />
+          {/* <Journey /> */}
         </div>
       </main>
     </>
