@@ -1,22 +1,17 @@
 @use "../../assets/styles" as *;
 
 .about__me {
-  @include section;
+  @include page;
   @include grid-backdrop;
 
   // --------- header ---------
   &-header {
-    @include section-header;
-
-    &::before {
-      display: none;
-    }
+    @include page-header;
   }
 
   // --------- container ---------
   &-container {
     @include container;
-    margin-top: clamp($space-32, 14vw, $space-48);
 
     @media (max-width: $breakpoint-2md) {
       padding: $space-4;
@@ -27,7 +22,7 @@
   &-steps {
     @include flex-column;
     align-items: center;
-    gap: clamp($space-16, 14vw, $space-72);
+    gap: clamp($space-4, 4vw, $space-72);
   }
 
   // --------- each step row ---------
@@ -106,10 +101,10 @@
     width: clamp(300px, 32vw, 400px);
     aspect-ratio: 1/1;
     background-color: var(--surface);
-    border-radius: $radius-md;
+    // border-radius: $radius-md;
     box-shadow: 5px 5px 5px rgb(from black r g b / 0.1);
     padding: clamp($space-8, 6vw, $space-10) clamp($space-8, 6vw, $space-10)
-      clamp($space-24, 6vw, $space-48);
+      clamp($space-32, 6vw, $space-48);
 
     &--left {
       transform: rotate(-2.2deg);
@@ -122,6 +117,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top;
     }
 
     // washi tape pieces

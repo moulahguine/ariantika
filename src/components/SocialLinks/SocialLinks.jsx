@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { socialLinks } from "@/data/socialLinks";
+import { socialLinks } from "@/data";
 
 import "./SocialLinks.scss";
 

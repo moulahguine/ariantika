@@ -1,98 +1,81 @@
 import Image from "next/image";
-import heroPortrait from "@/assets/images/hero/hero.jpeg";
-import { GoArrowUpRight } from "react-icons/go";
-import { FaFileAlt, FaMapMarkerAlt } from "react-icons/fa";
+
 import { ButtonLink, ButtonDownload, SocialLinks } from "@/components";
+import { getHeroExperienceYears, hero } from "@/data";
+
 import "./Hero.scss";
 
-// action links
-const actionLinks = [
-  {
-    label: "Contact",
-    href: "/contact",
-    icon: <GoArrowUpRight />,
-    variant: "primary",
-    size: "default",
-  },
-  {
-    label: "Resume",
-    href: "/documents/ARIANTIKA_PUBLIC HEALTH_RESUME.pdf",
-    icon: <FaFileAlt />,
-    variant: "secondary",
-    download: true,
-    size: "default",
-  },
-];
-
+// ---- hero component ----
 export default function Hero() {
-  const now = new Date();
-  const totalMonths = (now.getFullYear() - 2017) * 12 + now.getMonth() - 8;
-  const experienceYears = Math.floor(totalMonths / 12);
+  // ---- get experience years ----
+  const experienceYears = getHeroExperienceYears();
 
+  // ---- hero data ----
+  const {
+    greeting,
+    title,
+    location,
+    description,
+    actions,
+    image,
+    badge,
+    figureCaption,
+    locationIcon,
+  } = hero;
+
+  // ---- render hero component ----
   return (
-    // hero section
+    // ---- hero section ----
     <section className="hero" aria-labelledby="hero-heading">
-      {/* hero container */}
       <div className="hero__container">
-        {/* hero content */}
         <div className="hero__content">
           {/* greeting */}
-          <p className="hero__content--greeting">
-            hi there!
-            <span className="hero__content--greeting-icon">👋</span>
+          <p className="hero__greeting">
+            {greeting.text}
+            <span className="hero__greeting-icon">{greeting.icon}</span>
           </p>
 
           {/* title */}
-          <h1 id="hero-heading" className="hero__content--title">
-            <span className="hero__content--title-name">
-              I&apos;m Ariantika
-            </span>
+          <h1 id="hero-heading" className="hero__title">
+            <span className="hero__title-name">{title.name}</span>
 
-            <span className="hero__content--title-line">
-              <span className="hero__content--title-highlight-sronly">
-                , an
+            <span className="hero__title-line">
+              <span className="hero__title-highlight-sronly">
+                {title.highlightSrOnly}
               </span>
-              <mark className="hero__content--title-highlight">
-                Epidemiology &amp; Biostatistics Researcher.
-              </mark>
+              <mark className="hero__title-highlight">{title.highlight}</mark>
             </span>
           </h1>
 
           {/* location */}
-          <address className="hero__content--location">
-            <span className="hero__content--location-icon">
-              <FaMapMarkerAlt aria-label="Location" aria-hidden="true" />
-            </span>
-            <span className="hero__content--location-text">
-              based in North Sumatra, Indonesia.
-            </span>
+          <address className="hero__location">
+            <span className="hero__location-icon">{locationIcon}</span>
+            <span className="hero__location-text">{location.text}</span>
           </address>
 
           {/* description */}
-          <p className="hero__content--description">
-            Conducting research in cancer, infectious, and
-            non&#8209;communicable diseases. Experienced in research design,
-            statistical analysis using{" "}
+          <p className="hero__description">
+            {description.beforeAbbr}
             <abbr
-              title="Statistical Package for the Social Sciences"
-              className="hero__content--description-abbreviation"
+              title={description.abbr.title}
+              className="hero__description-abbreviation"
               tabIndex={0}
-              data-tooltip="Statistical Package for the Social Sciences"
+              data-tooltip={description.abbr.tooltip}
             >
-              SPSS
+              {description.abbr.label}
             </abbr>
-            , and translating data into insights that strengthen public health
-            systems.
+            {description.afterAbbr}
           </p>
 
           {/* actions */}
-          <div className="hero__content--actions">
-            {actionLinks.map((link) => {
+          <div className="hero__actions">
+            {actions.map((link) => {
               const Button = link.download ? ButtonDownload : ButtonLink;
+
               return (
                 <Button
-                  key={link.href}
-                  className="hero__content--actions-button"
+                  key={link.id}
+                  className="hero__actions-button"
                   variant={link.variant}
                   size={link.size}
                   href={link.href}
@@ -105,28 +88,28 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* hero media*/}
+        {/* media */}
         <div className="hero__media">
-          {/* hero image */}
-          <figure className="hero__media--images">
+          {/* images */}
+          <figure className="hero__images">
             <Image
-              className="hero__media--images-image"
-              src={heroPortrait}
-              alt="Ariantika smiling at the camera, wearing a cream hijab, round eyeglasses, and a white Genomic Science Day T-shirt with a light-blue lanyard, raising her right hand in a peace sign at an indoor research event."
-              width={520}
-              height={520}
+              className="hero__images-image"
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
               priority
-              sizes="(max-width: 778px) 100vw, min(520px, 45vw)"
+              sizes={image.sizes}
             />
 
-            {/* experience badge */}
+            {/* badge */}
             <span
-              className="hero__media--badge"
+              className="hero__badge"
               role="img"
-              aria-label={`${experienceYears}years plus of research experience`}
+              aria-label={badge.experienceAriaLabel(experienceYears)}
             >
               <svg
-                className="hero__media--badge-svg"
+                className="hero__badge-svg"
                 viewBox="0 0 200 200"
                 aria-hidden="true"
               >
@@ -136,28 +119,27 @@ export default function Hero() {
                     d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
                   />
                 </defs>
-                <text className="hero__media--badge-text">
+                <text className="hero__badge-text">
                   <textPath href="#hero-badge-curve" startOffset="0">
-                    Research Experience • Researcher • Public Health •
+                    {badge.ringText}
                   </textPath>
                 </text>
               </svg>
 
-              <div className="hero__media--badge-center">
-                <span className="hero__media--badge-number">
-                  +{experienceYears}
-                </span>
-                <span className="hero__media--badge-label">Years</span>
+              <div className="hero__badge-center">
+                <span className="hero__badge-number">{experienceYears}+</span>
+                <span className="hero__badge-label">{badge.yearsLabel}</span>
               </div>
             </span>
 
-            <figcaption className="hero__media--image-caption">
-              photo by @ariantika
+            {/* figure caption */}
+            <figcaption className="hero__image-caption">
+              {figureCaption}
             </figcaption>
           </figure>
 
           {/* social links */}
-          <SocialLinks direction="vertical" className="hero__media--social" />
+          <SocialLinks direction="vertical" className="hero__social" />
         </div>
       </div>
     </section>

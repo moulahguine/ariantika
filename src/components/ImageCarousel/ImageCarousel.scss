@@ -1,7 +1,7 @@
 @use "../../assets/styles" as *;
 
 .image-carousel {
-  --ic-card-width: clamp(260px, 32vw, 420px);
+  --ic-card-width: clamp(260px, 32vw, 400px);
   --ic-card-aspect: 4 / 5;
 
   position: relative;
@@ -12,10 +12,10 @@
   overflow-x: clip;
 
   &__stage {
+    @include flex-center;
     position: relative;
     width: 100%;
     height: calc(var(--ic-card-width) * 1.3);
-    @include flex-center;
   }
 
   &__card {
@@ -26,8 +26,9 @@
     aspect-ratio: var(--ic-card-aspect);
     margin: calc(-1 * var(--ic-card-width) * 1.25 / 2) 0 0
       calc(-1 * var(--ic-card-width) / 2);
+    transform-origin: center center;
     border-radius: clamp($radius-lg, 2vw, $radius-xl);
-    background-color: rgba(from var(--surface-dark-softer) r g b / 0.2);
+    background-color: var(--primary-soft);
     overflow: hidden;
     cursor: pointer;
     user-select: none;
@@ -91,14 +92,6 @@
     -webkit-line-clamp: 3;
     line-clamp: 3;
     -webkit-box-orient: vertical;
-  }
-
-  &__figcaption {
-    width: 0px;
-    height: 0px;
-    overflow: hidden;
-    pointer-events: none;
-    visibility: hidden;
   }
 
   &__dots {

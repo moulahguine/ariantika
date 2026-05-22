@@ -1,0 +1,284 @@
+@use "../../assets/styles" as *;
+
+.journey {
+  width: 100%;
+  position: relative;
+  background-color: transparent;
+
+  // Stacked fallback (mobile + reduced motion)
+  &--stacked {
+    padding: clamp($space-48, 10vw, $space-96) 0;
+  }
+
+  // Sticky pinning container
+  &__sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    .journey--stacked & {
+      position: static;
+      height: auto;
+      overflow: visible;
+      display: block;
+    }
+  }
+
+  // Header
+  &__header {
+    @include container;
+    padding-top: clamp($space-32, 6vw, $space-64);
+    padding-bottom: clamp($space-16, 2vw, $space-24);
+    text-align: left;
+    max-width: 1200px;
+  }
+
+  &__eyebrow {
+    font-family: $font-brush;
+    font-size: clamp($font-size-18, 1.8vw, $font-size-24);
+    color: var(--secondary);
+    letter-spacing: 0.02em;
+  }
+
+  &__title {
+    font-family: $font-brush;
+    font-size: clamp($font-size-40, 6vw, $font-size-72);
+    color: var(--primary);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+
+    &-accent {
+      color: var(--secondary);
+    }
+  }
+
+  &__lead {
+    margin-top: $space-8;
+    color: var(--text-muted);
+    font-size: clamp($font-size-14, 1.4vw, $font-size-18);
+    line-height: $line-height-relaxed;
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  // Horizontal viewport
+  &__viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    .journey--stacked & {
+      overflow: visible;
+      display: block;
+    }
+  }
+
+  // Translating track
+  &__track {
+    position: relative;
+    height: 100%;
+    will-change: transform;
+    display: flex;
+    align-items: center;
+
+    .journey--stacked & {
+      width: 100% !important;
+      transform: none !important;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: $space-24;
+      padding: 0 clamp($space-16, 4vw, $space-32);
+    }
+  }
+
+  // Road backdrop
+  &__road {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+
+    .journey--stacked & {
+      display: none;
+    }
+
+    // Asphalt — the wide dark road body
+    &-asphalt {
+      fill: none;
+      stroke: var(--surface-dark);
+      stroke-width: 56;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 8px 16px rgb(15 23 42 / 0.18));
+    }
+
+    // Dashed yellow center line
+    &-line {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 16 18;
+    }
+  }
+
+  // Car driving along the road
+  &__car {
+    pointer-events: none;
+  }
+
+  &__car-emoji {
+    font-size: 44px;
+    user-select: none;
+  }
+
+  // Milestones list
+  &__milestones {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    .journey--stacked & {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      gap: $space-24;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__milestone {
+    position: absolute;
+    top: 50%;
+    width: 320px;
+    z-index: $z-card;
+
+    &--top {
+      transform: translate(-50%, calc(-100% - 60px));
+    }
+    &--bottom {
+      transform: translate(-50%, 60px);
+    }
+
+    .journey--stacked & {
+      position: static;
+      transform: none !important;
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+  }
+
+  // Node (anchor on the helix)
+  &__node {
+    position: absolute;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    box-shadow:
+      0 4px 10px rgb(15 23 42 / 0.18),
+      inset 0 1px 1px rgb(255 255 255 / 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 2;
+
+    .journey__milestone--top & {
+      bottom: -60px;
+      transform: translate(-50%, 50%);
+    }
+    .journey__milestone--bottom & {
+      top: -60px;
+      transform: translate(-50%, -50%);
+    }
+
+    &-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .journey--stacked & {
+      display: none;
+    }
+  }
+
+  // Card
+  &__card {
+    background: var(--surface);
+    padding: clamp($space-16, 1.4vw, $space-20);
+    border-radius: $radius-lg;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 1px 0 rgb(15 23 42 / 0.02),
+      0 18px 36px -16px rgb(15 23 42 / 0.18),
+      0 6px 14px -8px rgb(15 23 42 / 0.08);
+    transition:
+      transform $transition-base,
+      box-shadow $transition-base;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 1px 0 rgb(15 23 42 / 0.02),
+        0 26px 48px -18px rgb(15 23 42 / 0.22),
+        0 10px 20px -10px rgb(15 23 42 / 0.1);
+    }
+
+    &-year {
+      font-family: $font-brush;
+      font-size: clamp($font-size-20, 1.6vw, $font-size-24);
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: $space-4;
+    }
+
+    &-title {
+      font-size: clamp($font-size-16, 1.3vw, $font-size-18);
+      font-weight: $fw-bold;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: $space-4;
+      line-height: $line-height-tight;
+    }
+
+    &-subtitle {
+      color: var(--secondary);
+      font-size: $font-size-12;
+      font-weight: $fw-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: $space-8;
+    }
+
+    &-body {
+      color: var(--text-muted);
+      font-size: $font-size-14;
+      line-height: $line-height-relaxed;
+      margin-bottom: $space-8;
+      text-wrap: pretty;
+    }
+
+    &-place {
+      color: var(--text-light);
+      font-size: $font-size-12;
+      font-style: italic;
+    }
+  }
+}

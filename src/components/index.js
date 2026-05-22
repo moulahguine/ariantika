@@ -4,4 +4,4 @@ export { default as Navigation } from "./Navigation/Navigation";
 export { default as Menu } from "./Menu/Menu";
 export { default as SocialLinks } from "./SocialLinks/SocialLinks";
 export { default as ImageCarousel } from "./ImageCarousel/ImageCarousel";
-export { Button, ButtonLink, ButtonDownload } from "./ui/Button";
+export { Button, ButtonLink, ButtonDownload } from "./Button";

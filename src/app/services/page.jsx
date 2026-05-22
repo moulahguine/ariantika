@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import { Header } from "@/components";
 import { servicesFull, servicesPage } from "@/data";
-import { FaCircleCheck } from "react-icons/fa6";
 import ProcessConnectors from "./ProcessConnectors";
 
 import "./page.scss";
@@ -10,7 +9,12 @@ import "./page.scss";
 export const metadata = servicesPage.metadata;
 
 export default function ServicesPage() {
-  const { header, processHeading, figureCaption } = servicesPage;
+  const {
+    header,
+    processHeading,
+    figureCaption,
+    listItemIcon: ListItemIcon,
+  } = servicesPage;
 
   return (
     <>
@@ -96,7 +100,7 @@ export default function ServicesPage() {
                         className="services__page-section-list-item-icon"
                         aria-hidden="true"
                       >
-                        <FaCircleCheck />
+                        <ListItemIcon />
                       </span>
                       <span className="services__page-section-list-item-text">
                         {item}

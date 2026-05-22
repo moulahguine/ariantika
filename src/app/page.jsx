@@ -1,21 +1,34 @@
-import Header from "@/components/Header/Header";
-import { homeHero, site } from "@/data/content";
-import { About, Banner, Hero, Services } from "@/sections";
+import { Header } from "@/components";
+import { About, Banner, Hero, Journey, Services } from "@/sections";
 
-export const metadata = {
-  title: `${site.name} | ${site.title}`,
-  description: homeHero.mission,
-};
+import "./page.scss";
 
+// ---- home page ----
 export default function Home() {
   return (
     <>
+      {/* navigation header */}
       <Header />
-      <main style={{ overflowX: "clip", position: "relative" }}>
+
+      {/* main container */}
+      <main className="home__main">
+        {/* hero section */}
         <Hero />
+
+        {/* banner section */}
         <Banner />
-        <About />
-        <Services />
+
+        {/* grid background */}
+        <div className="home__grid-bg">
+          {/* about section */}
+          <About />
+
+          {/* services section */}
+          <Services />
+
+          {/* journey section */}
+          <Journey />
+        </div>
       </main>
     </>
   );

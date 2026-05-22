@@ -1,0 +1,13 @@
+@use "../assets/styles" as *;
+
+// ---- home page ----
+.home__main {
+  overflow-x: clip;
+  position: relative;
+}
+
+// ---- grid background ----
+.home__grid-bg {
+  @include grid-backdrop;
+  background-color: var(--background);
+}

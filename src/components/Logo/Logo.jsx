@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import logoSrc from "@/assets/images/logo/logo.png";
+import logoSrc from "@/assets/images/logo/ariantika-logo.png";
 import "./Logo.scss";
 
 export default function Logo() {

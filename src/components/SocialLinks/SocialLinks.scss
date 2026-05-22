@@ -5,13 +5,12 @@
 
   &--vertical {
     @include flex-column;
-    gap: $space-12;
+    gap: clamp($space-4, 2vw, $space-12);
   }
 
   &--horizontal {
     @include flex-center;
-    flex-wrap: wrap;
-    gap: $space-12;
+    gap: clamp($space-4, 2vw, $space-12);
 
     .social-links__item {
       width: fit-content;

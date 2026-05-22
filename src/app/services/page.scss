@@ -14,11 +14,7 @@
 
   // --------- page header ---------
   &-header {
-    @include section-header;
-
-    &::before {
-      display: none;
-    }
+    @include page-header;
   }
 
   // --------- container ---------
@@ -26,7 +22,6 @@
     @include container;
     @include flex-column;
     gap: clamp($space-40, 4vw, $space-64);
-    padding-block: clamp($space-4, 4vw, $space-32);
   }
 
   // --------- service section ---------
@@ -194,7 +189,7 @@
       &-icon {
         @include flex-center;
         margin-left: clamp($space-4, 1vw, $space-8);
-        margin-top: -2px;
+        margin-top: -1px;
         overflow: hidden;
         height: 1.75em;
         flex-shrink: 0;
@@ -338,7 +333,7 @@
         }
 
         svg {
-          color: var(--accent-color);
+          color: var(--text-inverse);
         }
       }
     }

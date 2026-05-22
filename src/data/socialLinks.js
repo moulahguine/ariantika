@@ -1,7 +1,9 @@
 import { FaEnvelope, FaGlobe, FaLinkedin } from "react-icons/fa";
 
+// ---- social links ----
 export const socialLinks = [
   {
+    // ---- linkedin ----
     label: "LinkedIn",
     id: "linkedin",
     href: "https://www.linkedin.com/in/ariantikaa",
@@ -9,6 +11,7 @@ export const socialLinks = [
     color: "#0077B5",
   },
   {
+    // ---- email ----
     label: "Email",
     id: "email",
     href: "mailto:ariantikaeffendi@gmail.com",
@@ -16,6 +19,7 @@ export const socialLinks = [
     color: "red",
   },
   {
+    // ---- e-journal ----
     label: "EJournal",
     id: "eJournal",
     href: "https://e-journal.unair.ac.id/JR/search/search?authors=Ariantika%20Ariantika",

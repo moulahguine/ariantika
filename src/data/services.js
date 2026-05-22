@@ -18,7 +18,7 @@ import scientificWritingImg from "@/assets/images/services/scientific-writing.sv
 import researchDesignImg from "@/assets/images/services/research-design.svg";
 import copyEditingImg from "@/assets/images/services/copy-editing.svg";
 
-/** Copy and SEO for the /services page. */
+// ---- services page ----
 export const servicesPage = {
   metadata: {
     title: "Services",
@@ -35,8 +35,10 @@ export const servicesPage = {
   },
   processHeading: "How This Service Works",
   figureCaption: "photo by @storyset",
+  listItemIcon: FaCircleCheck,
 };
 
+// ---- services full ----
 export const servicesFull = [
   {
     id: "scientific-writing",
@@ -212,7 +214,7 @@ export const servicesFull = [
   },
 ];
 
-/** Compact data for the home preview, kept in sync with servicesFull. */
+// ---- services preview ----
 export const servicesPreview = servicesFull.map((s) => ({
   title: s.titleShort ?? s.title,
   description: s.description,
