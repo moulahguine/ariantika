@@ -1,4 +1,4 @@
-@use "../../../assets/styles" as *;
+@use "../../assets/styles" as *;
 
 .btn {
   // ---- Base ----
@@ -28,12 +28,6 @@
     transform: scale(0.97);
     border-radius: $radius-xl;
   }
-
-  // &[data-focus-visible],
-  // &:focus-visible {
-  //   outline: 2px solid var(--secondary-focus-ring);
-  //   outline-offset: 2px;
-  // }
 
   // ---- Sizes ----
   &--small {
