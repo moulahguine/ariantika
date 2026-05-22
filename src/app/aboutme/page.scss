@@ -17,6 +17,10 @@
   &-container {
     @include container;
     margin-top: clamp($space-32, 14vw, $space-48);
+
+    @media (max-width: $breakpoint-2md) {
+      padding: $space-4;
+    }
   }
 
   // --------- steps list ---------

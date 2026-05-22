@@ -1,5 +1,13 @@
 @use "../../assets/styles" as *;
 
+// ---- animation properties ----
+@property --marker-icon-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+// ---- services page ----
 .services__page {
   @include page;
   @include grid-backdrop;
@@ -18,7 +26,7 @@
     @include container;
     @include flex-column;
     gap: clamp($space-40, 4vw, $space-64);
-    padding-block: clamp($space-24, 4vw, $space-32);
+    padding-block: clamp($space-4, 4vw, $space-32);
   }
 
   // --------- service section ---------
@@ -29,9 +37,6 @@
     gap: clamp($space-20, 3vw, $space-32);
     padding-block: clamp($space-16, 4vw, $space-32);
     scroll-margin-top: clamp($space-48, 12vh, $space-96);
-
-    view-timeline-name: --section-progress;
-    view-timeline-axis: block;
 
     // ---- section theme ----
     &--primary {
@@ -92,6 +97,7 @@
       text-wrap: balance;
       word-break: keep-all;
       max-width: 70ch;
+      width: fit-content;
       text-indent: clamp($space-12, 3vw, $space-16);
     }
 
@@ -114,7 +120,7 @@
 
       @media (max-width: $breakpoint-2md) {
         position: static;
-        margin-bottom: clamp($space-12, 2vw, $space-16);
+        margin-block: clamp($space-12, 2vw, $space-16);
       }
     }
 
@@ -123,11 +129,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: translatey(40px);
+      transform: translateY(40px);
 
       @media (max-width: $breakpoint-2md) {
-        transform: translateY(15px);
-        scale: 0.9;
+        transform: translateY(24px) scale(1.09);
         object-fit: contain;
       }
     }
@@ -137,7 +142,7 @@
       @include flex-column;
       gap: clamp($space-12, 1.5vw, $space-20);
 
-      &:has(.services__page-section-process-items) {
+      &:has(.services__page-section-process) {
         position: relative;
       }
     }
@@ -151,6 +156,7 @@
       margin: 0;
       letter-spacing: 0.5px;
       position: relative;
+      width: fit-content;
 
       &::before {
         content: "";
@@ -172,6 +178,7 @@
     &-list-items {
       @include flex-column;
       gap: clamp($space-8, 1vw, $space-12);
+      width: fit-content;
     }
 
     // ---- section list item ----
@@ -199,6 +206,13 @@
     }
 
     // ---- section process ----
+
+    &-process {
+      position: relative;
+      view-timeline-name: --process-progress;
+      view-timeline-axis: block;
+      timeline-scope: --process-progress;
+    }
 
     &-process-items {
       --process-gap: clamp(#{$space-32}, 1.5vw, #{$space-48});
@@ -245,14 +259,9 @@
         @media (prefers-reduced-motion: no-preference) {
           stroke-dashoffset: 1;
           animation: connector-fill linear forwards;
-          animation-timeline: --section-progress;
-          animation-range: cover calc(43% + var(--i) * 7%) cover
-            calc(40% + (var(--i) + 1) * 7%);
-
-          @media (max-width: $breakpoint-2md) {
-            animation-range: cover calc(63% + var(--i) * 7%) cover
-              calc(60% + (var(--i) + 1) * 7%);
-          }
+          animation-timeline: --process-progress;
+          animation-range: cover calc(3% + var(--i) * 14%) cover
+            calc((var(--i) + 1) * 14%);
         }
       }
 
@@ -281,16 +290,15 @@
       border-radius: 50%;
       position: relative;
 
-      --color: var(--accent-color);
+      --marker-icon-color: var(--accent-color);
+
       svg {
         position: relative;
         z-index: 2;
-        color: var(--color);
+        color: var(--marker-icon-color);
         font-size: clamp($font-size-16, 2vw, $font-size-20);
       }
 
-      --scale: 0;
-      --opacity: 0;
       &::before {
         content: "";
         position: absolute;
@@ -301,31 +309,50 @@
         z-index: 1;
         background-color: var(--accent-color);
         border-radius: 50%;
-        opacity: var(--opacity);
-        scale: var(--scale);
-        transition: scale 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        opacity: 0;
+        transform: scale(0);
+        transform-origin: center;
       }
 
       @supports (animation-timeline: view()) {
         @media (prefers-reduced-motion: no-preference) {
-          animation: marker-fill linear forwards;
-          animation-timeline: --section-progress;
-          animation-range: cover calc(40% + var(--i) * 7%) cover
-            calc(43% + var(--i) * 7%);
+          animation: marker-icon-fill linear forwards;
+          animation-timeline: --process-progress;
+          animation-range: cover calc(var(--i) * 14%) cover
+            calc(3% + var(--i) * 14%);
 
-          @media (max-width: $breakpoint-2md) {
-            animation-range: cover calc(60% + var(--i) * 7%) cover
-              calc(63% + var(--i) * 7%);
+          &::before {
+            animation: marker-fill linear forwards;
+            animation-timeline: --process-progress;
+            animation-range: cover calc(var(--i) * 14%) cover
+              calc(3% + var(--i) * 14%);
           }
+        }
+      }
+
+      @supports not (animation-timeline: view()) {
+        &::before {
+          opacity: 1;
+          transform: scale(1);
+          transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        svg {
+          color: var(--accent-color);
         }
       }
     }
 
     @keyframes marker-fill {
       to {
-        --scale: 1;
-        --opacity: 1;
-        --color: white;
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes marker-icon-fill {
+      to {
+        --marker-icon-color: white;
       }
     }
 
@@ -333,15 +360,6 @@
       to {
         stroke-dashoffset: 0;
       }
-    }
-
-    // ---- section process number ----
-    &-process-number {
-      font-size: clamp($font-size-18, 1.05vw, $font-size-20);
-      font-weight: $fw-bold;
-      font-family: $font-brush;
-      color: rgb(from var(--text-muted) r g b / 0.8);
-      text-align: center;
     }
 
     // ---- section process title ----

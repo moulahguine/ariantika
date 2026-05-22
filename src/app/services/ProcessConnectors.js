@@ -65,8 +65,9 @@ export default function ProcessConnectors({ sectionId, children }) {
 
   return (
     <Xwrapper>
-      <ul className="services__page-section-process-items">{children}</ul>
-      {connections.map((index) => {
+      <div className="services__page-section-process">
+        <ul className="services__page-section-process-items">{children}</ul>
+        {connections.map((index) => {
         const start = markerId(sectionId, index);
         const end = markerId(sectionId, index + 1);
         const connectionProps = getConnectionProps(index, isMobileColumn);
@@ -102,6 +103,7 @@ export default function ProcessConnectors({ sectionId, children }) {
           </Fragment>
         );
       })}
+      </div>
     </Xwrapper>
   );
 }
