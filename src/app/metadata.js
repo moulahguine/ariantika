@@ -64,6 +64,9 @@ const metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  verification: {
+    google: "4AhP3TwACu_yGCE3TRLJ7jVgr5BA1DETZePAmR9uqhI",
+  },
 };
 
 export async function generateMetadata() {
