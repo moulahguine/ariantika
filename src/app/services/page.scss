@@ -26,8 +26,8 @@
 
   // --------- service section ---------
   &-section {
-    --accent-color: var(--primary);
     @include flex-column;
+    --accent-color: var(--primary);
     position: relative;
     gap: clamp($space-20, 3vw, $space-32);
     padding-block: clamp($space-16, 4vw, $space-32);
@@ -47,18 +47,23 @@
     // ---- section heading ----
     &-head {
       @include flex-center;
-      justify-content: flex-start;
       gap: clamp($space-8, 1vw, $space-12);
       background-color: rgb(from var(--accent-color) r g b / 0.05);
       padding: clamp($space-8, 1vw, $space-12);
       border-radius: $radius-lg;
-      box-shadow: -5px 0 0 0 rgb(from var(--accent-color) r g b);
+      box-shadow:
+        -$space-4 0 0 0 rgb(from var(--accent-color) r g b / 0.8),
+        $space-4 0 0 rgb(from var(--accent-color) r g b / 0.8);
+
+      @media (min-width: $breakpoint-2md) {
+        justify-content: flex-start;
+      }
     }
 
     // ---- section number ----
     &-number {
       font-family: $font-brush;
-      font-size: clamp($font-size-24, 2vw, $font-size-32);
+      font-size: clamp($font-size-32, 2vw, $font-size-36);
       font-weight: $fw-bold;
       color: rgb(from var(--accent-color) r g b / 0.4);
       letter-spacing: 0.5px;
@@ -86,25 +91,21 @@
 
     // ---- section description ----
     &-description {
-      font-size: clamp($font-size-14, 1.5vw, $font-size-16);
-      color: var(--text);
-      line-height: 1.75;
+      font-size: clamp($font-size-14, 1.5vw, $font-size-18);
+      color: rgb(from var(--text) r g b / 0.8);
+      line-height: 1.6;
       text-wrap: balance;
       word-break: keep-all;
       max-width: 70ch;
       width: fit-content;
-      text-indent: clamp($space-12, 3vw, $space-16);
     }
 
-    // ---- section figure ----
+    // ---- section figure(illustration) ----
     &-figure {
       @include flex-center;
       gap: clamp($space-8, 1vw, $space-12);
-      width: clamp(250px, 25vw, 350px);
+      max-width: clamp(250px, 25vw, 400px);
       aspect-ratio: 1 / 1;
-      background-color: rgb(from var(--accent-color) r g b / 0.02);
-      border-radius: 50%;
-      overflow: hidden;
       position: absolute;
       right: 0;
       top: 0;
@@ -115,7 +116,6 @@
 
       @media (max-width: $breakpoint-2md) {
         position: static;
-        margin-block: clamp($space-12, 2vw, $space-16);
       }
     }
 
@@ -124,12 +124,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: translateY(40px);
-
-      @media (max-width: $breakpoint-2md) {
-        transform: translateY(24px) scale(1.09);
-        object-fit: contain;
-      }
     }
 
     // ---- section block ----
@@ -148,10 +142,10 @@
       font-size: clamp($font-size-24, 2vw, $font-size-28);
       font-weight: $fw-bold;
       color: rgb(from var(--text) r g b / 0.8);
-      margin: 0;
       letter-spacing: 0.5px;
       position: relative;
       width: fit-content;
+      margin: 0;
 
       &::before {
         content: "";
@@ -160,7 +154,7 @@
         bottom: -5px;
         width: clamp(100px, 10vw, 120px);
         height: clamp(8px, 1vw, 10px);
-        background-color: var(--accent-color);
+        background-color: rgb(from var(--accent-color) r g b / 0.8);
         $squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'%3E%3Cpath d='M0 4 Q5 0 10 4 T20 4 T30 4 T40 4 T50 4 T60 4 T70 4 T80 4 T90 4 T100 4 T110 4 T120 4' stroke='black' fill='none' stroke-width='2'/%3E%3C/svg%3E");
         mask: $squiggle repeat-x;
         mask-size: contain;
@@ -201,14 +195,55 @@
     }
 
     // ---- section process ----
-
     &-process {
+      --process-step: 0.48s;
       position: relative;
-      view-timeline-name: --process-progress;
-      view-timeline-axis: block;
-      timeline-scope: --process-progress;
+
+      // ---- section process started ----
+      &--started {
+        // ---- section process marker animation ----
+        @media (prefers-reduced-motion: no-preference) {
+          .services__page-section-process-marker {
+            animation: marker-icon-fill linear forwards paused;
+            animation-duration: calc(var(--process-step) * 0.22);
+            animation-delay: calc(var(--i) * var(--process-step));
+
+            &::before {
+              animation: marker-fill linear forwards paused;
+              animation-duration: calc(var(--process-step) * 0.22);
+              animation-delay: calc(var(--i) * var(--process-step));
+            }
+          }
+
+          .services__page-section-process-connector-fill {
+            animation: connector-fill linear forwards paused;
+            animation-duration: calc(var(--process-step) * 0.78);
+            animation-delay: calc(
+              var(--i) * var(--process-step) + var(--process-step) * 0.22
+            );
+          }
+        }
+      }
+
+      // ---- section process in view ----
+      &--started#{&}--in-view {
+        @media (prefers-reduced-motion: no-preference) {
+          .services__page-section-process-marker {
+            animation-play-state: running;
+
+            &::before {
+              animation-play-state: running;
+            }
+          }
+
+          .services__page-section-process-connector-fill {
+            animation-play-state: running;
+          }
+        }
+      }
     }
 
+    // ---- section process items ----
     &-process-items {
       --process-gap: clamp(#{$space-32}, 1.5vw, #{$space-48});
       --process-marker-size: clamp(55px, 2.5vw, 70px);
@@ -248,17 +283,7 @@
     &-process-connector-fill {
       opacity: 0.92;
       stroke-dasharray: 1;
-      stroke-dashoffset: 0;
-
-      @supports (animation-timeline: view()) {
-        @media (prefers-reduced-motion: no-preference) {
-          stroke-dashoffset: 1;
-          animation: connector-fill linear forwards;
-          animation-timeline: --process-progress;
-          animation-range: cover calc(3% + var(--i) * 14%) cover
-            calc((var(--i) + 1) * 14%);
-        }
-      }
+      stroke-dashoffset: 1;
 
       @media (prefers-reduced-motion: reduce) {
         stroke-dashoffset: 0;
@@ -309,27 +334,11 @@
         transform-origin: center;
       }
 
-      @supports (animation-timeline: view()) {
-        @media (prefers-reduced-motion: no-preference) {
-          animation: marker-icon-fill linear forwards;
-          animation-timeline: --process-progress;
-          animation-range: cover calc(var(--i) * 14%) cover
-            calc(3% + var(--i) * 14%);
-
-          &::before {
-            animation: marker-fill linear forwards;
-            animation-timeline: --process-progress;
-            animation-range: cover calc(var(--i) * 14%) cover
-              calc(3% + var(--i) * 14%);
-          }
-        }
-      }
-
-      @supports not (animation-timeline: view()) {
+      // ---- section process reduced motion ----
+      @media (prefers-reduced-motion: reduce) {
         &::before {
           opacity: 1;
           transform: scale(1);
-          transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
 
         svg {
@@ -363,6 +372,95 @@
       color: rgb(from var(--text-muted) r g b);
       text-wrap: nowrap;
       text-align: center;
+    }
+  }
+
+  // ---- why choose me ----
+  &-why-choose {
+    @include section;
+
+    // ---- why choose me container ----
+    .services__why-choose-container {
+      @include container;
+      @include flex-column;
+      overflow: hidden;
+      background-color: var(--primary-softer);
+      border-radius: clamp($radius-xl, 2.5vw, $radius-2xl);
+      padding: 0;
+    }
+
+    // ---- why choose me header ----
+    .services__why-choose-header {
+      @include page-header;
+      padding-block: clamp($space-32, 5vw, $space-48);
+      margin: 0;
+
+      &-description {
+        font-size: clamp($font-size-14, 1.5vw, $font-size-20);
+        font-family: $font-primary;
+        text-wrap: pretty;
+        max-width: 75ch;
+      }
+    }
+
+    // ---- why choose me grid ----
+    .services__why-choose-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp($space-8, 4vw, $space-16);
+      width: 100%;
+
+      padding: clamp($space-16, 5vw, $space-24);
+
+      @media (max-width: $breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @media (max-width: $breakpoint-sm) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    // ---- why choose me item ----
+    .services__why-choose-item {
+      @include flex-column;
+      align-items: center;
+      gap: clamp($space-8, 1.5vw, $space-16);
+      text-align: center;
+      background-color: var(--primary-on);
+      padding: clamp($space-16, 1.5vw, $space-20);
+      border-radius: $radius-xl;
+    }
+
+    // ---- why choose me icon ----
+    .services__why-choose-icon {
+      @include flex-center;
+      width: clamp(3.25rem, 5vw, 4rem);
+      height: clamp(3.25rem, 5vw, 4rem);
+      color: rgb(from var(--accent) r g b / 0.8);
+      filter: drop-shadow(
+        5px 5px 1px rgb(from var(--accent-hover) r g b / 0.2)
+      );
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    // ---- why choose me item title ----
+    .services__why-choose-item-title {
+      font-size: clamp($font-size-16, 1.35vw, $font-size-18);
+      font-weight: $fw-semibold;
+      color: var(--text);
+      line-height: $line-height-tight;
+    }
+
+    // ---- why choose me item description ----
+    .services__why-choose-item-description {
+      font-size: clamp($font-size-12, 1.05vw, $font-size-14);
+      line-height: 1.6;
+      color: var(--text-muted);
     }
   }
 }

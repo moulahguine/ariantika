@@ -1,69 +1,90 @@
 import Image from "next/image";
 
-import { Header } from "@/components";
-import { aboutSteps } from "@/data";
+import * as motion from "motion/react-client";
+
+import { aboutSteps, aboutMetadata } from "@/data";
+import {
+  fadeUp,
+  slideInLeft,
+  slideInRight,
+  staggerContainer,
+  viewportOnce,
+} from "@/lib";
 
 import "./page.scss";
 
-export const metadata = {
-  title: "About Me",
-  description:
-    "The story of how years in clinical pulmonology and research shaped my path into epidemiology, cancer and quality-of-life research, and public health prevention.",
-};
+// ---- about me metadata ----
+export const metadata = aboutMetadata;
 
+// ---- about me page ----
 export default function AboutMe() {
   return (
     <>
-      {/* navigation header */}
-      <Header />
-
-      {/* main container */}
+      {/* ---- main container ---- */}
       <main className="about__me">
-        {/* header */}
-        <header className="about__me-header">
-          <span className="about__me-header-eyebrow">My Story</span>
-          <h1 className="about__me-header-title">
+        {/* ---- header ---- */}
+        <motion.header
+          className="about__me-header"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          <motion.span className="about__me-header-eyebrow" variants={fadeUp}>
+            My Story
+          </motion.span>
+          <motion.h1 className="about__me-header-title" variants={fadeUp}>
             How <span className="about__me-header-title-accent">I</span> Got
             Here.
-          </h1>
-          <p className="about__me-header-subtitle">
+          </motion.h1>
+          <motion.p className="about__me-header-subtitle" variants={fadeUp}>
             How years of academic and clinical experience slowly shaped the way
             I understand health and disease.
-          </p>
-        </header>
+          </motion.p>
+        </motion.header>
 
-        {/* container  */}
+        {/* ---- container  ---- */}
         <div className="about__me-container">
-          {/* steps list */}
+          {/* ---- steps list ---- */}
           <div
             className="about__me-steps"
             aria-label="My journey into epidemiology"
           >
             {aboutSteps.map((step, i) => {
               const side = i % 2 === 0 ? "left" : "right";
+              const photoVariant = side === "left" ? slideInLeft : slideInRight;
+              const contentVariant =
+                side === "left" ? slideInRight : slideInLeft;
 
               return (
-                // card container
-                <section
+                // ---- card container ----
+                <motion.section
                   key={step.id}
                   className={`about__me-step about__me-step--${side} about__me-step--${step.theme}`}
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewportOnce}
                 >
-                  {/* polaroid photo */}
-                  <div className="about__me-wrapper--photo">
+                  {/* ---- polaroid photo ---- */}
+                  <motion.div
+                    className="about__me-wrapper--photo"
+                    variants={photoVariant}
+                  >
                     <figure
                       className={`about__me-photo about__me-photo--${side}`}
                     >
-                      {/* left tape */}
+                      {/* ---- left tape ---- */}
                       <span
                         className={`about__me-photo-tape about__me-photo-tape--tl about__me-photo-tape--tl-${side}`}
                         aria-hidden="true"
                       />
-                      {/* right tape */}
+                      {/* ---- right tape ---- */}
                       <span
                         className={`about__me-photo-tape about__me-photo-tape--tr about__me-photo-tape--tr-${side}`}
                         aria-hidden="true"
                       />
-                      {/* image */}
+                      {/* ---- image ---- */}
                       <Image
                         src={step.image}
                         className="about__me-photo-img"
@@ -90,11 +111,12 @@ export default function AboutMe() {
                         </span>
                       </figcaption>
                     </figure>
-                  </div>
+                  </motion.div>
 
-                  {/* content */}
-                  <article
+                  {/* ---- content ---- */}
+                  <motion.article
                     className={`about__me-content about__me-content--${side}`}
+                    variants={contentVariant}
                   >
                     <h2 className="about__me-content-title">
                       <span
@@ -107,8 +129,8 @@ export default function AboutMe() {
                     </h2>
 
                     <p className="about__me-content-body">{step.body}</p>
-                  </article>
-                </section>
+                  </motion.article>
+                </motion.section>
               );
             })}
           </div>

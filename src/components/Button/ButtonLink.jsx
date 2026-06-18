@@ -27,9 +27,10 @@ const ButtonLink = forwardRef(function ButtonLink(
     onPress,
     className = "",
     classNameContent = "",
+    ariaLabel,
     ...rest
   },
-  forwardedRef
+  forwardedRef,
 ) {
   const internalRef = useRef(null);
   const ref = mergeRefs(internalRef, forwardedRef);
@@ -75,6 +76,7 @@ const ButtonLink = forwardRef(function ButtonLink(
       target={target}
       rel={rel}
       className={classes}
+      aria-label={ariaLabel}
       {...mergeProps(mergedProps, rest)}
       {...dataState}
     >

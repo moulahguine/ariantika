@@ -24,7 +24,7 @@
 @mixin section {
   width: 100%;
   background-color: var(--background);
-  padding-block: clamp($space-40, 10vw, $space-64);
+  padding-block: clamp(50px, 10vw, 100px);
 }
 
 // page
@@ -91,9 +91,9 @@
   }
 
   &-subtitle {
-    font-size: clamp($font-size-18, 1.5vw, $font-size-24);
+    font-size: clamp($font-size-16, 1.5vw, $font-size-20);
     color: var(--text-muted);
-    font-family: $font-brush;
+    font-family: $font-display;
     text-wrap: pretty;
     text-align: center;
     max-width: 70ch;
@@ -103,13 +103,36 @@
   }
 }
 
-@mixin page-header {
+@mixin page-header-lead {
+  font-size: clamp($font-size-18, 1.5vw, $font-size-24);
+  color: var(--text-muted);
+  font-family: $font-brush;
+  text-wrap: pretty;
+  text-align: center;
+  max-width: 70ch;
+  padding-inline: clamp($space-4, 2vw, $space-8);
+  margin: 0;
+}
+
+/// Page header block styles.
+/// @param {String} $lead [both] - Style `subtitle`, `description`, or `both` lead elements.
+@mixin page-header($lead: both) {
+  $root: &;
+
   @include flex-column;
   align-items: center;
-  padding: clamp($space-18, 7vw, $space-32) 0;
+  padding-block: clamp($space-18, 5vw, $space-32);
   width: 100%;
   gap: clamp($space-4, 2vw, $space-8);
   margin-bottom: $space-48;
+
+  #{$root}:not(:has(#{$root}-eyebrow)) {
+    gap: clamp($space-4, 1vw, $space-8);
+  }
+
+  #{$root}:not(:has(#{$root}-subtitle)):not(:has(#{$root}-description)) {
+    margin-bottom: clamp($space-32, 4vw, $space-40);
+  }
 
   &-eyebrow {
     font-family: $font-brush;
@@ -117,6 +140,10 @@
     color: var(--accent);
     letter-spacing: 0.02em;
     margin-bottom: clamp($space-8, 2vw, $space-12);
+  }
+
+  #{$root}:not(:has(#{$root}-eyebrow)) &-title {
+    margin-top: 0;
   }
 
   &-title {
@@ -131,14 +158,16 @@
     }
   }
 
-  &-subtitle {
-    font-size: clamp($font-size-18, 1.5vw, $font-size-24);
-    color: var(--text-muted);
-    font-family: $font-brush;
-    text-wrap: pretty;
-    text-align: center;
-    max-width: 70ch;
-    padding-inline: clamp($space-4, 2vw, $space-8);
+  @if $lead == "subtitle" or $lead == both {
+    &-subtitle {
+      @include page-header-lead;
+    }
+  }
+
+  @if $lead == "description" or $lead == both {
+    &-description {
+      @include page-header-lead;
+    }
   }
 }
 
@@ -149,7 +178,8 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(
+    background-image:
+      linear-gradient(
         to right,
         rgb(from var(--primary) r g b / 0.1) 1px,
         transparent 1px

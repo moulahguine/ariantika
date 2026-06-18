@@ -1,5 +1,6 @@
 @use "../../assets/styles" as *;
 
+// ---- banner section ----
 .banner {
   width: 100%;
   transform: rotate(-2.5deg);
@@ -7,6 +8,7 @@
   position: relative;
   z-index: $z-elevated;
 
+  // ---- banner background behind the banner ----
   &::before {
     content: "";
     position: absolute;
@@ -19,14 +21,15 @@
     overflow: hidden;
   }
 
+  // ---- banner surface ----
   &__surface {
     width: 100svw;
     position: relative;
-    z-index: 1;
+    z-index: $z-base;
     background-color: var(--primary-soft);
-    color: var(--text);
   }
 
+  // ---- banner track ----
   &__track {
     display: flex;
     width: max-content;
@@ -34,6 +37,7 @@
     will-change: transform;
   }
 
+  // ---- banner group ----
   &__group {
     @include flex-center;
     justify-content: flex-start;
@@ -43,30 +47,27 @@
     list-style: none;
   }
 
+  // ---- banner item ----
   &__item {
     @include flex-center;
     gap: clamp($space-12, 2vw, $space-20);
     white-space: nowrap;
-
-    &-label {
-      font-size: clamp($font-size-14, 2vw, $font-size-20);
-      font-weight: $fw-semibold;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-      color: var(--text);
-      padding-inline: $space-4;
-    }
-
-    &-separator {
-      @include flex-center;
-      font-size: clamp($font-size-16, 2vw, $font-size-18);
-      color: var(--accent);
-    }
   }
-}
 
-@media (max-width: $breakpoint-md) {
-  .banner {
-    transform: rotate(-1.5deg);
+  // ---- banner label ----
+  &__label {
+    font-size: clamp($font-size-14, 2vw, $font-size-20);
+    font-weight: $fw-semibold;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+    padding-inline: $space-4;
+  }
+
+  // ---- banner separator icon ----
+  &__separator {
+    @include flex-center;
+    font-size: clamp($font-size-18, 2vw, $font-size-20);
+    color: var(--accent);
   }
 }

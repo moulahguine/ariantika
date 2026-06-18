@@ -1,6 +1,13 @@
 "use client";
 
-import { Children, Fragment, useMemo } from "react";
+import {
+  Children,
+  Fragment,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Xarrow, { Xwrapper } from "react-xarrows";
 import { useMediaQuery } from "react-responsive";
 
@@ -55,6 +62,9 @@ function markerId(sectionId, index) {
 }
 
 export default function ProcessConnectors({ sectionId, children }) {
+  const containerRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [started, setStarted] = useState(false);
   const isMobileColumn = useMediaQuery({ maxWidth: LAPTOP_MAX_WIDTH });
   const stepCount = Children.count(children);
 
@@ -63,46 +73,74 @@ export default function ProcessConnectors({ sectionId, children }) {
     [stepCount],
   );
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          setStarted(true);
+        } else {
+          setInView(false);
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const processClassName = [
+    "services__page-section-process",
+    started && "services__page-section-process--started",
+    inView && "services__page-section-process--in-view",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <Xwrapper>
-      <div className="services__page-section-process">
+      <div ref={containerRef} className={processClassName}>
         <ul className="services__page-section-process-items">{children}</ul>
         {connections.map((index) => {
-        const start = markerId(sectionId, index);
-        const end = markerId(sectionId, index + 1);
-        const connectionProps = getConnectionProps(index, isMobileColumn);
+          const start = markerId(sectionId, index);
+          const end = markerId(sectionId, index + 1);
+          const connectionProps = getConnectionProps(index, isMobileColumn);
 
-        const arrowKey = `${start}-${end}-${isMobileColumn ? "col" : "row"}`;
+          const arrowKey = `${start}-${end}-${isMobileColumn ? "col" : "row"}`;
 
-        return (
-          <Fragment key={index}>
-            <Xarrow
-              key={`${arrowKey}-track`}
-              start={start}
-              end={end}
-              {...connectionProps}
-              {...sharedArrowProps}
-              color="rgb(from var(--accent-color) r g b / 0.28)"
-              arrowBodyProps={{
-                className: "services__page-section-process-connector-track",
-              }}
-            />
-            <Xarrow
-              key={`${arrowKey}-fill`}
-              start={start}
-              end={end}
-              {...connectionProps}
-              {...sharedArrowProps}
-              color="var(--accent-color)"
-              arrowBodyProps={{
-                className: "services__page-section-process-connector-fill",
-                pathLength: "1",
-                style: { "--i": index },
-              }}
-            />
-          </Fragment>
-        );
-      })}
+          return (
+            <Fragment key={index}>
+              <Xarrow
+                key={`${arrowKey}-track`}
+                start={start}
+                end={end}
+                {...connectionProps}
+                {...sharedArrowProps}
+                color="rgb(from var(--accent-color) r g b / 0.28)"
+                arrowBodyProps={{
+                  className: "services__page-section-process-connector-track",
+                }}
+              />
+              <Xarrow
+                key={`${arrowKey}-fill`}
+                start={start}
+                end={end}
+                {...connectionProps}
+                {...sharedArrowProps}
+                color="var(--accent-color)"
+                arrowBodyProps={{
+                  className: "services__page-section-process-connector-fill",
+                  pathLength: "1",
+                  style: { "--i": index },
+                }}
+              />
+            </Fragment>
+          );
+        })}
       </div>
     </Xwrapper>
   );

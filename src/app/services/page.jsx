@@ -1,47 +1,68 @@
 import Image from "next/image";
 
-import { Header } from "@/components";
-import { servicesFull, servicesPage } from "@/data";
+import * as motion from "motion/react-client";
+
+import { servicesMeta, whyChooseMe, servicesPage } from "@/data";
+import { Contact } from "@/sections";
+import {
+  fadeUp,
+  mediaReveal,
+  scaleIn,
+  staggerContainer,
+  staggerContainerFast,
+  viewportOnce,
+} from "@/lib";
+
 import ProcessConnectors from "./ProcessConnectors";
 
 import "./page.scss";
 
-export const metadata = servicesPage.metadata;
+// ---- services page metadata ----
+export const metadata = servicesMeta;
 
+// ---- services page ----
 export default function ServicesPage() {
-  const {
-    header,
-    processHeading,
-    figureCaption,
-    listItemIcon: ListItemIcon,
-  } = servicesPage;
+  const { header, services } = servicesPage;
+
+  const { header: whyChooseHeader, items: whyChooseItems } = whyChooseMe;
 
   return (
     <>
-      {/* header */}
-      <Header />
-
-      {/* main */}
+      {/* ---- main container ---- */}
       <main className="services__page">
-        {/* page header */}
-        <header className="services__page-header">
-          <span className="services__page-header-eyebrow">
+        {/* ---- page header ---- */}
+        <motion.header
+          className="services__page-header"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          <motion.span
+            className="services__page-header-eyebrow"
+            variants={fadeUp}
+          >
             {header.eyebrow}
-          </span>
-          <h1 className="services__page-header-title">
-            {header.titleBeforeAccent}{" "}
+          </motion.span>
+          <motion.h1 className="services__page-header-title" variants={fadeUp}>
+            {/* {header.titleBeforeAccent}{" "} */}
             <span className="services__page-header-title-accent">
               {header.titleAccent}
             </span>
-            {header.titleAfterAccent}
-          </h1>
-          <p className="services__page-header-subtitle">{header.subtitle}</p>
-        </header>
+            {/* {header.titleAfterAccent} */}
+          </motion.h1>
+          <motion.p
+            className="services__page-header-subtitle"
+            variants={fadeUp}
+          >
+            {header.subtitle}
+          </motion.p>
+        </motion.header>
 
-        {/* container */}
+        {/* ---- container ---- */}
         <div className="services__page-container">
-          {/* service sections */}
-          {servicesFull.map((service, i) => (
+          {/* ---- service sections ---- */}
+          {services.map((service, i) => (
             <section
               key={service.id}
               id={service.id}
@@ -50,46 +71,72 @@ export default function ServicesPage() {
               }${i % 2 === 1 ? " services__page-section--reverse" : ""}`}
               aria-labelledby={`${service.id}-title`}
             >
-              {/* section heading */}
-              <header className="services__page-section-head">
-                <span
+              {/* ---- section heading ---- */}
+              <motion.header
+                className="services__page-section-head"
+                variants={staggerContainerFast}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+              >
+                <motion.span
                   className="services__page-section-number"
                   aria-hidden="true"
+                  variants={scaleIn}
                 >
                   {service.number}
-                </span>
-                <h2
+                </motion.span>
+                <motion.h2
                   className="services__page-section-title"
                   id={`${service.id}-title`}
+                  variants={fadeUp}
                 >
                   {service.title}
-                </h2>
-              </header>
+                </motion.h2>
+              </motion.header>
 
-              {/* description + illustration */}
+              {/* ---- description + illustration ---- */}
               <div className="services__page-section-intro">
-                <p className="services__page-section-description">
+                <motion.p
+                  className="services__page-section-description"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewportOnce}
+                >
                   {service.description}
-                </p>
+                </motion.p>
 
-                <figure className="services__page-section-figure">
+                <motion.figure
+                  className="services__page-section-figure"
+                  variants={mediaReveal}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewportOnce}
+                >
                   <Image
                     className="services__page-section-image"
                     src={service.image}
                     alt={service.imageAlt}
-                    width={520}
-                    height={520}
+                    width={2000}
+                    height={2000}
                     sizes="(max-width: 1024px) 80vw, 420px"
                   />
 
                   <figcaption className="services__page-section-figure-caption">
-                    {figureCaption}
+                    {service.figcaption}
                   </figcaption>
-                </figure>
+                </motion.figure>
               </div>
 
-              {/* what's included */}
-              <div className="services__page-section-block">
+              {/* ---- what's included ---- */}
+              <motion.div
+                className="services__page-section-block"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+              >
                 <h3 className="services__page-section-subhead">
                   {service.list.heading}
                 </h3>
@@ -100,7 +147,7 @@ export default function ServicesPage() {
                         className="services__page-section-list-item-icon"
                         aria-hidden="true"
                       >
-                        <ListItemIcon />
+                        <service.list.icon />
                       </span>
                       <span className="services__page-section-list-item-text">
                         {item}
@@ -108,37 +155,116 @@ export default function ServicesPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
 
-              {/* how this service works */}
-              <div className="services__page-section-block">
+              {/* ---- how this service works ---- */}
+              <motion.div
+                className="services__page-section-block"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+              >
                 <h3 className="services__page-section-subhead">
-                  {processHeading}
+                  {service.steps.heading}
                 </h3>
                 <ProcessConnectors sectionId={service.id}>
-                  {service.steps.map(({ number, title, icon: Icon }, i) => (
-                    <li
-                      key={number}
-                      className="services__page-section-process-item"
-                      style={{ "--i": i }}
-                    >
-                      <span
-                        id={`${service.id}-process-marker-${i}`}
-                        className="services__page-section-process-marker"
-                        aria-hidden="true"
+                  {service.steps.items.map(
+                    ({ number, title, icon: Icon }, i) => (
+                      <li
+                        key={number}
+                        className="services__page-section-process-item"
+                        style={{ "--i": i }}
                       >
-                        <Icon />
-                      </span>
-                      <h4 className="services__page-section-process-title">
-                        {title}
-                      </h4>
-                    </li>
-                  ))}
+                        <span
+                          id={`${service.id}-process-marker-${i}`}
+                          className="services__page-section-process-marker"
+                          aria-hidden="true"
+                        >
+                          <Icon />
+                        </span>
+                        <h4 className="services__page-section-process-title">
+                          {title}
+                        </h4>
+                      </li>
+                    ),
+                  )}
                 </ProcessConnectors>
-              </div>
+              </motion.div>
             </section>
           ))}
         </div>
+
+        {/* ---- why choose me section ---- */}
+        <section
+          className="services__page-why-choose"
+          aria-labelledby="why-choose-me-heading"
+        >
+          {/* ---- container ---- */}
+          <div className="services__why-choose-container">
+            {/* ---- header ---- */}
+            <motion.header
+              className="services__why-choose-header"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+            >
+              <motion.h2
+                className="services__why-choose-header-title"
+                id="why-choose-me-heading"
+                variants={fadeUp}
+              >
+                {whyChooseHeader.prefix}{" "}
+                <span className="services__why-choose-header-title-accent">
+                  {whyChooseHeader.accent}{" "}
+                </span>
+                {whyChooseHeader.suffix}
+              </motion.h2>
+              <motion.p
+                className="services__why-choose-header-description"
+                variants={fadeUp}
+              >
+                {whyChooseHeader.description}
+              </motion.p>
+            </motion.header>
+
+            {/* ---- grid items ---- */}
+            <motion.ul
+              className="services__why-choose-grid"
+              variants={staggerContainerFast}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+            >
+              {whyChooseItems.map(
+                ({ title: itemTitle, description, icon: Icon }) => (
+                  <motion.li
+                    key={itemTitle}
+                    className="services__why-choose-item"
+                    variants={scaleIn}
+                  >
+                    <span
+                      className="services__why-choose-icon"
+                      aria-hidden="true"
+                    >
+                      <Icon strokeWidth={1.7} />
+                    </span>
+                    <h3 className="services__why-choose-item-title">
+                      {itemTitle}
+                    </h3>
+                    <p className="services__why-choose-item-description">
+                      {description}
+                    </p>
+                  </motion.li>
+                ),
+              )}
+            </motion.ul>
+          </div>
+        </section>
+
+        {/* ---- contact section ---- */}
+        <Contact />
       </main>
     </>
   );

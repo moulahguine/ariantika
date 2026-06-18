@@ -1,12 +1,10 @@
 @use "../../assets/styles" as *;
 
+// ---- about section ----
 .about {
   @include section;
 
-  &__header {
-    @include section-header;
-  }
-
+  // ---- about container ----
   &__container {
     @include container;
     display: grid;
@@ -21,68 +19,89 @@
     }
   }
 
-  // media
+  // ---- media container ----
   &__media {
     position: relative;
     width: 100%;
 
-    &::after {
+    &::after,
+    &::before {
       content: "";
       position: absolute;
       top: 0;
-      left: 0;
-      width: 50%;
+      width: 40%;
       height: 100%;
       z-index: $z-base;
       pointer-events: none;
-      background: linear-gradient(
-        to left,
-        transparent 65%,
-        var(--background) 100%
-      );
-      -webkit-box-reflect: right;
       border-radius: $radius-xl;
     }
+
+    &::after {
+      left: -2px;
+      background: linear-gradient(
+        to left,
+        transparent 50%,
+        var(--background) 100%
+      );
+    }
+
+    &::before {
+      right: -2px;
+      background: linear-gradient(
+        to right,
+        transparent 50%,
+        var(--background) 100%
+      );
+    }
+
+    // i would like to use -webkit-box-reflect: right; but it's not supported by firefox
   }
 
   // paragraphs + link
   &__content {
     @include flex-column;
-    gap: clamp($space-8, 2.4vw, $space-18);
-    padding: 0 $space-12;
+    gap: clamp($space-8, 2.4vw, $space-16);
+    padding-inline: $space-12;
 
     @media (max-width: $breakpoint-md) {
       padding: 0;
     }
+  }
+  // ---- paragraphs ----
+  &__paragraphs {
+    font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+    color: var(--text-muted);
+    line-height: 1.6;
+    text-wrap: pretty;
+    word-break: keep-all;
 
-    &-paragraph {
-      font-size: clamp($font-size-14, 1.5vw, $font-size-16);
-      color: var(--text-muted);
-      line-height: 1.6;
-      text-wrap: pretty;
-      word-break: keep-all;
+    &-space {
+      display: block;
+      height: clamp($space-8, 2.4vw, $space-16);
+    }
 
-      &-space {
-        display: block;
-        height: clamp($space-12, 2.4vw, $space-18);
+    &-link {
+      display: inline;
+      color: inherit;
+      text-decoration: underline solid var(--text-muted);
+      text-underline-offset: 3px;
+      border-radius: $radius-sm;
+      transition: all 0.3s ease-in-out;
+
+      @media (hover: hover) {
+        &:hover {
+          color: var(--accent);
+          text-decoration-color: var(--accent);
+        }
       }
 
-      &-link {
-        display: inline;
-        color: inherit;
-        text-decoration: underline solid var(--text-muted);
-        text-underline-offset: 3px;
-        border-radius: $radius-sm;
-        transition: all 0.3s ease-in-out;
+      &:active {
+        color: var(--accent);
+        text-decoration-color: var(--accent);
+      }
 
-        &:hover {
-          color: var(--primary);
-          text-decoration-color: var(--primary);
-        }
-
-        svg {
-          transform: translateY(5px);
-        }
+      svg {
+        transform: translateY(5px);
       }
     }
   }

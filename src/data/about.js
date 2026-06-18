@@ -13,19 +13,32 @@ import mabipConference from "@/assets/images/about/ariantika-mabip-conference-20
 import genomicsScienceDay from "@/assets/images/about/ariantika-genomics-science-day.jpeg";
 import scienceMuseumBacteria from "@/assets/images/about/ariantika-science-museum-bacteria-exhibit.jpeg";
 
+// you can change the order of the steps by changing the ids here
 export const aboutCarouselStepIds = ["04", "02", "03"];
+
+// ---- about metadata ----
+export const aboutMetadata = {
+  title: "About Me",
+  description:
+    "The story of how years in clinical pulmonology and research shaped my path into epidemiology, cancer and quality-of-life research, and public health prevention.",
+};
 
 // ---- about section ----
 export const aboutSection = {
   id: "about",
   header: {
-    titleBeforeAccent: "About",
-    titleAccent: "Me",
+    titleId: "about-heading",
+    prefix: "About",
+    accent: "Me",
     subtitle: "Curious about what shapes health and disease.",
+    accentTag: "small",
   },
+  // ---- carousel ----
   carousel: {
-    ariaLabel: "Photos from my path in public health and research",
+    ariaLabel:
+      "here are some photos from my life as researcher and student tap to navigate to the around photos",
   },
+  // ---- paragraphs ----
   paragraphs: [
     "Before I ever studied epidemiology, I was already close to research.",
     "I spent several years working as a teaching and research assistant in a clinical setting. It wasn’t something distant or abstract. I was part of the daily work, helping with studies, joining discussions, and seeing how research actually develops from an idea into something useful.",
@@ -41,7 +54,7 @@ export const aboutSection = {
   },
 };
 
-// ---- about steps ----
+// ---- about steps page ----
 export const aboutSteps = [
   {
     id: "01",
@@ -102,7 +115,7 @@ export const aboutSteps = [
 
 // ---- about steps by id ----
 const aboutStepsById = Object.fromEntries(
-  aboutSteps.map((step) => [step.id, step])
+  aboutSteps.map((step) => [step.id, step]),
 );
 
 // ---- about carousel ----

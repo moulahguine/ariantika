@@ -1,22 +1,10 @@
 import heroPortrait from "@/assets/images/hero/ariantika-hero-portrait.jpeg";
 import { GoArrowUpRight } from "react-icons/go";
 import { FaFileAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { getExperienceDuration } from "@/lib";
 
-// ---- hero experience ----
-export const heroExperience = {
-  startYear: 2017,
-  startMonth: 8,
-};
-
-// ---- get hero experience years ----
-export function getHeroExperienceYears(date = new Date()) {
-  const totalMonths =
-    (date.getFullYear() - heroExperience.startYear) * 12 +
-    date.getMonth() -
-    heroExperience.startMonth;
-
-  return Math.floor(totalMonths / 12);
-}
+// ---- duration ----
+const duration = getExperienceDuration();
 
 // ---- hero data ----
 export const hero = {
@@ -35,6 +23,7 @@ export const hero = {
 
   // ---- location ----
   location: {
+    icon: <FaMapMarkerAlt aria-label="Location" aria-hidden="true" />,
     text: "based in North Sumatra, Indonesia.",
   },
 
@@ -57,26 +46,28 @@ export const hero = {
       id: "contact",
       label: "Contact",
       href: "/contact",
-      icon: <GoArrowUpRight />,
+      icon: <GoArrowUpRight aria-label="Arrow Up Right" aria-hidden="true" />,
       variant: "primary",
       size: "default",
       download: false,
+      ariaLabel: "contact page",
     },
     {
       id: "resume",
       label: "Resume",
-      href: "/documents/ARIANTIKA_PUBLIC HEALTH_RESUME.pdf",
-      icon: <FaFileAlt />,
+      href: "/documents/ARIANTIKA_PUBLIC_HEALTH_RESUME.pdf",
+      icon: <FaFileAlt aria-label="File Alt" aria-hidden="true" />,
       variant: "secondary",
       size: "default",
       download: true,
+      ariaLabel: "download resume PDF",
     },
   ],
 
   // ---- image ----
   image: {
     src: heroPortrait,
-    alt: "Ariantika smiling at the camera, wearing a cream hijab, round eyeglasses, and a white Genomic Science Day T-shirt with a light-blue lanyard, raising her right hand in a peace sign at an indoor research event.",
+    alt: "Ariantika smiling in an outdoor graduation portrait, wearing a black mortarboard cap over a lavender hijab, a mauve dress with beaded neckline and shoulder detail, pearl earrings, and her chin resting on her index finger.",
     width: 520,
     height: 520,
     sizes: "(max-width: 778px) 100vw, min(520px, 45vw)",
@@ -85,13 +76,11 @@ export const hero = {
   // ---- badge ----
   badge: {
     ringText: "Research Experience • Researcher • Public Health •",
+    years: duration.years,
     yearsLabel: "Years",
-    experienceAriaLabel: (years) => `${years}+ years of research experience`,
+    experienceAriaLabel: `${duration.years} years of research experience`,
   },
 
   // ---- figure caption ----
   figureCaption: "photo by @ariantika",
-
-  // ---- location icon ----
-  locationIcon: <FaMapMarkerAlt aria-label="Location" aria-hidden="true" />,
 };

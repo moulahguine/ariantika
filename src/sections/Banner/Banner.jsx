@@ -7,38 +7,27 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { BiSolidVirus } from "react-icons/bi";
+
+import { fadeIn, viewportOnce } from "@/lib";
+import { banner } from "@/data";
 
 import "./Banner.scss";
 
-const bannerItems = [
-  "Epidemiology",
-  "Biostatistics",
-  "Public Health",
-  "Cancer Research",
-  "Infectious Diseases",
-  "Data-Driven Insights",
-  "Healthcare Impact",
-];
+const { ariaLabel, items, marquee, separator } = banner;
+const { repeatCount, scrollSpeed } = marquee;
+const SeparatorIcon = separator.icon;
 
-const REPEAT_COUNT = 2;
-const SCROLL_SPEED = 80;
+const repeatedItems = Array.from({ length: repeatCount }, () => items).flat();
 
-// Repeat the banner items to create a loop
-const repeatedItems = Array.from(
-  { length: REPEAT_COUNT },
-  () => bannerItems
-).flat();
-
-// Banner group component
+// ---- banner group component ----
 function BannerGroup({ itemKeyPrefix, groupRef }) {
   return (
     <ul className="banner__group" aria-hidden="true" ref={groupRef}>
       {repeatedItems.map((item, index) => (
         <li className="banner__item" key={`${itemKeyPrefix}-${item}-${index}`}>
-          <span className="banner__item-label">{item}</span>
-          <span className="banner__item-separator" aria-label="Separator">
-            <BiSolidVirus aria-hidden="true" />
+          <span className="banner__label">{item}</span>
+          <span className="banner__separator" aria-label={separator.ariaLabel}>
+            <SeparatorIcon aria-hidden="true" />
           </span>
         </li>
       ))}
@@ -46,14 +35,14 @@ function BannerGroup({ itemKeyPrefix, groupRef }) {
   );
 }
 
-// Main banner component
+// ---- main banner component ----
 export default function Banner() {
   const prefersReducedMotion = useReducedMotion();
   const [loopWidth, setLoopWidth] = useState(0);
   const firstGroupRef = useRef(null);
   const x = useMotionValue(0);
 
-  // Update the loop width when the window is resized
+  // ---- update loop width ----
   useEffect(() => {
     const updateLoopWidth = () => {
       if (firstGroupRef.current) {
@@ -67,17 +56,25 @@ export default function Banner() {
     return () => window.removeEventListener("resize", updateLoopWidth);
   }, []);
 
+  // ---- animate the banner ----
   useAnimationFrame((_, delta) => {
     if (prefersReducedMotion || loopWidth === 0) return;
 
-    const moveBy = (SCROLL_SPEED * delta) / 1000;
+    const moveBy = (scrollSpeed * delta) / 1000;
     const next = x.get() - moveBy;
     x.set(next <= -loopWidth ? next + loopWidth : next);
   });
 
   return (
-    <section className="banner" aria-label="Research expertise marquee">
-      <div className="banner__surface">
+    // ---- banner section ----
+    <section className="banner" aria-label={ariaLabel}>
+      <motion.div
+        className="banner__surface"
+        variants={fadeIn}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+      >
         <motion.div
           className="banner__track"
           style={{ x: prefersReducedMotion ? 0 : x }}
@@ -85,7 +82,7 @@ export default function Banner() {
           <BannerGroup itemKeyPrefix="group-a" groupRef={firstGroupRef} />
           <BannerGroup itemKeyPrefix="group-b" />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

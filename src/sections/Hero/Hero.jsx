@@ -1,15 +1,20 @@
 import Image from "next/image";
-
+import * as motion from "motion/react-client";
 import { ButtonLink, ButtonDownload, SocialLinks } from "@/components";
-import { getHeroExperienceYears, hero } from "@/data";
+import { hero } from "@/data";
+import {
+  fadeUp,
+  mediaReveal,
+  rotateSettle,
+  springPopDelayed,
+  springPopUp,
+  staggerContainer,
+  viewportOnce,
+} from "@/lib";
 
 import "./Hero.scss";
 
-// ---- hero component ----
 export default function Hero() {
-  // ---- get experience years ----
-  const experienceYears = getHeroExperienceYears();
-
   // ---- hero data ----
   const {
     greeting,
@@ -20,23 +25,34 @@ export default function Hero() {
     image,
     badge,
     figureCaption,
-    locationIcon,
   } = hero;
 
-  // ---- render hero component ----
   return (
     // ---- hero section ----
     <section className="hero" aria-labelledby="hero-heading">
       <div className="hero__container">
-        <div className="hero__content">
-          {/* greeting */}
-          <p className="hero__greeting">
+        {/* ---- hero content ---- */}
+        <motion.div
+          className="hero__content"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          {/* ---- greeting ---- */}
+          <motion.p className="hero__greeting" variants={fadeUp}>
             {greeting.text}
-            <span className="hero__greeting-icon">{greeting.icon}</span>
-          </p>
+            <span className="hero__greeting-icon" aria-hidden="true">
+              {greeting.icon}
+            </span>
+          </motion.p>
 
-          {/* title */}
-          <h1 id="hero-heading" className="hero__title">
+          {/* ---- title ---- */}
+          <motion.h1
+            id="hero-heading"
+            className="hero__title"
+            variants={fadeUp}
+          >
             <span className="hero__title-name">{title.name}</span>
 
             <span className="hero__title-line">
@@ -45,30 +61,36 @@ export default function Hero() {
               </span>
               <mark className="hero__title-highlight">{title.highlight}</mark>
             </span>
-          </h1>
+          </motion.h1>
 
-          {/* location */}
-          <address className="hero__location">
-            <span className="hero__location-icon">{locationIcon}</span>
+          {/* ---- location ---- */}
+          <motion.address className="hero__location" variants={fadeUp}>
+            <motion.span
+              className="hero__location-icon"
+              variants={rotateSettle}
+            >
+              {location.icon}
+            </motion.span>
             <span className="hero__location-text">{location.text}</span>
-          </address>
+          </motion.address>
 
-          {/* description */}
-          <p className="hero__description">
+          {/* ---- description ---- */}
+          <motion.p className="hero__description" variants={fadeUp}>
             {description.beforeAbbr}
             <abbr
               title={description.abbr.title}
               className="hero__description-abbreviation"
               tabIndex={0}
               data-tooltip={description.abbr.tooltip}
+              aria-label={description.abbr.tooltip}
             >
               {description.abbr.label}
             </abbr>
             {description.afterAbbr}
-          </p>
+          </motion.p>
 
-          {/* actions */}
-          <div className="hero__actions">
+          {/* ---- actions ---- */}
+          <motion.div className="hero__actions" variants={springPopUp}>
             {actions.map((link) => {
               const Button = link.download ? ButtonDownload : ButtonLink;
 
@@ -80,18 +102,25 @@ export default function Hero() {
                   size={link.size}
                   href={link.href}
                   icon={link.icon}
+                  ariaLabel={link.ariaLabel}
                 >
                   {link.label}
                 </Button>
               );
             })}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* media */}
+        {/* ---- media ---- */}
         <div className="hero__media">
-          {/* images */}
-          <figure className="hero__images">
+          {/* ---- images ---- */}
+          <motion.figure
+            className="hero__images"
+            variants={mediaReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+          >
             <Image
               className="hero__images-image"
               src={image.src}
@@ -102,11 +131,11 @@ export default function Hero() {
               sizes={image.sizes}
             />
 
-            {/* badge */}
-            <span
+            {/* ---- badge ---- */}
+            <motion.span
               className="hero__badge"
-              role="img"
-              aria-label={badge.experienceAriaLabel(experienceYears)}
+              aria-label={badge.experienceAriaLabel}
+              variants={springPopDelayed}
             >
               <svg
                 className="hero__badge-svg"
@@ -126,19 +155,20 @@ export default function Hero() {
                 </text>
               </svg>
 
+              {/* ---- badge center ---- */}
               <div className="hero__badge-center">
-                <span className="hero__badge-number">{experienceYears}+</span>
+                <span className="hero__badge-number">{badge.years}+</span>
                 <span className="hero__badge-label">{badge.yearsLabel}</span>
               </div>
-            </span>
+            </motion.span>
 
-            {/* figure caption */}
+            {/* ---- figure caption ---- */}
             <figcaption className="hero__image-caption">
               {figureCaption}
             </figcaption>
-          </figure>
+          </motion.figure>
 
-          {/* social links */}
+          {/* ---- social links ---- */}
           <SocialLinks direction="vertical" className="hero__social" />
         </div>
       </div>

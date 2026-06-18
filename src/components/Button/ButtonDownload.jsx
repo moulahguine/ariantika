@@ -38,9 +38,10 @@ const ButtonDownload = forwardRef(function ButtonDownload(
     onPress,
     className = "",
     classNameContent = "",
+    ariaLabel,
     ...rest
   },
-  forwardedRef
+  forwardedRef,
 ) {
   const internalRef = useRef(null);
   const ref = mergeRefs(internalRef, forwardedRef);
@@ -67,6 +68,7 @@ const ButtonDownload = forwardRef(function ButtonDownload(
         role="link"
         aria-disabled="true"
         className={classes}
+        aria-label={ariaLabel}
         {...dataState}
       >
         <ButtonContent
@@ -89,6 +91,7 @@ const ButtonDownload = forwardRef(function ButtonDownload(
       target={target}
       rel={rel}
       className={classes}
+      aria-label={ariaLabel}
       {...mergeProps(mergedProps, rest)}
       {...dataState}
     >

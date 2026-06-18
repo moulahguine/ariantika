@@ -1,75 +1,80 @@
+// ---- next/image imports ----
 import Image from "next/image";
 import Link from "next/link";
 
-import { servicesPreview } from "@/data/services";
-
-import { FaCheckCircle } from "react-icons/fa";
-
+// ---- components imports ----
+import { SectionHeader } from "@/components";
 import ServiceCardHover from "./ServiceCardHover";
 
+// ---- data imports ----
+import { servicesSection } from "@/data";
+
+// ---- react-icons imports ----
+import { FaCheckCircle } from "react-icons/fa";
+
+// ---- styles ----
 import "./Services.scss";
 
+// ---- services section ----
 export default function Services() {
+  const { header, cards } = servicesSection;
+
   return (
     <section
       className="services"
       id="services"
       aria-labelledby="services-heading"
     >
-      <div className="services__container">
-        <header
-          className="services__header"
-          id="services-header"
-          aria-labelledby="services-header-heading"
-        >
-          <h2 className="services__header-title" id="services-header-heading">
-            <small className="services__header-title-accent">Research</small>{" "}
-            Services
-          </h2>
-          <p className="services__header-subtitle">
-            here are the services I provide to help you with your research and
-            publishing work.
-          </p>
-        </header>
+      {/* ---- section header ---- */}
+      <SectionHeader
+        headingId={header.id}
+        prefix={header.prefix}
+        accent={header.accent}
+        subtitle={header.subtitle}
+        accentTag="small"
+      />
 
-        <ul className="services__grid">
-          {servicesPreview.map((service) => (
-            <ServiceCardHover key={service.title}>
-              <Link href={service.href} className="services__card-link">
-                <div className="services__card-media">
-                  {service.image && (
-                    <Image
-                      className="services__card-image"
-                      src={service.image}
-                      alt={service.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 500px"
-                    />
-                  )}
-                </div>
+      {/* ---- services container ---- */}
+      <ul className="services__container">
+        {cards.map((card, index) => (
+          <ServiceCardHover key={card.title} index={index}>
+            {/* ---- service card link ---- */}
+            <Link href={card.href} className="services__link">
+              {/* ---- service card media ---- */}
+              <div className="services__media">
+                {card.image && (
+                  <Image
+                    className="services__image"
+                    src={card.image}
+                    alt={card.imageAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 500px"
+                  />
+                )}
+              </div>
 
-                <div className="services__card-body">
-                  <h3 className="services__card-title">{service.title}</h3>
-                  <p className="services__card-description">
-                    {service.shortDescription}
-                  </p>
-
-                  <ul className="services__card-bullets">
-                    {service.bullets.map((bullet) => (
-                      <li key={bullet} className="services__card-bullet">
-                        <span className="services__card-bullet-icon">
-                          <FaCheckCircle aria-hidden="true" />
-                        </span>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Link>
-            </ServiceCardHover>
-          ))}
-        </ul>
-      </div>
+              {/* ---- service card body ---- */}
+              <div className="services__body">
+                {/* ---- service card title ---- */}
+                <h3 className="services__title">{card.title}</h3>
+                {/* ---- service card description ---- */}
+                <p className="services__description">{card.description}</p>
+                {/* ---- service card bullets ---- */}
+                <ul className="services__bullets">
+                  {card.bullets.map((bullet) => (
+                    <li key={bullet} className="services__bullet">
+                      <span className="services__bullet-icon">
+                        <card.icon aria-hidden="true" />
+                      </span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Link>
+          </ServiceCardHover>
+        ))}
+      </ul>
     </section>
   );
 }

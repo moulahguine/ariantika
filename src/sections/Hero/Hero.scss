@@ -15,8 +15,7 @@
     padding: clamp($space-12, 2vw, $space-16);
 
     @media (max-width: $breakpoint-2md) {
-      flex-direction: column;
-      justify-content: flex-start;
+      flex-direction: column-reverse;
     }
   }
 
@@ -28,8 +27,7 @@
     gap: clamp($space-10, 1.5vw, $space-12);
 
     @media (max-width: $breakpoint-2md) {
-      order: 2;
-      width: clamp(250px, 100%, 470px);
+      width: clamp(350px, 100%, 470px);
       text-align: center;
     }
   }
@@ -37,7 +35,7 @@
   // ---- greeting ----
   &__greeting {
     font-family: $font-brush;
-    font-size: clamp($font-size-16, 2vw, $font-size-20);
+    font-size: clamp($font-size-18, 2vw, $font-size-20);
     font-weight: $fw-medium;
     color: var(--accent);
     text-transform: capitalize;
@@ -115,23 +113,22 @@
   &__location {
     @include flex-center;
     width: fit-content;
-    font-size: clamp(calc($font-size-10 + 1px), 1.5vw, $font-size-14);
-    font-weight: $fw-medium;
-    color: var(--text-muted);
+    font-size: clamp($font-size-12, 1.5vw, $font-size-14);
 
     &-icon {
       @include flex-center;
       width: clamp(16px, 2vw, 24px);
       height: clamp(16px, 2vw, 24px);
       color: var(--secondary);
-
-      svg {
-        font-size: clamp($font-size-10, 1.5vw, $font-size-12);
-      }
+      translate: -1px -1px;
+      border-radius: 50%;
+      font-size: inherit;
     }
 
     &-text {
       font-size: inherit;
+      font-weight: $fw-medium;
+      color: var(--text-muted);
     }
 
     @media (max-width: $breakpoint-2md) {
@@ -143,7 +140,7 @@
   // ---- description ----
   &__description {
     text-indent: $space-12;
-    font-size: clamp(calc($font-size-12 + 1px), 1.5vw, $font-size-16);
+    font-size: clamp($font-size-14 - 1px, 1.5vw, $font-size-16);
     font-weight: $fw-medium;
     color: var(--text-muted);
     word-break: keep-all;
@@ -199,7 +196,7 @@
     }
   }
 
-  // actions
+  // ---- action buttons ----
   &__actions {
     @include flex-center;
     width: fit-content;
@@ -221,11 +218,10 @@
 
     @media (max-width: $breakpoint-2md) {
       width: 100%;
-      order: 1;
     }
   }
 
-  // ---- hero image ----
+  // ---- image container ----
   &__images {
     max-width: clamp(250px, 40vw, 500px);
     aspect-ratio: 1/1;
@@ -260,11 +256,12 @@
 
   // ---- experience badge ----
   &__badge {
+    --badge-size: clamp(90px, 13vw, 140px);
     position: absolute;
     top: 0;
     left: 0;
-    width: clamp(90px, 13vw, 140px);
-    height: clamp(90px, 13vw, 140px);
+    width: var(--badge-size);
+    height: var(--badge-size);
     translate: 4% -5%;
     z-index: $z-above;
     pointer-events: none;
@@ -274,6 +271,7 @@
     background-color: var(--surface);
     border-radius: 50%;
     border: 1px solid var(--accent);
+    overflow: hidden;
 
     &-svg {
       position: absolute;

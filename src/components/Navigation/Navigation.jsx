@@ -32,27 +32,30 @@ export default function Navigation({
           isMobile ? "navigation__list--mobile" : ""
         }`}
       >
-        {links.map((link) => (
-          <li
-            className={`navigation__list-item ${
-              isActive(link.href) ? "active" : ""
-            }`}
-            key={link.href}
-          >
-            <ButtonLink
-              href={link.href}
-              variant="ghost"
-              className={`navigation__list-item--link ${
-                isActive(link.href) ? "active" : ""
-              }`}
-              classNameContent="navigation__list-item--link-text"
-              size="small"
-              onPress={onNavigate}
+        {links.map((link) => {
+          const active = isActive(link.href);
+
+          return (
+            <li
+              className={`navigation__list-item ${active ? "active" : ""}`}
+              key={link.href}
             >
-              {link.label}
-            </ButtonLink>
-          </li>
-        ))}
+              <ButtonLink
+                href={link.href}
+                variant="ghost"
+                className={`navigation__list-item--link ${
+                  active ? "active" : ""
+                }`}
+                classNameContent="navigation__list-item--link-text"
+                size="small"
+                aria-current={active ? "page" : undefined}
+                onPress={onNavigate}
+              >
+                {link.label}
+              </ButtonLink>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

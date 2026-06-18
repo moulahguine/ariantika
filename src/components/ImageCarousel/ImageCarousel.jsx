@@ -3,76 +3,38 @@
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import {
+  CAROUSEL_PERSPECTIVE,
+  carouselDotProgress,
+  carouselDotProgressTransition,
+  carouselSlideTransition,
+  getCarouselSlideStates,
+} from "@/lib";
 
 import "./ImageCarousel.scss";
 
 const AUTOPLAY_MS = 3000;
 const SWIPE_THRESHOLD = 75;
-const SPRING = { type: "spring", stiffness: 260, damping: 30, mass: 0.9 };
-const SIDE_ROTATE_DEG = 12;
 
-function getSlideStates(reduceMotion) {
-  const sideRotate = reduceMotion ? 0 : SIDE_ROTATE_DEG;
-
-  return {
-    active: {
-      x: "0%",
-      rotate: 0,
-      scale: 1,
-      opacity: 1,
-      filter: "blur(0px) brightness(1)",
-      zIndex: 3,
-    },
-    prev: {
-      x: "-62%",
-      rotate: -sideRotate,
-      scale: 0.8,
-      opacity: 0.65,
-      filter: "blur(3px) brightness(0.75)",
-      zIndex: 2,
-    },
-    next: {
-      x: "62%",
-      rotate: sideRotate,
-      scale: 0.8,
-      opacity: 0.65,
-      filter: "blur(3px) brightness(0.75)",
-      zIndex: 2,
-    },
-    hidden: {
-      x: "0%",
-      rotate: 0,
-      scale: 0.8,
-      opacity: 0,
-      filter: "blur(6px) brightness(0.6)",
-      zIndex: 1,
-    },
-  };
-}
-
-// Get the role of the slide based on the index, active slide, and total slides
 function getSlideRole(index, active, total) {
   if (index === active) return "active";
   if (index === (active - 1 + total) % total) return "prev";
-  if (index === (active + 1) % total) return "next";
-  return "hidden";
+  return "next";
 }
 
 // Image Carousel Component
-export default function ImageCarousel({
-  images = [],
-  ariaLabel = "Photo carousel",
-}) {
-  const total = images.length;
+export default function ImageCarousel({ images = [], ariaLabel }) {
+  const slides = images.slice(0, 3);
+  const total = slides.length;
   const [active, setActive] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const reduceMotion = useReducedMotion();
-  const slideStates = getSlideStates(reduceMotion);
+  const slideStates = getCarouselSlideStates(reduceMotion);
 
   // Go to the next or previous slide
   const goTo = useCallback(
     (next) => setActive(((next % total) + total) % total),
-    [total]
+    [total],
   );
 
   // Autoplay the carousel
@@ -118,18 +80,19 @@ export default function ImageCarousel({
       onKeyDown={handleKeyDown}
     >
       <div className="image-carousel__stage">
-        {images.map((img, idx) => {
+        {slides.map((img, idx) => {
           const role = getSlideRole(idx, active, total);
           const isActive = role === "active";
 
           return (
             <motion.figure
               key={img.alt ?? `slide-${idx}`}
-              className={`image-carousel__card${
+              className={`image-carousel__card image-carousel__card--${role}${
                 isActive ? " image-carousel__card--active" : ""
               }`}
+              style={{ transformPerspective: CAROUSEL_PERSPECTIVE }}
               animate={slideStates[role]}
-              transition={SPRING}
+              transition={carouselSlideTransition}
               drag={isActive ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0}
@@ -168,7 +131,7 @@ export default function ImageCarousel({
           role="tablist"
           aria-label="Select slide"
         >
-          {images.map((img, idx) => {
+          {slides.map((img, idx) => {
             const isCurrent = idx === active;
             return (
               <button
@@ -176,7 +139,7 @@ export default function ImageCarousel({
                 type="button"
                 role="tab"
                 aria-selected={isCurrent}
-                aria-label={`Go to slide ${idx + 1}`}
+                aria-label={`Image ${idx + 1} of ${img.alt}`}
                 className={`image-carousel__dot${
                   isCurrent ? " image-carousel__dot--active" : ""
                 }`}
@@ -186,12 +149,9 @@ export default function ImageCarousel({
                   <motion.span
                     key={`progress-${active}`}
                     className="image-carousel__dot-progress"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{
-                      duration: AUTOPLAY_MS / 1000,
-                      ease: "linear",
-                    }}
+                    initial={carouselDotProgress.initial}
+                    animate={carouselDotProgress.animate}
+                    transition={carouselDotProgressTransition(AUTOPLAY_MS)}
                   />
                 )}
               </button>

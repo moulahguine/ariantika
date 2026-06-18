@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { RemoveScroll } from "react-remove-scroll";
 import { Navigation, SocialLinks } from "@/components";
+
 import "./Menu.scss";
 
 export default function Menu({ isOpen, onClose, headerHeight = 0 }) {
@@ -40,6 +41,7 @@ export default function Menu({ isOpen, onClose, headerHeight = 0 }) {
                 isOpen ? "menu__navigation--open" : ""
               }`}
               variant="mobile"
+              onNavigate={onClose}
             />
 
             <SocialLinks

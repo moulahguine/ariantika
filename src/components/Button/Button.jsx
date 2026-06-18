@@ -24,9 +24,10 @@ const Button = forwardRef(function Button(
     onPress,
     className = "",
     classNameContent = "",
+    ariaLabel,
     ...rest
   },
-  forwardedRef
+  forwardedRef,
 ) {
   const internalRef = useRef(null);
   const ref = mergeRefs(internalRef, forwardedRef);
@@ -35,7 +36,7 @@ const Button = forwardRef(function Button(
 
   const { mergedProps, state } = useButtonBase(
     { onPress, isDisabled, type },
-    internalRef
+    internalRef,
   );
 
   const classes = buildButtonClassName({ variant, size, className });
@@ -51,6 +52,7 @@ const Button = forwardRef(function Button(
     <button
       ref={ref}
       className={classes}
+      aria-label={ariaLabel}
       {...mergeProps(mergedProps, rest)}
       {...dataState}
     >

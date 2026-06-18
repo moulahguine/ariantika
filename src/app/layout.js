@@ -1,4 +1,5 @@
 import { Inter, Sour_Gummy, Caveat_Brush } from "next/font/google";
+import { Header, Footer } from "@/components";
 import { generateMetadata } from "./metadata";
 
 import "@/assets/styles/main.scss";
@@ -22,12 +23,7 @@ const personJsonLd = {
     mainEntityOfPage: SITE_URL,
     image: `${SITE_URL}/og-image.png`,
     email: "mailto:ariantikaeffendi@gmail.com",
-    sameAs: [
-      "https://www.linkedin.com/in/ariantikaa",
-      "https://www.instagram.com/ms.ariantikaef",
-      "https://www.facebook.com/aryantica.effendy",
-      "https://mohamedoulahguine.com",
-    ],
+    sameAs: ["https://www.linkedin.com/in/ariantikaa"],
     address: {
       "@type": "PostalAddress",
       addressLocality: "North Sumatra",
@@ -80,7 +76,11 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="site-body">{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

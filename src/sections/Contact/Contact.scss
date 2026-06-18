@@ -1,0 +1,278 @@
+@use "../../assets/styles" as *;
+
+// ---- contact section ----
+.contact {
+  @include section;
+
+  // ---- contact container ----
+  &__container {
+    @include container;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp($space-24, 3vw, $space-32);
+    padding-block: clamp($space-24, 4vw, $space-40);
+
+    @media (width <= $breakpoint-2md) {
+      grid-template-columns: 250px 2fr;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__info {
+    @include flex-column;
+    gap: clamp($space-16, 5vw, $space-24);
+    padding-block: clamp($space-8, 1.5vw, $space-12);
+    min-height: 100%;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: clamp(250px, 100%, 57%);
+      aspect-ratio: 1 / 1;
+      background-image: url("../../assets/images/contact/email.png");
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation: float 2.5s ease-in-out infinite;
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+
+      @media (width <= $breakpoint-md) {
+        display: none;
+      }
+    }
+  }
+
+  &__block {
+    @include flex-column;
+    gap: clamp($space-4, 2vw, $space-8);
+
+    @media (width <= $breakpoint-md) {
+      text-align: center;
+    }
+  }
+
+  &__block-title {
+    font-size: clamp($font-size-18, 2vw, $font-size-24);
+    font-weight: $fw-semibold;
+    font-family: $font-display;
+    color: var(--accent);
+  }
+
+  &__email-row {
+    display: flex;
+    align-items: center;
+    gap: clamp($space-4, 1.5vw, $space-8);
+
+    @media (width <= $breakpoint-md) {
+      justify-content: center;
+    }
+  }
+
+  &__email {
+    font-size: clamp($font-size-14, 1.6vw, $font-size-18);
+    color: var(--text-muted);
+    line-height: 1.5;
+    transition: color $transition-fast;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__copy {
+    @include flex-center;
+    flex-shrink: 0;
+    width: clamp(32px, 3.5vw, 36px);
+    aspect-ratio: 1 / 1;
+    color: var(--text-muted);
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition:
+      color 0.3s ease-in-out,
+      background-color 0.3s ease-in-out;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--primary-softer);
+      }
+    }
+
+    &--copied {
+      color: var(--text-muted);
+
+      @media (hover: hover) {
+        &:hover {
+          color: var(--text-muted);
+          background-color: var(--primary-softer);
+        }
+      }
+    }
+  }
+
+  &__copy-icon {
+    font-size: clamp($font-size-14, 1.6vw, $font-size-16);
+  }
+
+  &__location {
+    font-size: clamp($font-size-14, 1.6vw, $font-size-18);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  &__social {
+    margin-top: auto;
+
+    @media (width <= $breakpoint-md) {
+      margin-top: 0;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  &__form {
+    @include flex-column;
+    gap: clamp($space-24, 3vw, $space-32);
+    width: 100%;
+    background-color: var(--primary-softer);
+    padding: clamp($space-24, 3vw, $space-32);
+    border-radius: $radius-xl;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp($space-24, 3vw, $space-32);
+
+    @media (width <= $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  &__field {
+    @include flex-column;
+    gap: $space-8;
+
+    &--textarea {
+      .contact__textarea {
+        min-height: clamp(100px, 18vw, 150px);
+      }
+    }
+
+    grid-column: span 2;
+
+    &--full-name {
+      grid-column: 1/2;
+    }
+    &--email {
+      grid-column: 2/3;
+    }
+
+    @media (width <= $breakpoint-md) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__label {
+    font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+    font-weight: $fw-semibold;
+    color: var(--primary);
+
+    &--required {
+      color: var(--accent);
+      font-size: clamp($font-size-8, 1.2vw, $font-size-10);
+    }
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    width: 100%;
+    padding: $space-8;
+    font: inherit;
+    font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+    color: var(--text);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--primary-border);
+    border-radius: 0;
+    resize: vertical;
+    transition: border-color $transition-fast;
+
+    &:focus,
+    &:focus-visible,
+    &:active {
+      outline: none;
+      border-bottom-color: var(--primary);
+      border-radius: 0;
+    }
+  }
+
+  &__textarea {
+    line-height: 1.6;
+    resize: none;
+  }
+
+  &__submit {
+    grid-column: span 2;
+    align-self: flex-end;
+    font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+    width: calc(100% - $space-24);
+
+    @media (width <= $breakpoint-md) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__toast {
+    position: fixed;
+    right: clamp($space-16, 3vw, $space-24);
+    bottom: clamp($space-16, 3vw, $space-24);
+    z-index: $z-modal;
+    padding: clamp($space-12, 1.6vw, $space-14) clamp($space-16, 2vw, $space-20);
+    font-size: clamp($font-size-14, 1.5vw, $font-size-16);
+    font-weight: $fw-medium;
+    line-height: 1.4;
+    border-radius: $radius-xl;
+    box-shadow: 0 0 4px rgb(from var(--text) r g b / 0.12);
+    pointer-events: none;
+
+    &--success {
+      color: var(--text-inverse);
+      background-color: var(--success);
+    }
+
+    &--error {
+      color: var(--text-inverse);
+      background-color: var(--danger);
+    }
+  }
+}

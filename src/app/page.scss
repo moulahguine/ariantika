@@ -2,12 +2,8 @@
 
 // ---- home page ----
 .home__main {
+  @include flex-column;
   overflow-x: clip;
   position: relative;
-}
-
-// ---- grid background ----
-.home__grid-bg {
-  @include grid-backdrop;
   background-color: var(--background);
 }

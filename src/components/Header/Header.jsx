@@ -1,20 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 import { Logo, Navigation, Menu } from "@/components";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import {
+  stickyBarReveal,
+  stickyBarTransition,
+  useHideOnScrollDown,
+} from "@/lib";
+import { motion } from "motion/react";
+
 import "./Header.scss";
 
 const MOBILE_NAV_MEDIA = "(max-width: 767px)";
 
 export default function Header() {
+  const pathname = usePathname();
   const isMobileNav = useMediaQuery({ query: MOBILE_NAV_MEDIA });
   const [isMounted, setIsMounted] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef(null);
-  const [hidden, setHidden] = useState(false);
-  const { scrollY } = useScroll();
+  const hidden = useHideOnScrollDown();
 
   // close and toggle the menu
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,15 +29,11 @@ export default function Header() {
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), []);
   const isMobileMenuOpen = isMobileNav && menuOpen;
 
-  // hide on scroll down, show on scroll up
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  });
+  useEffect(() => {
+    setTimeout(() => {
+      setMenuOpen(false);
+    }, 100);
+  }, [pathname]);
 
   // mount the header
   useEffect(() => {
@@ -60,17 +63,14 @@ export default function Header() {
     };
   }, []);
 
-  // render the header
   return (
+    // ---- header ----
     <motion.header
       ref={headerRef}
-      variants={{
-        visible: { opacity: 1, y: 0 },
-        hidden: { opacity: 0, y: -100 },
-      }}
+      variants={stickyBarReveal}
       initial="hidden"
       animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.7, ease: "easeInOut" }}
+      transition={stickyBarTransition}
       className={`header ${isMobileMenuOpen ? "header--mobile-menu-open" : ""}`}
     >
       <div className="header__container">
