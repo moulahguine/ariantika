@@ -1,237 +1,140 @@
 import Image from "next/image";
-
 import * as motion from "motion/react-client";
-
-import { servicesMeta, whyChooseMe, servicesPage } from "@/data";
-import { Contact } from "@/sections";
+import {
+  ButtonLink,
+  PageHeader,
+  QuoteVerse,
+  SectionHeader,
+} from "@/components";
+import { faq, whyChooseMe, servicesPage, servicesMetaData } from "@/data";
 import {
   fadeUp,
-  mediaReveal,
+  fadeUpLight,
   scaleIn,
+  slideInLeft,
+  slideInRight,
+  springPopUp,
   staggerContainer,
   staggerContainerFast,
   viewportOnce,
 } from "@/lib";
-
-import ProcessConnectors from "./ProcessConnectors";
+import FAQSection from "./FAQ__section";
 
 import "./page.scss";
 
 // ---- services page metadata ----
-export const metadata = servicesMeta;
+export const metadata = servicesMetaData;
 
-// ---- services page ----
 export default function ServicesPage() {
-  const { header, services } = servicesPage;
+  const { header, services, quran, contactCta } = servicesPage;
 
   const { header: whyChooseHeader, items: whyChooseItems } = whyChooseMe;
+  const { header: faqHeader, items: faqItems } = faq;
 
   return (
     <>
-      {/* ---- main container ---- */}
       <main className="services__page">
         {/* ---- page header ---- */}
-        <motion.header
-          className="services__page-header"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-        >
-          <motion.span
-            className="services__page-header-eyebrow"
-            variants={fadeUp}
-          >
-            {header.eyebrow}
-          </motion.span>
-          <motion.h1 className="services__page-header-title" variants={fadeUp}>
-            {/* {header.titleBeforeAccent}{" "} */}
-            <span className="services__page-header-title-accent">
-              {header.titleAccent}
-            </span>
-            {/* {header.titleAfterAccent} */}
-          </motion.h1>
-          <motion.p
-            className="services__page-header-subtitle"
-            variants={fadeUp}
-          >
-            {header.subtitle}
-          </motion.p>
-        </motion.header>
+        <PageHeader header={header} />
 
         {/* ---- container ---- */}
         <div className="services__page-container">
-          {/* ---- service sections ---- */}
-          {services.map((service, i) => (
-            <section
-              key={service.id}
-              id={service.id}
-              className={`services__page-section services__page-section--${
-                service.theme
-              }${i % 2 === 1 ? " services__page-section--reverse" : ""}`}
-              aria-labelledby={`${service.id}-title`}
-            >
-              {/* ---- section heading ---- */}
-              <motion.header
-                className="services__page-section-head"
-                variants={staggerContainerFast}
+          {services.map((service, i) => {
+            const isReversed = i % 2 === 0;
+            const imageVariant = isReversed ? slideInRight : slideInLeft;
+            const contentVariant = isReversed ? slideInLeft : slideInRight;
+
+            return (
+              <motion.section
+                key={service.id}
+                id={service.id}
+                className={`services__page-section services__page-section--${service.theme}`}
+                aria-labelledby={`${service.id}-title`}
+                variants={staggerContainer}
                 initial="hidden"
                 whileInView="visible"
                 viewport={viewportOnce}
               >
-                <motion.span
-                  className="services__page-section-number"
-                  aria-hidden="true"
-                  variants={scaleIn}
-                >
-                  {service.number}
-                </motion.span>
-                <motion.h2
-                  className="services__page-section-title"
-                  id={`${service.id}-title`}
-                  variants={fadeUp}
-                >
-                  {service.title}
-                </motion.h2>
-              </motion.header>
-
-              {/* ---- description + illustration ---- */}
-              <div className="services__page-section-intro">
-                <motion.p
-                  className="services__page-section-description"
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={viewportOnce}
-                >
-                  {service.description}
-                </motion.p>
-
-                <motion.figure
-                  className="services__page-section-figure"
-                  variants={mediaReveal}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={viewportOnce}
+                <motion.div
+                  className="services__page--wrapper"
+                  variants={imageVariant}
                 >
                   <Image
-                    className="services__page-section-image"
+                    className="services__page-image"
                     src={service.image}
                     alt={service.imageAlt}
-                    width={2000}
-                    height={2000}
+                    width={1000}
+                    height={1000}
                     sizes="(max-width: 1024px) 80vw, 420px"
                   />
+                </motion.div>
 
-                  <figcaption className="services__page-section-figure-caption">
-                    {service.figcaption}
-                  </figcaption>
-                </motion.figure>
-              </div>
+                <motion.div
+                  className="services__page--content"
+                  variants={contentVariant}
+                >
+                  <motion.h2
+                    className="services__page-title"
+                    id={`${service.id}-title`}
+                    variants={fadeUp}
+                  >
+                    {service.title}:
+                  </motion.h2>
+                  <motion.p
+                    className="services__page-description"
+                    variants={fadeUp}
+                  >
+                    {service.description}
+                  </motion.p>
 
-              {/* ---- what's included ---- */}
-              <motion.div
-                className="services__page-section-block"
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-              >
-                <h3 className="services__page-section-subhead">
-                  {service.list.heading}
-                </h3>
-                <ul className="services__page-section-list-items">
-                  {service.list.items.map((item) => (
-                    <li key={item} className="services__page-section-list-item">
-                      <span
-                        className="services__page-section-list-item-icon"
-                        aria-hidden="true"
-                      >
-                        <service.list.icon />
-                      </span>
-                      <span className="services__page-section-list-item-text">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-
-              {/* ---- how this service works ---- */}
-              <motion.div
-                className="services__page-section-block"
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-              >
-                <h3 className="services__page-section-subhead">
-                  {service.steps.heading}
-                </h3>
-                <ProcessConnectors sectionId={service.id}>
-                  {service.steps.items.map(
-                    ({ number, title, icon: Icon }, i) => (
-                      <li
-                        key={number}
-                        className="services__page-section-process-item"
-                        style={{ "--i": i }}
+                  <motion.ul
+                    className="services__page--items"
+                    variants={staggerContainerFast}
+                  >
+                    {service.list.items.map((item) => (
+                      <motion.li
+                        key={item}
+                        className="services__page-item"
+                        variants={fadeUp}
                       >
                         <span
-                          id={`${service.id}-process-marker-${i}`}
-                          className="services__page-section-process-marker"
+                          className="services__page-item-icon"
                           aria-hidden="true"
                         >
-                          <Icon />
+                          <service.list.icon />
                         </span>
-                        <h4 className="services__page-section-process-title">
-                          {title}
-                        </h4>
-                      </li>
-                    ),
-                  )}
-                </ProcessConnectors>
-              </motion.div>
-            </section>
-          ))}
-        </div>
+                        <span className="services__page-item-text">{item}</span>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                </motion.div>
+              </motion.section>
+            );
+          })}
 
-        {/* ---- why choose me section ---- */}
-        <section
-          className="services__page-why-choose"
-          aria-labelledby="why-choose-me-heading"
-        >
-          {/* ---- container ---- */}
-          <div className="services__why-choose-container">
-            {/* ---- header ---- */}
-            <motion.header
-              className="services__why-choose-header"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-            >
-              <motion.h2
-                className="services__why-choose-header-title"
-                id="why-choose-me-heading"
-                variants={fadeUp}
-              >
-                {whyChooseHeader.prefix}{" "}
-                <span className="services__why-choose-header-title-accent">
-                  {whyChooseHeader.accent}{" "}
-                </span>
-                {whyChooseHeader.suffix}
-              </motion.h2>
-              <motion.p
-                className="services__why-choose-header-description"
-                variants={fadeUp}
-              >
-                {whyChooseHeader.description}
-              </motion.p>
-            </motion.header>
+          {/* ---- Quran verse ---- */}
+          <QuoteVerse
+            arabic={quran.arabic}
+            translation={quran.translation}
+            source={quran.source}
+            href={quran.href}
+            variant="secondary"
+          />
 
-            {/* ---- grid items ---- */}
+          {/* ---- why choose me ---- */}
+          <section
+            className="services__page--why-choose"
+            aria-labelledby="why-choose-me-heading"
+          >
+            <SectionHeader
+              prefix={whyChooseHeader.prefix}
+              accent={whyChooseHeader.accent}
+              suffix={whyChooseHeader.suffix}
+              subtitle={whyChooseHeader.subtitle}
+            />
+
             <motion.ul
-              className="services__why-choose-grid"
+              className="services__page--why-choose-grid"
               variants={staggerContainerFast}
               initial="hidden"
               whileInView="visible"
@@ -241,30 +144,97 @@ export default function ServicesPage() {
                 ({ title: itemTitle, description, icon: Icon }) => (
                   <motion.li
                     key={itemTitle}
-                    className="services__why-choose-item"
-                    variants={scaleIn}
+                    className="services__page--why-choose-item"
+                    variants={fadeUp}
                   >
                     <span
-                      className="services__why-choose-icon"
+                      className="services__page--why-choose-iconItem"
                       aria-hidden="true"
                     >
-                      <Icon strokeWidth={1.7} />
+                      <Icon />
                     </span>
-                    <h3 className="services__why-choose-item-title">
+                    <h3 className="services__page--why-choose-titleItem">
                       {itemTitle}
                     </h3>
-                    <p className="services__why-choose-item-description">
-                      {description}
-                    </p>
                   </motion.li>
                 ),
               )}
             </motion.ul>
-          </div>
-        </section>
+          </section>
 
-        {/* ---- contact section ---- */}
-        <Contact />
+          {/* ---- FAQ section ---- */}
+          <section
+            className="services__page--faq"
+            aria-labelledby="faq-heading"
+          >
+            <SectionHeader
+              prefix={faqHeader.prefix}
+              accent={faqHeader.accent}
+              subtitle={faqHeader.subtitle}
+            />
+
+            <motion.div
+              variants={fadeUpLight}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+            >
+              <FAQSection faqItems={faqItems} />
+            </motion.div>
+          </section>
+
+          <section
+            className="services__page--contact"
+            aria-labelledby="services-contact-heading"
+          >
+            <motion.div
+              className="services__page--contact-card"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+            >
+              <motion.div variants={scaleIn}>
+                <Image
+                  className="services__page--contact-avatar"
+                  src={contactCta.image.src}
+                  alt={contactCta.image.alt}
+                  width={72}
+                  height={72}
+                />
+              </motion.div>
+
+              <motion.h2
+                className="services__page--contact-title"
+                id="services-contact-heading"
+                variants={fadeUp}
+              >
+                {contactCta.title}
+              </motion.h2>
+
+              <motion.p
+                className="services__page--contact-subtitle"
+                variants={fadeUp}
+              >
+                {contactCta.subtitle}
+              </motion.p>
+
+              <motion.div variants={springPopUp}>
+                <ButtonLink
+                  className="services__page--contact-button"
+                  href={contactCta.cta.href}
+                  variant={contactCta.cta.variant}
+                  size={contactCta.cta.size}
+                  icon={contactCta.cta.icon}
+                  iconPosition="right"
+                  aria-label={contactCta.cta.ariaLabel}
+                >
+                  {contactCta.cta.label}
+                </ButtonLink>
+              </motion.div>
+            </motion.div>
+          </section>
+        </div>
       </main>
     </>
   );

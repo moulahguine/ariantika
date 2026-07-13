@@ -2,6 +2,7 @@
 $font-primary: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 $font-display: var(--font-sour-gummy), "Sour Gummy", ui-sans-serif, sans-serif;
 $font-brush: var(--font-caveat-brush), "Caveat Brush", cursive;
+$font-arabic: var(--font-arabic), "Amiri", serif;
 
 // ----------------------- TYPOGRAPHY -----------------------
 $base-font-size: 16px;
@@ -18,6 +19,7 @@ $font-size-32: 2rem;
 $font-size-36: 2.25rem;
 $font-size-40: 2.5rem;
 $font-size-48: 3rem;
+$font-size-56: 3.5rem;
 $font-size-64: 4rem;
 $font-size-72: 4.5rem;
 $font-size-96: 6rem;
@@ -99,10 +101,10 @@ $modal-max-height-mobile: 65dvh;
 
 $src-primary: #1563a7; // navy
 $src-secondary: #1ba79b; // teal
+$src-accent: #f59e0b; // amber (highlighter / callouts)
 $src-tertiary: #a5f9b3; // lime
 $src-tertiary-light: #e7fbce; // lime-light
 $src-quaternary: #66deef; // sky
-$src-accent: #f59e0b; // amber (highlighter / callouts)
 $src-info: #0284c7; // cyan-blue (links, info)
 $src-success: #16a34a; // emerald
 $src-warning: #d97706; // burnt amber
@@ -143,6 +145,7 @@ $src-neutral: #334155; // slate (UI chrome)
   --surface-dark: #1e293b;
   --surface-dark-muted: #334155;
   --surface-dark-softer: #475569;
+  --image-bg: var(--primary-softer);
 
   // Text
   --text: #0f172a;

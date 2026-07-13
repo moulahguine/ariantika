@@ -22,12 +22,12 @@ const repeatedItems = Array.from({ length: repeatCount }, () => items).flat();
 // ---- banner group component ----
 function BannerGroup({ itemKeyPrefix, groupRef }) {
   return (
-    <ul className="banner__group" aria-hidden="true" ref={groupRef}>
+    <ul className="banner__group" ref={groupRef}>
       {repeatedItems.map((item, index) => (
         <li className="banner__item" key={`${itemKeyPrefix}-${item}-${index}`}>
           <span className="banner__label">{item}</span>
-          <span className="banner__separator" aria-label={separator.ariaLabel}>
-            <SeparatorIcon aria-hidden="true" />
+          <span className="banner__separator">
+            <SeparatorIcon />
           </span>
         </li>
       ))}
@@ -67,7 +67,7 @@ export default function Banner() {
 
   return (
     // ---- banner section ----
-    <section className="banner" aria-label={ariaLabel}>
+    <section className="banner" aria-hidden="true">
       <motion.div
         className="banner__surface"
         variants={fadeIn}

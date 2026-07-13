@@ -1,13 +1,13 @@
 @use "../../assets/styles" as *;
 
 .footer {
+  margin-top: auto;
   @include section;
   padding: 0;
 
   &__container {
     @include container;
     @include flex-between;
-    border-top: 1px solid rgb(from var(--text) r g b / 0.1);
     padding-block: clamp($space-24, 4vw, $space-32);
 
     @media (max-width: $breakpoint-md) {

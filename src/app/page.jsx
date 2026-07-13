@@ -1,6 +1,16 @@
 import { Hero, Banner, About, Experience, Services, Contact } from "@/sections";
+import { QuoteVerse } from "@/components";
 
 import "./page.scss";
+
+// ---- Quran verse ----
+const QuranVerse = {
+  arabic: "وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا",
+  translation:
+    "and whoever saves a life, it will be as if they saved all of humanity",
+  source: "Quran 5:32",
+  href: "https://quran.com/search?page=1&query=5+32",
+};
 
 // ---- home page ----
 export default function Home() {
@@ -16,6 +26,15 @@ export default function Home() {
 
         {/* ---- about section ---- */}
         <About />
+
+        {/* ---- quote verse section ---- */}
+        <QuoteVerse
+          arabic={QuranVerse.arabic}
+          translation={QuranVerse.translation}
+          source={QuranVerse.source}
+          href={QuranVerse.href}
+          variant="primary"
+        />
 
         {/* ---- services section ---- */}
         <Services />

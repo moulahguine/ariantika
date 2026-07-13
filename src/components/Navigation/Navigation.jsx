@@ -46,12 +46,13 @@ export default function Navigation({
                 className={`navigation__list-item--link ${
                   active ? "active" : ""
                 }`}
-                classNameContent="navigation__list-item--link-text"
                 size="small"
                 aria-current={active ? "page" : undefined}
                 onPress={onNavigate}
               >
-                {link.label}
+                <span className="navigation__list-item--link-text">
+                  {link.label}
+                </span>
               </ButtonLink>
             </li>
           );

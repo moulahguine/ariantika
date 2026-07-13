@@ -1,29 +1,15 @@
 @use "../../assets/styles" as *;
 
-/*
-I originally wanted to use the <details> and <summary> elements to handle 
-expanding and collapsing each experience item. However, there's a CSS feature
-called calc-size() that allows animating elements to their intrinsic size without
-relying on JavaScript.
-
-Combined with transition-behavior: allow-discrete, this would provide a smoother
-and more modern solution. Since transition-behavior: allow-discrete is now
-supported across major browsers, I'd like to take advantage of it where possible.
-
-Could you check whether the browser supports the calc-size() function? 
-If it does, keep the current implementation and use CSS-based animations. If it
-doesn't, fall back to using <details> and <summary> for the expand/collapse behavior.
-*/
 // ---- experience section ----
 .experience {
-  --experience-width: 80%;
+  --experience-width: 85%;
   @include section;
   background-color: var(--primary-soft);
   width: var(--experience-width);
   margin-inline: auto;
-  border-radius: $radius-xl;
+  border-radius: clamp($radius-lg, 3vw, $radius-2xl);
 
-  @media (width <= $breakpoint-2md) {
+  @media (width <= $breakpoint-lg) {
     --experience-width: 100%;
   }
 
@@ -56,7 +42,11 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
 
   // ---- header ----
   &__header {
-    padding-block-start: 0 !important;
+    h2 {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: clamp($space-4, 1.5vw, $space-8);
+    }
   }
 
   // ---- container ----
@@ -66,7 +56,10 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
     max-width: 900px;
     gap: clamp($space-4, 2.5vw, $space-8);
     padding-block-end: clamp($space-16, 2vw, $space-32);
-    border-radius: inherit;
+
+    @media (width <= $breakpoint-md) {
+      max-width: 615px;
+    }
   }
 
   // ---- item ----
@@ -119,14 +112,13 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
     @include flex-center;
     flex-shrink: 0;
     width: clamp(48px, 6vw, 56px);
-    height: clamp(48px, 6vw, 56px);
+    aspect-ratio: 1;
     padding: $space-8;
     border-radius: 50%;
+    background-color: var(--image-bg);
 
     // ---- logo ----
     &-logo {
-      width: 100%;
-      height: 100%;
       object-fit: contain;
     }
 
@@ -135,7 +127,7 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
       font-family: $font-display;
       font-size: $font-size-16;
       font-weight: $fw-semibold;
-      color: var(--accent);
+      color: var(--text-muted);
     }
   }
 
@@ -195,7 +187,7 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
 
   // ---- period ----
   &__period {
-    font-size: clamp($font-size-10 - 1px, 1.4vw, $font-size-14 - 1px);
+    font-size: clamp($font-size-10, 1.4vw, $font-size-14 - 1px);
     font-weight: $fw-semibold;
     color: var(--text);
     white-space: nowrap;
@@ -203,7 +195,7 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
 
   // ---- location ----
   &__location {
-    font-size: clamp(8px, 1.4vw, $font-size-12);
+    font-size: clamp($font-size-10, 1.4vw, $font-size-12);
     color: var(--text-muted);
     white-space: nowrap;
     margin-top: 2px;
@@ -214,11 +206,12 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
     @include flex-center;
     flex-shrink: 0;
     width: 32px;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1;
     padding: $space-8;
     border-radius: 50%;
   }
 
+  // ---- icon ----
   &__chevron {
     font-size: clamp($font-size-12, 1.4vw, $font-size-14);
   }
@@ -242,7 +235,7 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
   &__detail {
     width: fit-content;
     list-style: disc;
-    font-size: clamp($font-size-12 - 1px, 1.4vw, $font-size-16 - 1px);
+    font-size: clamp($font-size-12 - 1px, 2vw, $font-size-16 - 1px);
     line-height: 1.6;
     color: var(--text-light);
     max-width: 75ch;

@@ -1,33 +1,14 @@
 "use client";
 
-import { forwardRef, useRef } from "react";
-import { mergeProps } from "react-aria";
-import ButtonContent from "./ButtonContent";
-import {
-  useInteractiveBase,
-  mergeRefs,
-  buildButtonClassName,
-  buildDataState,
-} from "./useButtonBase";
+import { forwardRef } from "react";
+import { Link as RACLink } from "react-aria-components";
 import "./Button.scss";
 
-/**
- * ButtonDownload
- *
- * Renders a native <a download> styled like a button — for file downloads
- * (resume PDF, assets, etc.). Uses a plain anchor instead of next/link so
- * the browser actually triggers a download instead of client-side routing.
- *
- * `download` may be:
- *   - true            → use the server-suggested filename
- *   - "filename.ext"  → override the filename
- */
 const ButtonDownload = forwardRef(function ButtonDownload(
   {
     children,
     variant = "primary",
     size = "default",
-    loading = false,
     disabled = false,
     icon,
     iconPosition = "left",
@@ -35,75 +16,45 @@ const ButtonDownload = forwardRef(function ButtonDownload(
     download = true,
     target,
     rel,
-    onPress,
     className = "",
-    classNameContent = "",
-    ariaLabel,
     ...rest
   },
-  forwardedRef,
+  ref,
 ) {
-  const internalRef = useRef(null);
-  const ref = mergeRefs(internalRef, forwardedRef);
-
-  const isDisabled = disabled || loading;
-
-  const { mergedProps, state } = useInteractiveBase({ onPress, isDisabled });
-
-  const classes = buildButtonClassName({ variant, size, className });
-  const dataState = buildDataState({
-    variant,
-    size,
-    state,
-    isDisabled,
-    loading,
-  });
-
-  const downloadAttr = typeof download === "string" ? download : "";
-
-  if (isDisabled) {
-    return (
-      <span
-        ref={ref}
-        role="link"
-        aria-disabled="true"
-        className={classes}
-        aria-label={ariaLabel}
-        {...dataState}
-      >
-        <ButtonContent
-          icon={icon}
-          iconPosition={iconPosition}
-          loading={loading}
-          classNameContent={classNameContent}
-        >
-          {children}
-        </ButtonContent>
-      </span>
-    );
-  }
+  const downloadAttr =
+    typeof download === "string" ? download : download ? "" : undefined;
+  const showLeftIcon = icon && iconPosition === "left";
+  const showRightIcon = icon && iconPosition === "right";
 
   return (
-    <a
+    <RACLink
       ref={ref}
       href={href}
       download={downloadAttr}
       target={target}
       rel={rel}
-      className={classes}
-      aria-label={ariaLabel}
-      {...mergeProps(mergedProps, rest)}
-      {...dataState}
+      isDisabled={disabled}
+      className={["btn", `btn--${variant}`, `btn--${size}`, className]
+        .filter(Boolean)
+        .join(" ")}
+      {...rest}
     >
-      <ButtonContent
-        icon={icon}
-        iconPosition={iconPosition}
-        loading={loading}
-        classNameContent={classNameContent}
-      >
-        {children}
-      </ButtonContent>
-    </a>
+      <span className="btn__content">
+        {showLeftIcon ? (
+          <span className="btn__icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+
+        {children ? <span className="btn__label">{children}</span> : null}
+
+        {showRightIcon ? (
+          <span className="btn__icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+      </span>
+    </RACLink>
   );
 });
 

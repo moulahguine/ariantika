@@ -5,6 +5,7 @@ export {
   staggerContainer,
   staggerContainerFast,
   fadeUp,
+  fadeUpLight,
   fadeUpStagger,
   hoverPop,
   fadeIn,
@@ -17,12 +18,8 @@ export {
   slideInRight,
   deckSpreadContainer,
   deckSpreadCard,
+  DECK_SPREAD_DESKTOP_MEDIA,
   stickyBarReveal,
   stickyBarTransition,
-  CAROUSEL_PERSPECTIVE,
-  carouselSlideTransition,
-  getCarouselSlideStates,
-  carouselDotProgress,
-  carouselDotProgressTransition,
 } from "./motion";
 export { useHideOnScrollDown } from "./use-hide-on-scroll-down";

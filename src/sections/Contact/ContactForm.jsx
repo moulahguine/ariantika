@@ -1,65 +1,119 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { Button } from "@/components";
-import { slideInRight } from "@/lib";
+import { useRef, useState } from "react";
+import { contact } from "@/data";
+import { Button as SiteButton } from "@/components";
+import { addToast } from "@/lib/toastQueue";
+import {
+  Form,
+  FieldError,
+  Input,
+  Label,
+  TextArea,
+  TextField,
+  Select,
+  Button as AriaButton,
+  SelectValue,
+  Popover,
+  ListBox,
+  ListBoxItem,
+} from "react-aria-components";
 
-// this is the formspree endpoint that is used to send the form data to the server
 const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_FORM_URL;
-const TOAST_DURATION_MS = 3000; // 3 seconds
+const REQUIRED_ERROR = "This field is required.";
+const EMAIL_ERROR = "Please enter a valid email address.";
+const requiredFieldNames = ["fullName", "email", "service", "message"];
 
-export default function ContactForm({ form }) {
-  // ---- form reference ----
+function getInitialValues() {
+  return {
+    fullName: "",
+    email: "",
+    service: "",
+    message: "",
+  };
+}
+
+function validateSingleField(name, value) {
+  const normalized = value.trim();
+
+  if (requiredFieldNames.includes(name) && !normalized) {
+    return REQUIRED_ERROR;
+  }
+
+  if (name === "email") {
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
+    if (!isValidEmail) return EMAIL_ERROR;
+  }
+
+  return "";
+}
+
+export default function ContactForm() {
+  const { form } = contact;
+
   const formRef = useRef(null);
-  // ---- toast timeout reference ----
-  const toastTimeoutRef = useRef(null);
-  // ---- is sending state ----
   const [isSending, setIsSending] = useState(false);
-  // ---- toast state ----
-  const [toast, setToast] = useState(null);
-
-  // ---- clear toast timeout ----
-  const clearToastTimeout = useCallback(() => {
-    clearTimeout(toastTimeoutRef.current);
-  }, []);
-
-  // ---- show toast ----
-  const showToast = useCallback(
-    (message, variant = "success") => {
-      clearToastTimeout();
-      setToast({ message, variant });
-      toastTimeoutRef.current = setTimeout(
-        () => setToast(null),
-        TOAST_DURATION_MS,
-      );
-    },
-    [clearToastTimeout],
+  const [values, setValues] = useState(getInitialValues);
+  const [errors, setErrors] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const isFormValid = requiredFieldNames.every(
+    (fieldName) => !validateSingleField(fieldName, values[fieldName] ?? ""),
   );
 
-  // ---- clear toast timeout on unmount ----
-  useEffect(() => clearToastTimeout, [clearToastTimeout]);
+  const showToast = (message, variant = "success") => {
+    addToast(message, variant);
+  };
 
-  // ---- handle submit ----
+  const setFieldValue = (name, value) => {
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: hasSubmitted ? validateSingleField(name, value) : "",
+    }));
+  };
+
+  const validateForm = () => {
+    const nextErrors = Object.fromEntries(
+      requiredFieldNames.map((fieldName) => [
+        fieldName,
+        validateSingleField(fieldName, values[fieldName] ?? ""),
+      ]),
+    );
+    setErrors(nextErrors);
+
+    return nextErrors;
+  };
+
+  const focusFirstInvalidField = (validationErrors) => {
+    const firstInvalidField = requiredFieldNames.find(
+      (fieldName) => validationErrors[fieldName],
+    );
+    if (!firstInvalidField) return;
+
+    const field = formRef.current?.querySelector(`[name="${firstInvalidField}"]`);
+    field?.focus();
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setHasSubmitted(true);
 
-    // ---- check if formspree endpoint is configured ----
+    const validationErrors = validateForm();
+    const hasValidationErrors = Object.values(validationErrors).some(Boolean);
+    if (hasValidationErrors) {
+      focusFirstInvalidField(validationErrors);
+      return;
+    }
+
     if (!FORMSPREE_ENDPOINT) {
       showToast(form.notConfiguredMessage, "error");
       return;
     }
-
-    // ---- get form element ----
     const formElement = formRef.current;
     if (!formElement) return;
 
-    // ---- set sending state ----
     setIsSending(true);
-
-    // ---- try to send form data ----
     try {
-      // ---- create form data ----
       const formData = new FormData(formElement);
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
@@ -67,35 +121,30 @@ export default function ContactForm({ form }) {
         headers: { Accept: "application/json" },
       });
 
-      // ---- check if response is ok ----
       if (!response.ok) {
         throw new Error("Formspree request failed");
       }
 
-      // ---- reset form ----
       formElement.reset();
+      setValues(getInitialValues());
+      setErrors({});
+      setHasSubmitted(false);
       showToast(form.successMessage, "success");
     } catch {
-      // ---- show error toast ----
       showToast(form.errorMessage, "error");
     } finally {
-      // ---- set sending state to false ----
       setIsSending(false);
     }
   };
 
   return (
-    // ---- contact form container ----
     <>
-      {/* ---- contact form ---- */}
-      <motion.form
-        variants={slideInRight}
+      <Form
         ref={formRef}
         className="contact__form"
         onSubmit={handleSubmit}
-        noValidate
+        validationBehavior="aria"
       >
-        {/* ---- honeypot field ---- */}
         <p className="contact__honeypot" aria-hidden="true">
           <label>
             Do not fill this out
@@ -112,96 +161,127 @@ export default function ContactForm({ form }) {
           const fieldId = `contact-${field.name}`;
           const isTextarea = field.type === "textarea";
           const isSelect = field.type === "select";
+          const FieldIcon = field.icon;
 
           return (
             <div
               key={field.name}
-              className={`contact__field${
+              className={`contact__field ${
                 isTextarea ? " contact__field--textarea" : ""
               }${isSelect ? " contact__field--select" : ""} ${field.name === "email" ? "contact__field--email" : ""} ${field.name === "fullName" ? "contact__field--full-name" : ""}`}
             >
-              {/* ---- field label ---- */}
-              <label className="contact__label" htmlFor={fieldId}>
-                {field.label}
-
-                {field.required ? (
-                  <span className="contact__label--required">*</span>
-                ) : null}
-              </label>
-
-              {/* ---- field textarea ---- */}
               {isTextarea ? (
-                <textarea
-                  className="contact__textarea"
-                  id={fieldId}
+                <TextField
                   name={field.name}
-                  rows={5}
-                  required={field.required}
-                  disabled={isSending}
-                />
-              ) : /* ---- field select ---- */ isSelect ? (
-                <select
-                  className="contact__select"
-                  id={fieldId}
-                  name={field.name}
-                  defaultValue=""
-                  disabled={isSending}
+                  isRequired
+                  isDisabled={isSending}
+                  value={values[field.name] ?? ""}
+                  onChange={(value) => setFieldValue(field.name, value)}
+                  isInvalid={Boolean(errors[field.name])}
                 >
-                  <option value="" disabled>
-                    {field.optionsGroupLabel}
-                  </option>
-                  {field.options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  <Label className="contact__label contact__label--textarea">
+                    {FieldIcon ? (
+                      <span className="contact__label-icon" aria-hidden="true">
+                        <FieldIcon />
+                      </span>
+                    ) : null}
+                    {field.label}
+                    <span className="contact__label--required">{form.requireIcon}</span>
+                  </Label>
+                  <TextArea className="contact__textarea" id={fieldId} />
+                  <FieldError className="contact__error">
+                    {errors[field.name]}
+                  </FieldError>
+                </TextField>
+              ) : isSelect ? (
+                <Select
+                  className="contact__select"
+                  name={field.name}
+                  isDisabled={isSending}
+                  isRequired
+                  placeholder={field.label}
+                  selectedKey={values[field.name] || null}
+                  onSelectionChange={(key) =>
+                    setFieldValue(field.name, key ? String(key) : "")
+                  }
+                  isInvalid={Boolean(errors[field.name])}
+                >
+                  <Label className="contact__visually-hidden">{field.label}</Label>
+                  <AriaButton
+                    className={({ isPlaceholder }) =>
+                      !isPlaceholder
+                        ? "contact__select--label contact__select--label--selected"
+                        : "contact__select--label"
+                    }
+                  >
+                    <SelectValue className="contact__select--label-text" />
+
+                    <span
+                      className="contact__select--label-icon"
+                      aria-hidden="true"
+                    >
+                      <FieldIcon />
+                    </span>
+                  </AriaButton>
+
+                  <Popover className="contact__popover">
+                    <ListBox className="contact__listbox">
+                      {field.options.map((option) => (
+                        <ListBoxItem
+                          key={option.value}
+                          id={option.value}
+                          className="contact__option"
+                        >
+                          {option.label}
+                        </ListBoxItem>
+                      ))}
+                    </ListBox>
+                  </Popover>
+                  <FieldError className="contact__error">
+                    {errors[field.name]}
+                  </FieldError>
+                </Select>
               ) : (
-                /* ---- field input ---- */ <input
-                  className="contact__input"
-                  id={fieldId}
+                <TextField
                   name={field.name}
                   type={field.type}
                   autoComplete={field.autoComplete}
-                  required={field.required}
-                  disabled={isSending}
-                />
+                  isRequired
+                  isDisabled={isSending}
+                  value={values[field.name] ?? ""}
+                  onChange={(value) => setFieldValue(field.name, value)}
+                  isInvalid={Boolean(errors[field.name])}
+                >
+                  <Label className="contact__label">
+                    {FieldIcon ? (
+                      <span className="contact__label-icon" aria-hidden="true">
+                        <FieldIcon />
+                      </span>
+                    ) : null}
+                    {field.label}
+                    <span className="contact__label--required">{form.requireIcon}</span>
+                  </Label>
+                  <Input className="contact__input" id={fieldId} />
+                  <FieldError className="contact__error">
+                    {errors[field.name]}
+                  </FieldError>
+                </TextField>
               )}
             </div>
           );
         })}
 
-        {/* ---- submit button ---- */}
-        <Button
+        <SiteButton
           type="submit"
           variant="primary"
           size="default"
           className="contact__submit"
           loading={isSending}
-          disabled={isSending}
+          disabled={isSending || !isFormValid}
         >
           {isSending ? form.sendingLabel : form.submitLabel}
-        </Button>
-      </motion.form>
-
-      {/* ---- toast ---- */}
-      <AnimatePresence>
-        {/* ---- toast message ---- */}
-        {toast ? (
-          <motion.output
-            key={toast.message}
-            role="status"
-            aria-live="polite"
-            className={`contact__toast contact__toast--${toast.variant}`}
-            initial={{ opacity: 0, y: 12, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.96 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-          >
-            {toast.message}
-          </motion.output>
-        ) : null}
-      </AnimatePresence>
+        </SiteButton>
+      </Form>
     </>
   );
 }

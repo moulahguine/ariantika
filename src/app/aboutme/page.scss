@@ -2,188 +2,81 @@
 
 .about__me {
   @include page;
-  @include grid-backdrop;
 
-  // --------- header ---------
-  &-header {
-    @include page-header;
-  }
-
-  // --------- container ---------
+  // ---- container ----
   &-container {
     @include container;
-
-    @media (max-width: $breakpoint-2md) {
-      padding: $space-4;
-    }
   }
 
-  // --------- steps list ---------
+  // ---- steps list ----
   &-steps {
     @include flex-column;
     align-items: center;
-    gap: clamp($space-4, 4vw, $space-72);
+    gap: clamp($space-24, 4vw, $space-48);
+    width: fit-content;
+    margin-inline: auto;
+
+    @media (width <= $breakpoint-md) {
+      padding-inline: clamp($space-4, 1vw, $space-12);
+    }
   }
 
-  // --------- each step row ---------
-  &-step {
+  // ---- each step row ----
+  &--step {
     @include flex-center;
-    gap: $space-32;
-    padding: clamp($space-24, 14vw, $space-48) clamp($space-4, 14vw, $space-8);
+    gap: clamp($space-12, 5vw, $space-24);
+    padding: clamp($space-24, 4vw, $space-48) clamp($space-4, 14vw, $space-8);
     width: 100%;
 
-    // image LEFT / content RIGHT
-    &--left {
-      .about__me-wrapper--photo {
-        order: 2;
-      }
-      .about__me-content {
-        order: 1;
-      }
+    &:nth-child(odd) {
+      flex-direction: row-reverse;
     }
 
-    // image RIGHT / content LEFT
-    &--right {
-      .about__me-wrapper--photo {
-        order: 1;
-      }
-      .about__me-content {
-        order: 2;
-      }
+    @media (width <= $breakpoint-md) {
+      flex-direction: column !important;
     }
 
-    @media (max-width: $breakpoint-2md) {
-      flex-direction: column;
-      padding-block: clamp($space-12, 10vw, $space-24);
-
-      // image LEFT / content RIGHT
-      &--left {
-        .about__me-wrapper--photo {
-          order: 1;
-        }
-        .about__me-content {
-          order: 2;
-        }
-      }
-
-      // image RIGHT / content LEFT
-      &--right {
-        .about__me-wrapper--photo {
-          order: 1;
-        }
-        .about__me-content {
-          order: 2;
-        }
-      }
-
-      &:nth-child(odd) {
-        .about__me-wrapper--photo {
-          display: flex;
-          justify-content: flex-end;
-        }
-      }
+    &:last-child {
+      margin-bottom: clamp($space-32, 4vw, $space-72);
     }
   }
 
-  // --------- image ---------
+  // ---- image wrapper ----
 
-  &-wrapper--photo {
+  &--wrapper {
     width: fit-content;
 
-    @media (max-width: $breakpoint-2md) {
+    @media (width <= $breakpoint-md) {
       width: 100%;
       padding-block: $space-20;
     }
   }
 
-  &-photo {
+  &--photo {
     position: relative;
-    width: clamp(300px, 32vw, 400px);
-    aspect-ratio: 1/1;
-    background-color: var(--surface);
-    // border-radius: $radius-md;
-    box-shadow: 5px 5px 5px rgb(from black r g b / 0.1);
-    padding: clamp($space-8, 6vw, $space-10) clamp($space-8, 6vw, $space-10)
-      clamp($space-32, 6vw, $space-48);
+    width: clamp(290px, 35vw, 350px);
+    aspect-ratio: 1;
+    background-color: var(--image-bg);
+    padding: clamp($space-4, 6vw, $space-8) clamp($space-4, 6vw, $space-8)
+      clamp($space-24, 6vw, $space-40);
+    transform: rotate(2.2deg);
+    border: 2px dashed rgb(from var(--primary) r g b / 0.2);
 
-    &--left {
+    &-odd {
       transform: rotate(-2.2deg);
-    }
-    &--right {
-      transform: rotate(2.2deg);
-    }
-    // image inside polaroid
-    &-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-    }
-
-    // washi tape pieces
-    &-tape {
-      position: absolute;
-      top: 0px;
-      height: clamp(20px, 6vw, 40px);
-      width: clamp(50px, 6vw, 70px);
-      box-shadow: 0 2px 4px rgb(15 23 42 / 0.1);
-      opacity: 0.85;
-      background: repeating-linear-gradient(
-        45deg,
-        rgb(from var(--accent) r g b / 0.45),
-        rgb(from var(--accent) r g b / 0.45) 6px,
-        rgb(from var(--accent) r g b / 0.65) 6px,
-        rgb(from var(--accent) r g b / 0.65) 7px
-      );
-
-      &--tl {
-        left: -10px;
-
-        &-left {
-          rotate: -22deg;
-        }
-        &-right {
-          rotate: 22deg;
-        }
-      }
-
-      &--tr {
-        right: -10px;
-
-        &-left {
-          rotate: 22deg;
-        }
-        &-right {
-          rotate: -22deg;
-        }
-      }
-    }
-
-    // handwritten caption with curve arrow
-    &-caption {
-      display: flex;
-      align-items: flex-start;
-      gap: $space-4;
-      position: absolute;
-      left: $space-16;
-      bottom: -$space-24;
-      max-width: 90%;
-      color: var(--text-muted);
-      font-family: $font-brush;
-      font-size: clamp($font-size-14, 1.2vw, $font-size-18);
-      line-height: 1.25;
-
-      &-curve {
-        width: 22px;
-        height: 15px;
-        flex-shrink: 0;
-        color: var(--text-muted);
-      }
+      margin-left: auto;
     }
   }
+  // image inside polaroid
+  &-img {
+    object-fit: cover;
+    object-position: top;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 
-  // --------- content side ---------
-  &-content {
+  // ---- content side ----
+  &--content {
     @include flex-column;
     gap: clamp($space-12, 1.5vw, $space-16);
 
@@ -192,32 +85,33 @@
       gap: $space-4;
       justify-content: flex-start;
       font-family: $font-brush;
-      font-size: clamp($font-size-24, 3vw, $font-size-40);
+      font-size: clamp($font-size-28, 3.5vw, $font-size-32);
       font-weight: $fw-bold;
-      color: var(--secondary);
-      letter-spacing: 1px;
+      color: var(--accent);
+      letter-spacing: -1px;
 
-      .about__me-step--amber & {
-        color: var(--accent);
+      &-odd {
+        color: var(--secondary);
       }
     }
 
     &-icon {
+      @include flex-center;
       font-size: inherit;
-      color: rgb(from var(--accent) r g b / 0.5);
+      color: rgb(from var(--secondary) r g b / 0.5);
       margin-right: $space-4;
 
-      .about__me-step--amber & {
-        color: rgb(from var(--secondary) r g b / 0.5);
+      &-odd {
+        color: rgb(from var(--accent) r g b / 0.5);
       }
     }
 
     &-body {
-      font-size: clamp($font-size-14, 1.05vw, $font-size-16);
+      max-width: 60ch;
+      font-size: clamp($font-size-12 + 1px, 1vw, $font-size-16);
       color: var(--text-muted);
-      line-height: 1.75;
-      max-width: 65ch;
-      text-indent: clamp($space-8, 1.5vw, $space-12);
+      line-height: 1.7;
+      text-indent: clamp($space-10, 1.5vw, $space-12);
     }
   }
 }

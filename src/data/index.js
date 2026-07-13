@@ -5,9 +5,10 @@ export { hero } from "./hero";
 export {
   aboutMetadata,
   aboutSection,
-  aboutSteps,
-  aboutCarousel,
-  aboutCarouselStepIds,
+  aboutMePageSteps,
+  aboutMePageCarousel,
+  aboutMePageStepsById,
+  aboutMePageCarouselStepIds,
 } from "./about";
 
 // ---- social links data ----
@@ -18,10 +19,11 @@ export { experienceSection } from "./experience";
 
 // ---- services data ----
 export {
-  servicesMeta,
+  servicesMetaData,
   servicesSection,
   servicesPage,
   whyChooseMe,
+  faq,
 } from "./services";
 
 // ---- contact data ----

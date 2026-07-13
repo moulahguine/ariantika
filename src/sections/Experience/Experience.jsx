@@ -25,8 +25,13 @@ doesn't, fall back to using <details> and <summary> for the expand/collapse beha
 */
 
 export default function Experience() {
-  const { id, header, icon: ChevronIcon, items } = experienceSection;
-  const [openId, setOpenId] = useState(null);
+  const {
+    experienceHeadingId,
+    header,
+    icon: ChevronIcon,
+    items,
+  } = experienceSection;
+  const [openId, setOpenId] = useState(items[0]?.id ?? null);
 
   const handleToggle = (id) => {
     setOpenId((current) => (current === id ? null : id));
@@ -34,17 +39,13 @@ export default function Experience() {
 
   return (
     // ---- experience section ----
-    <section
-      className="experience"
-      id={id}
-      aria-labelledby="experience-heading"
-    >
+    <section className="experience" aria-labelledby={experienceHeadingId}>
       {/* ---- section header ---- */}
       <SectionHeader
-        headingId="experience-heading"
+        headingId={experienceHeadingId}
         className="experience__header"
-        prefix={header.title}
-        accent={header.titleAccent}
+        prefix={header.prefix}
+        accent={header.accent}
         subtitle={header.subtitle}
       />
 
@@ -71,13 +72,14 @@ export default function Experience() {
             >
               {/* ---- head summary ---- */}
               <button
-                type="button"
                 className="experience__head"
                 onClick={() => handleToggle(item.id)}
                 aria-expanded={isOpen}
+                aria-label={`Experience ${item.role} at ${item.company}`}
+                aria-controls={`experience-content-${item.id}`}
               >
                 {/* ---- image ---- */}
-                <div className="experience__image">
+                <div className="experience__image" aria-hidden="true">
                   {item.logo ? (
                     <Image
                       className="experience__image-logo"

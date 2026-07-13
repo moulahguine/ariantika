@@ -31,6 +31,21 @@ export const fadeUp = {
   },
 };
 
+// lift reveal without blur — sections, cards, lighter blocks
+export const fadeUpLight = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: EASE_OUT_EXPO },
+  },
+};
+
+export const slideInUp = {
+  hidden: { opacity: 0, y: 28, filter: "blur(16px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
+
 // blur + lift reveal with per-item delay — pass `custom` index via the `custom` prop
 export const fadeUpStagger = {
   hidden: { opacity: 0, y: 40, filter: "blur(12px)" },
@@ -133,121 +148,12 @@ export const slideInRight = {
   },
 };
 
-// ---- deck-of-cards spread ----
-export const deckSpreadContainer = {
-  hidden: {},
-  visible: {},
-};
-
-// how long the center card takes to scale in before the side cards move
-const DECK_CENTER_DURATION = 0.9;
-
-// Wrapped layout (≤1279px): simple staggered fade-up per card.
-const deckSpreadWrapped = {
-  hidden: {
-    opacity: 0,
-    y: 40,
-    filter: "blur(12px)",
-  },
-  visible: (index = 0) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.7,
-      ease: EASE_OUT_EXPO,
-      delay: index * 0.1,
-    },
-  }),
-};
-
-export const deckSpreadCard = {
-  hidden: ({ index, isDesktop }) => {
-    if (!isDesktop) return deckSpreadWrapped.hidden;
-
-    switch (index) {
-      case 0:
-        return {
-          opacity: 0,
-          x: "100%",
-        };
-
-      case 1:
-        return {
-          opacity: 0,
-          scale: 0.5,
-        };
-
-      case 2:
-        return {
-          opacity: 0,
-          x: "-100%",
-        };
-
-      default:
-        return {};
-    }
-  },
-
-  visible: ({ index, isDesktop }) => {
-    if (!isDesktop) return deckSpreadWrapped.visible(index);
-
-    switch (index) {
-      case 0:
-        return {
-          opacity: 1,
-          x: "0%",
-          scale: 1,
-          transition: {
-            delay: DECK_CENTER_DURATION - 0.3,
-            duration: 0.3,
-            ease: "linear",
-          },
-        };
-
-      case 1:
-        return {
-          opacity: 1,
-          scale: 1,
-          transition: {
-            duration: DECK_CENTER_DURATION,
-            ease: EASE_OUT_EXPO,
-          },
-        };
-
-      case 2:
-        return {
-          opacity: 1,
-          x: "0%",
-          scale: 1,
-          transition: {
-            delay: DECK_CENTER_DURATION - 0.3,
-            duration: 0.3,
-            ease: "linear",
-          },
-        };
-
-      default:
-        return {};
-    }
-  },
-
-  // lets child cursor variants respond to card hover
-  hover: {},
-};
-
-// sticky bars (header, toolbar) — slide up and fade out when hidden
-export const stickyBarReveal = {
-  hidden: { opacity: 0, y: -100 },
-  visible: { opacity: 1, y: 0 },
-};
-
-export const stickyBarTransition = { duration: 0.7, ease: "easeInOut" };
-
-// ---- 3D image carousel ----
-export const CAROUSEL_SIDE_ROTATE_DEG = 52;
-export const CAROUSEL_SIDE_DEPTH = -140;
-export const CAROUSEL_PERSPECTIVE = 1200;
+// ---- 3D carousel ----
+export const CAROUSEL_SIDE_X = "60%";
+export const CAROUSEL_SIDE_ROTATE_DEG = 50;
+export const CAROUSEL_SIDE_DEPTH = -150;
+export const CAROUSEL_SIDE_SCALE = 0.8;
+export const DECK_SPREAD_DESKTOP_MEDIA = "(min-width: 1279px)";
 
 export const carouselSlideTransition = {
   type: "spring",
@@ -271,31 +177,114 @@ export function getCarouselSlideStates(reduceMotion = false) {
       zIndex: 3,
     },
     prev: {
-      x: "-54%",
+      x: "-60%",
       rotateY: sideRotate,
       z: sideDepth,
-      scale: 0.78,
-      opacity: 0.92,
-      filter: "blur(0px) brightness(0.88)",
+      scale: CAROUSEL_SIDE_SCALE,
+      opacity: 1,
+      filter: "blur(7px) brightness(0.5)",
       zIndex: 2,
     },
     next: {
-      x: "54%",
+      x: CAROUSEL_SIDE_X,
       rotateY: -sideRotate,
       z: sideDepth,
-      scale: 0.78,
-      opacity: 0.92,
-      filter: "blur(0px) brightness(0.88)",
+      scale: CAROUSEL_SIDE_SCALE,
+      opacity: 1,
+      filter: "blur(7px) brightness(0.5)",
       zIndex: 2,
     },
   };
 }
 
-export const carouselDotProgress = {
-  initial: { scaleX: 0 },
-  animate: { scaleX: 1 },
+export const deckSpreadContainer = {
+  hidden: {},
+  visible: {},
 };
 
-export function carouselDotProgressTransition(durationMs) {
-  return { duration: durationMs / 1000, ease: "linear" };
-}
+const DECK_CENTER_DURATION = 0.9;
+
+const deckSpreadWrapped = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+    filter: "blur(12px)",
+  },
+  visible: (index = 0) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.7,
+      ease: EASE_OUT_EXPO,
+      delay: index * 0.1,
+    },
+  }),
+};
+
+const deckSpreadSideTransition = {
+  delay: DECK_CENTER_DURATION - 0.3,
+  duration: 0.3,
+  ease: "linear",
+};
+
+const deckSpreadCenterTransition = {
+  duration: DECK_CENTER_DURATION,
+  ease: EASE_OUT_EXPO,
+};
+
+export const deckSpreadCard = {
+  hidden: ({ index, isDesktop }) => {
+    if (!isDesktop) return deckSpreadWrapped.hidden;
+
+    switch (index) {
+      case 0:
+        return { opacity: 0, x: "100%" };
+      case 1:
+        return { opacity: 0, scale: 0.5 };
+      case 2:
+        return { opacity: 0, x: "-100%" };
+      default:
+        return {};
+    }
+  },
+
+  visible: ({ index, isDesktop }) => {
+    if (!isDesktop) return deckSpreadWrapped.visible(index);
+
+    switch (index) {
+      case 0:
+        return {
+          opacity: 1,
+          x: "0%",
+          scale: 1,
+          transition: deckSpreadSideTransition,
+        };
+      case 1:
+        return {
+          opacity: 1,
+          scale: 1,
+          transition: deckSpreadCenterTransition,
+        };
+      case 2:
+        return {
+          opacity: 1,
+          x: "0%",
+          scale: 1,
+          transition: deckSpreadSideTransition,
+        };
+      default:
+        return {};
+    }
+  },
+
+  hover: {},
+};
+
+// sticky bars (header, toolbar) — slide up and fade out when hidden
+export const stickyBarReveal = {
+  hidden: { opacity: 0, y: -100 },
+  visible: { opacity: 1, y: 0 },
+};
+
+export const stickyBarTransition = { duration: 0.7, ease: "easeInOut" };

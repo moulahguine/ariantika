@@ -25,7 +25,7 @@
   }
 
   &[data-pressed] {
-    transform: scale(0.97);
+    transform: scale(0.99);
     border-radius: $radius-xl;
   }
 
@@ -55,7 +55,7 @@
       background-color: var(--primary-hover);
       border-color: var(--primary-hover);
       border-radius: $radius-xl;
-      scale: 0.97;
+      scale: 0.99;
     }
 
     &[data-pressed] {

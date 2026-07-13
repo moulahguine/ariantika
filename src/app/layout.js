@@ -1,5 +1,5 @@
-import { Inter, Sour_Gummy, Caveat_Brush } from "next/font/google";
-import { Header, Footer } from "@/components";
+import { Inter, Sour_Gummy, Caveat_Brush, Amiri } from "next/font/google";
+import { Header, Footer, ToastRegion } from "@/components";
 import { generateMetadata } from "./metadata";
 
 import "@/assets/styles/main.scss";
@@ -62,11 +62,18 @@ const caveatBrush = Caveat_Brush({
   display: "swap",
 });
 
+const amiri = Amiri({
+  subsets: ["arabic"],
+  weight: ["400"],
+  variable: "--font-arabic",
+  display: "swap",
+});
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sourGummy.variable} ${caveatBrush.variable}`}
+      className={`${inter.variable} ${sourGummy.variable} ${caveatBrush.variable} ${amiri.variable}`}
     >
       <head>
         <script
@@ -80,6 +87,7 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         <Footer />
+        <ToastRegion />
       </body>
     </html>
   );

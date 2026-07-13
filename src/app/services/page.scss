@@ -1,21 +1,8 @@
 @use "../../assets/styles" as *;
 
-// ---- animation properties ----
-@property --marker-icon-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: transparent;
-}
-
 // ---- services page ----
 .services__page {
   @include page;
-  @include grid-backdrop;
-
-  // --------- page header ---------
-  &-header {
-    @include page-header;
-  }
 
   // --------- container ---------
   &-container {
@@ -26,441 +13,284 @@
 
   // --------- service section ---------
   &-section {
-    @include flex-column;
-    --accent-color: var(--primary);
-    position: relative;
-    gap: clamp($space-20, 3vw, $space-32);
-    padding-block: clamp($space-16, 4vw, $space-32);
-    scroll-margin-top: clamp($space-48, 12vh, $space-96);
+    @include flex-between;
+    gap: clamp($space-8, 2vw, $space-10);
+    border-radius: clamp($radius-lg, 2vw, $radius-xl);
+    padding: clamp($space-14, 1.5vw, $space-16);
+    background-color: var(--background);
+    @include section;
 
-    // ---- section theme ----
     &--primary {
-      --accent-color: var(--primary);
+      --service-color: var(--primary);
     }
+
     &--secondary {
-      --accent-color: var(--secondary);
+      --service-color: var(--secondary);
     }
+
     &--accent {
-      --accent-color: var(--accent);
+      --service-color: var(--accent);
     }
 
-    // ---- section heading ----
-    &-head {
-      @include flex-center;
-      gap: clamp($space-8, 1vw, $space-12);
-      background-color: rgb(from var(--accent-color) r g b / 0.05);
-      padding: clamp($space-8, 1vw, $space-12);
-      border-radius: $radius-lg;
-      box-shadow:
-        -$space-4 0 0 0 rgb(from var(--accent-color) r g b / 0.8),
-        $space-4 0 0 rgb(from var(--accent-color) r g b / 0.8);
+    &:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
 
-      @media (min-width: $breakpoint-2md) {
-        justify-content: flex-start;
+    @media (width <= $breakpoint-md) {
+      flex-direction: column;
+
+      &:nth-child(odd) {
+        flex-direction: column;
+      }
+    }
+  }
+
+  &--wrapper {
+    max-width: clamp(280px, 50vw, 500px);
+    aspect-ratio: 1;
+  }
+
+  &-image {
+    object-fit: cover;
+    filter: drop-shadow(0 0 50px rgb(from var(--service-color) r g b / 0.1));
+  }
+
+  &--content {
+    width: fit-content;
+    @include flex-column;
+    gap: clamp($space-10, 2vw, $space-12);
+  }
+
+  &-title {
+    font-family: $font-display;
+    font-size: clamp($font-size-20, 2vw, $font-size-32);
+    font-weight: $fw-bold;
+    color: var(--service-color);
+  }
+
+  &-description {
+    font-size: clamp($font-size-12 + 1px, 1vw, $font-size-16);
+    color: var(--text-light);
+    line-height: 1.6;
+    text-wrap: pretty;
+    word-break: keep-all;
+    max-width: 60ch;
+  }
+
+  &--items {
+    @include flex-column;
+    gap: clamp($space-4, 1vw, $space-8);
+    width: fit-content;
+  }
+
+  &-item {
+    display: flex;
+    justify-content: flex-start;
+    gap: clamp($space-4, 1vw, $space-8);
+
+    &-icon {
+      svg {
+        font-size: clamp($font-size-10, 2vw, $font-size-14 - 1px);
+        color: var(--service-color);
       }
     }
 
-    // ---- section number ----
-    &-number {
-      font-family: $font-brush;
-      font-size: clamp($font-size-32, 2vw, $font-size-36);
-      font-weight: $fw-bold;
-      color: rgb(from var(--accent-color) r g b / 0.4);
-      letter-spacing: 0.5px;
-    }
-
-    // ---- section title ----
-    &-title {
-      font-family: $font-brush;
-      font-size: clamp($font-size-20, 2vw, $font-size-32);
-      font-weight: $fw-bold;
-      color: var(--accent-color);
-    }
-
-    // ---- section intro ----
-    &-intro {
-      @include flex-between;
-      align-items: flex-start;
-      position: relative;
-
-      @media (max-width: $breakpoint-2md) {
-        flex-direction: column-reverse;
-        align-items: center;
-      }
-    }
-
-    // ---- section description ----
-    &-description {
-      font-size: clamp($font-size-14, 1.5vw, $font-size-18);
-      color: rgb(from var(--text) r g b / 0.8);
-      line-height: 1.6;
-      text-wrap: balance;
-      word-break: keep-all;
-      max-width: 70ch;
-      width: fit-content;
-    }
-
-    // ---- section figure(illustration) ----
-    &-figure {
-      @include flex-center;
-      gap: clamp($space-8, 1vw, $space-12);
-      max-width: clamp(250px, 25vw, 400px);
-      aspect-ratio: 1 / 1;
-      position: absolute;
-      right: 0;
-      top: 0;
-
-      &-caption {
-        display: none;
-      }
-
-      @media (max-width: $breakpoint-2md) {
-        position: static;
-      }
-    }
-
-    // ---- section image ----
-    &-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    // ---- section block ----
-    &-block {
-      @include flex-column;
-      gap: clamp($space-12, 1.5vw, $space-20);
-
-      &:has(.services__page-section-process) {
-        position: relative;
-      }
-    }
-
-    // ---- section list subhead ----
-    &-subhead {
-      font-family: $font-brush;
-      font-size: clamp($font-size-24, 2vw, $font-size-28);
-      font-weight: $fw-bold;
-      color: rgb(from var(--text) r g b / 0.8);
-      letter-spacing: 0.5px;
-      position: relative;
-      width: fit-content;
-      margin: 0;
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -5px;
-        width: clamp(100px, 10vw, 120px);
-        height: clamp(8px, 1vw, 10px);
-        background-color: rgb(from var(--accent-color) r g b / 0.8);
-        $squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'%3E%3Cpath d='M0 4 Q5 0 10 4 T20 4 T30 4 T40 4 T50 4 T60 4 T70 4 T80 4 T90 4 T100 4 T110 4 T120 4' stroke='black' fill='none' stroke-width='2'/%3E%3C/svg%3E");
-        mask: $squiggle repeat-x;
-        mask-size: contain;
-        -webkit-mask: $squiggle repeat-x;
-        -webkit-mask-size: contain;
-      }
-    }
-
-    // ---- section list items ----
-    &-list-items {
-      @include flex-column;
-      gap: clamp($space-8, 1vw, $space-12);
-      width: fit-content;
-    }
-
-    // ---- section list item ----
-    &-list-item {
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      gap: clamp($space-4, 1vw, $space-8);
-      font-size: clamp($font-size-12, 1.05vw, $font-size-14);
+    &-text {
+      font-size: clamp($font-size-12, 1.05vw, $font-size-16);
       color: var(--text-muted);
       line-height: 1.75;
-
-      &-icon {
-        @include flex-center;
-        margin-left: clamp($space-4, 1vw, $space-8);
-        margin-top: -1px;
-        overflow: hidden;
-        height: 1.75em;
-        flex-shrink: 0;
-
-        svg {
-          color: var(--accent-color);
-        }
-      }
-    }
-
-    // ---- section process ----
-    &-process {
-      --process-step: 0.48s;
-      position: relative;
-
-      // ---- section process started ----
-      &--started {
-        // ---- section process marker animation ----
-        @media (prefers-reduced-motion: no-preference) {
-          .services__page-section-process-marker {
-            animation: marker-icon-fill linear forwards paused;
-            animation-duration: calc(var(--process-step) * 0.22);
-            animation-delay: calc(var(--i) * var(--process-step));
-
-            &::before {
-              animation: marker-fill linear forwards paused;
-              animation-duration: calc(var(--process-step) * 0.22);
-              animation-delay: calc(var(--i) * var(--process-step));
-            }
-          }
-
-          .services__page-section-process-connector-fill {
-            animation: connector-fill linear forwards paused;
-            animation-duration: calc(var(--process-step) * 0.78);
-            animation-delay: calc(
-              var(--i) * var(--process-step) + var(--process-step) * 0.22
-            );
-          }
-        }
-      }
-
-      // ---- section process in view ----
-      &--started#{&}--in-view {
-        @media (prefers-reduced-motion: no-preference) {
-          .services__page-section-process-marker {
-            animation-play-state: running;
-
-            &::before {
-              animation-play-state: running;
-            }
-          }
-
-          .services__page-section-process-connector-fill {
-            animation-play-state: running;
-          }
-        }
-      }
-    }
-
-    // ---- section process items ----
-    &-process-items {
-      --process-gap: clamp(#{$space-32}, 1.5vw, #{$space-48});
-      --process-marker-size: clamp(55px, 2.5vw, 70px);
-
-      position: relative;
-      padding-block: clamp($space-16, 4vw, $space-24);
-      @include flex-center;
-      gap: var(--process-gap);
-
-      @media (max-width: $breakpoint-2md) {
-        flex-direction: column;
-        margin-inline: auto;
-        width: clamp(350px, 25vw, 450px);
-
-        > .services__page-section-process-item:nth-of-type(even) {
-          align-self: flex-end;
-        }
-        > .services__page-section-process-item:nth-of-type(odd) {
-          align-self: flex-start;
-        }
-      }
-    }
-
-    // ---- section process connectors ----
-    &-process-connector-layer {
-      pointer-events: none;
-    }
-
-    &-process-connector-track,
-    &-process-connector-fill {
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    &-process-connector-fill {
-      opacity: 0.92;
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-
-      @media (prefers-reduced-motion: reduce) {
-        stroke-dashoffset: 0;
-        animation: none;
-      }
-    }
-
-    // ---- section process item ----
-    &-process-item {
-      flex: 1;
-      @include flex-column;
-      align-items: center;
-      gap: clamp($space-4, 1vw, $space-8);
-      position: relative;
-      z-index: $z-base + 1;
-    }
-
-    // ---- section process marker ----
-    &-process-marker {
-      @include flex-center;
-      width: var(--process-marker-size);
-      height: var(--process-marker-size);
-      background-color: rgb(from var(--accent-color) r g b / 0.07);
-      border-radius: 50%;
-      position: relative;
-
-      --marker-icon-color: var(--accent-color);
-
-      svg {
-        position: relative;
-        z-index: 2;
-        color: var(--marker-icon-color);
-        font-size: clamp($font-size-16, 2vw, $font-size-20);
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        background-color: var(--accent-color);
-        border-radius: 50%;
-        opacity: 0;
-        transform: scale(0);
-        transform-origin: center;
-      }
-
-      // ---- section process reduced motion ----
-      @media (prefers-reduced-motion: reduce) {
-        &::before {
-          opacity: 1;
-          transform: scale(1);
-        }
-
-        svg {
-          color: var(--text-inverse);
-        }
-      }
-    }
-
-    @keyframes marker-fill {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    @keyframes marker-icon-fill {
-      to {
-        --marker-icon-color: white;
-      }
-    }
-
-    @keyframes connector-fill {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-
-    // ---- section process title ----
-    &-process-title {
-      font-size: clamp($font-size-12, 1.05vw, $font-size-16);
-      color: rgb(from var(--text-muted) r g b);
-      text-wrap: nowrap;
-      text-align: center;
     }
   }
 
   // ---- why choose me ----
-  &-why-choose {
+  &--why-choose {
     @include section;
 
-    // ---- why choose me container ----
-    .services__why-choose-container {
-      @include container;
-      @include flex-column;
-      overflow: hidden;
-      background-color: var(--primary-softer);
-      border-radius: clamp($radius-xl, 2.5vw, $radius-2xl);
-      padding: 0;
-    }
-
-    // ---- why choose me header ----
-    .services__why-choose-header {
-      @include page-header;
-      padding-block: clamp($space-32, 5vw, $space-48);
-      margin: 0;
-
-      &-description {
-        font-size: clamp($font-size-14, 1.5vw, $font-size-20);
-        font-family: $font-primary;
-        text-wrap: pretty;
-        max-width: 75ch;
-      }
-    }
-
-    // ---- why choose me grid ----
-    .services__why-choose-grid {
+    &-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp($space-8, 4vw, $space-16);
-      width: 100%;
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+      gap: clamp($space-10, 2vw, $space-16);
 
-      padding: clamp($space-16, 5vw, $space-24);
-
-      @media (max-width: $breakpoint-md) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      @media (max-width: $breakpoint-sm) {
-        grid-template-columns: 1fr;
+      @media (width <= $breakpoint-md) {
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
       }
     }
 
-    // ---- why choose me item ----
-    .services__why-choose-item {
-      @include flex-column;
-      align-items: center;
-      gap: clamp($space-8, 1.5vw, $space-16);
-      text-align: center;
-      background-color: var(--primary-on);
-      padding: clamp($space-16, 1.5vw, $space-20);
-      border-radius: $radius-xl;
-    }
-
-    // ---- why choose me icon ----
-    .services__why-choose-icon {
+    &-item {
+      flex: 1;
+      height: 200px;
+      background-color: var(--primary-softer);
+      border-radius: clamp($radius-md, 2vw, $radius-lg);
       @include flex-center;
-      width: clamp(3.25rem, 5vw, 4rem);
-      height: clamp(3.25rem, 5vw, 4rem);
-      color: rgb(from var(--accent) r g b / 0.8);
-      filter: drop-shadow(
-        5px 5px 1px rgb(from var(--accent-hover) r g b / 0.2)
-      );
+      flex-direction: column;
+      gap: clamp($space-10, 2vw, $space-16);
+      box-shadow: 0 0 2px var(--primary-soft);
+
+      transition: background-color 0.3s ease-in-out;
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: rgb(from var(--primary-soft) r g b / 0.6);
+
+          .services__page--why-choose-iconItem {
+            transform: scale(1.2) rotate(-5deg);
+          }
+        }
+      }
+    }
+
+    &-iconItem {
+      @include flex-center;
+      background-color: rgb(from var(--accent) r g b / 0.8);
+      border-radius: 50%;
+      padding: clamp($space-10, 2vw, $space-16);
+      transition: transform 0.3s ease-in-out;
 
       svg {
-        width: 100%;
-        height: 100%;
+        color: var(--text-inverse);
+        font-size: clamp($font-size-20, 8vw, $font-size-32);
+        filter: drop-shadow(0 0 1px rgb(from var(--text-inverse) r g b));
       }
     }
 
-    // ---- why choose me item title ----
-    .services__why-choose-item-title {
-      font-size: clamp($font-size-16, 1.35vw, $font-size-18);
+    &-titleItem {
+      word-break: keep-all;
+      text-wrap: nowrap;
+      font-size: clamp($font-size-14, 1vw, $font-size-16);
       font-weight: $fw-semibold;
-      color: var(--text);
-      line-height: $line-height-tight;
+      color: var(--text-muted);
+    }
+  }
+
+  // ---- faq ----
+  &--faq {
+    // width: 100%;
+    @include section;
+
+    header {
+      h2 {
+        word-spacing: -15px;
+      }
     }
 
-    // ---- why choose me item description ----
-    .services__why-choose-item-description {
-      font-size: clamp($font-size-12, 1.05vw, $font-size-14);
-      line-height: 1.6;
+    &-list {
+      padding-inline: clamp($space-8, 0.5vw, $space-10);
+    }
+
+    &-item {
+      padding-inline: clamp($space-8, 0.5vw, $space-10);
+      background-color: var(--background);
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.3s ease-in-out;
+
+      &:not([data-expanded]):hover {
+        background-color: var(--primary-softer);
+      }
+    }
+
+    &-heading {
+      margin: 0;
+    }
+
+    &-trigger {
+      @include flex-between;
+      width: 100%;
+      gap: clamp($space-12, 2vw, $space-24);
+      padding-block: clamp($space-16, 2vw, $space-24);
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+
+      &:focus-within {
+        border-radius: 0;
+      }
+    }
+
+    &-question {
+      font-size: clamp($font-size-14, 1.5vw, $font-size-18);
+      font-weight: $fw-medium;
+      line-height: 1.5;
+    }
+
+    &-icon {
+      @include flex-center;
+      flex-shrink: 0;
+      color: var(--accent);
+      font-size: clamp($font-size-18, 2vw, $font-size-24);
+
+      &-minus {
+        display: none;
+      }
+    }
+
+    &-item[data-expanded] &-icon {
+      &-plus {
+        display: none;
+      }
+
+      &-minus {
+        display: block;
+      }
+    }
+
+    &-panel {
+      overflow: clip;
+      height: var(--disclosure-panel-height);
+      transition: height 300ms linear;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+
+      p {
+        padding-bottom: clamp($space-16, 2vw, $space-24);
+        max-width: 60ch;
+        font-size: clamp($font-size-12, 1.05vw, $font-size-16);
+        color: var(--text-muted);
+        line-height: 1.7;
+      }
+    }
+  }
+
+  // ---- contact cta ----
+  &--contact {
+    @include section;
+
+    &-card {
+      @include flex-column;
+      align-items: center;
+      text-align: center;
+      gap: clamp($space-12, 2vw, $space-16);
+      padding: clamp($space-24, 4vw, $space-40);
+      border-radius: clamp($radius-lg, 2vw, $radius-xl);
+      background-color: var(--primary-softer);
+    }
+
+    &-avatar {
+      width: clamp(56px, 8vw, 72px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--surface);
+    }
+
+    &-title {
+      font-family: $font-display;
+      font-size: clamp($font-size-16, 2.5vw, $font-size-24);
+      font-weight: $fw-bold;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    &-subtitle {
+      max-width: 58ch;
+      font-size: clamp($font-size-14, 1.2vw, $font-size-16);
       color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    &-button {
+      margin-top: clamp($space-8, 1vw, $space-16);
     }
   }
 }

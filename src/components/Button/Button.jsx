@@ -1,14 +1,7 @@
 "use client";
 
-import { forwardRef, useRef } from "react";
-import { mergeProps } from "react-aria";
-import ButtonContent from "./ButtonContent";
-import {
-  useButtonBase,
-  mergeRefs,
-  buildButtonClassName,
-  buildDataState,
-} from "./useButtonBase";
+import { forwardRef } from "react";
+import { Button as RACButton } from "react-aria-components";
 import "./Button.scss";
 
 const Button = forwardRef(function Button(
@@ -23,48 +16,47 @@ const Button = forwardRef(function Button(
     type = "button",
     onPress,
     className = "",
-    classNameContent = "",
-    ariaLabel,
     ...rest
   },
-  forwardedRef,
+  ref,
 ) {
-  const internalRef = useRef(null);
-  const ref = mergeRefs(internalRef, forwardedRef);
-
   const isDisabled = disabled || loading;
-
-  const { mergedProps, state } = useButtonBase(
-    { onPress, isDisabled, type },
-    internalRef,
-  );
-
-  const classes = buildButtonClassName({ variant, size, className });
-  const dataState = buildDataState({
-    variant,
-    size,
-    state,
-    isDisabled,
-    loading,
-  });
+  const showLeftIcon = icon && iconPosition === "left";
+  const showRightIcon = icon && iconPosition === "right";
 
   return (
-    <button
+    <RACButton
       ref={ref}
-      className={classes}
-      aria-label={ariaLabel}
-      {...mergeProps(mergedProps, rest)}
-      {...dataState}
+      type={type}
+      isDisabled={isDisabled}
+      onPress={onPress}
+      className={["btn", `btn--${variant}`, `btn--${size}`, className]
+        .filter(Boolean)
+        .join(" ")}
+      {...rest}
     >
-      <ButtonContent
-        icon={icon}
-        iconPosition={iconPosition}
-        loading={loading}
-        classNameContent={classNameContent}
-      >
-        {children}
-      </ButtonContent>
-    </button>
+      {loading ? (
+        <span className="btn__loading" aria-hidden="true">
+          <span className="btn__spinner" />
+        </span>
+      ) : null}
+
+      <span className={`btn__content${loading ? " is-hidden" : ""}`}>
+        {showLeftIcon ? (
+          <span className="btn__icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+
+        {children ? <span className="btn__label">{children}</span> : null}
+
+        {showRightIcon ? (
+          <span className="btn__icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+      </span>
+    </RACButton>
   );
 });
 

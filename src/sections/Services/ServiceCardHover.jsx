@@ -1,20 +1,16 @@
 "use client";
 
-// ---- dependencies ----
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { useMediaQuery } from "react-responsive";
-
-// ---- libraries ----
-import { deckSpreadCard, hoverPop, viewportOnce } from "@/lib";
-
-// matches Services.scss $breakpoint-lg — 3-column grid only above this width
-const DESKTOP_DECK_MEDIA = "(min-width: 1279px)";
-
-// ---- data ----
+import {
+  deckSpreadCard,
+  DECK_SPREAD_DESKTOP_MEDIA,
+  hoverPop,
+  viewportOnce,
+} from "@/lib";
 import { servicesSection } from "@/data";
 
-// ---- service card hover (cursor) ----
 export default function ServiceCardHover({ children, index = 0 }) {
   const { cursor } = servicesSection;
   const cardRef = useRef(null);
@@ -45,13 +41,10 @@ export default function ServiceCardHover({ children, index = 0 }) {
     }
   };
 
-  // ---- handle mouse enter ----
   const handleMouseEnter = (event) => setCursorPosition(event, true);
-
-  // ---- handle mouse move ----
   const handleMouseMove = (event) => setCursorPosition(event, false);
 
-  const matchesDesktop = useMediaQuery({ query: DESKTOP_DECK_MEDIA });
+  const matchesDesktop = useMediaQuery({ query: DECK_SPREAD_DESKTOP_MEDIA });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -85,10 +78,10 @@ export default function ServiceCardHover({ children, index = 0 }) {
         className="services__cursor"
         style={{ x: springX, y: springY }}
         variants={hoverPop}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        transition={{ type: "spring", stiffness: 200, damping: 15 }}
         aria-hidden="true"
       >
-        {cursor.icon && <cursor.icon aria-hidden="true" />}
+        {cursor.icon && <cursor.icon />}
       </motion.span>
     </motion.li>
   );

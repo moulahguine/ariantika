@@ -7,13 +7,13 @@ import { FaChevronDown } from "react-icons/fa6";
 const duration = getExperienceDuration();
 
 export const experienceSection = {
-  id: "experience",
+  experienceHeadingId: "experience-heading",
   icon: FaChevronDown,
 
   // ---- header ----
   header: {
-    title: "My",
-    titleAccent: "Experience",
+    accent: "My",
+    prefix: "Experience",
     subtitle:
       "Years of study, research, and professional experience dedicated to improving public health.",
   },

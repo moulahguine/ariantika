@@ -1,21 +1,30 @@
 @use "../../assets/styles" as *;
 
 // ---- section header ----
-.section__header {
+.page__header {
   @include flex-column;
   align-items: center;
   gap: clamp($space-4, 2vw, $space-8);
   padding-block: clamp($space-48, 10vw, $space-64);
   width: 100%;
-  position: relative;
-  z-index: $z-base;
+
+  // ---- page header eyebrow ----
+  &-eyebrow {
+    font-family: $font-brush;
+    font-size: clamp($font-size-18, 2vw, $font-size-24);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: $space-8;
+  }
 
   // ---- section header title ----
   &-title {
-    font-size: clamp($font-size-40, 8vw, $font-size-64);
+    font-size: clamp($font-size-48, 8vw, $font-size-72);
     font-weight: $fw-bold;
-    font-family: $font-display;
+    font-family: $font-brush;
     color: var(--primary);
+    position: relative;
+    z-index: $z-base;
 
     // ---- section header title accent ----
     &-accent {
@@ -25,12 +34,14 @@
 
   // ---- section header subtitle ----
   &-subtitle {
-    font-size: clamp($font-size-12 + 1px, 1.5vw, $font-size-18);
+    font-size: clamp($font-size-14, 3vw, $font-size-20);
     color: var(--text-muted);
+    font-family: $font-display;
     text-wrap: pretty;
     text-align: center;
     max-width: 65ch;
     padding-inline: clamp($space-8, 2vw, $space-12);
-    line-height: 1.6;
+    position: relative;
+    z-index: $z-base;
   }
 }

@@ -4,7 +4,6 @@
 .banner {
   width: 100%;
   transform: rotate(-2.5deg);
-  transform-origin: center;
   position: relative;
   z-index: $z-elevated;
 
@@ -13,10 +12,9 @@
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: $z-base;
     background-color: var(--primary);
-    transform: rotate(2.5deg) scale(1.03);
-    transform-origin: center;
+    transform: rotate(2.5deg) scale(1.05);
     pointer-events: none;
     overflow: hidden;
   }
@@ -26,6 +24,7 @@
     width: 100svw;
     position: relative;
     z-index: $z-base;
+    left: -$space-4;
     background-color: var(--primary-soft);
   }
 
@@ -43,8 +42,7 @@
     justify-content: flex-start;
     flex-shrink: 0;
     gap: clamp($space-20, 3vw, $space-40);
-    padding: clamp($space-16, 2vw, $space-20) clamp($space-32, 4vw, $space-40);
-    list-style: none;
+    padding: clamp($space-14, 2vw, $space-20) clamp($space-32, 4vw, $space-40);
   }
 
   // ---- banner item ----
@@ -56,7 +54,7 @@
 
   // ---- banner label ----
   &__label {
-    font-size: clamp($font-size-14, 2vw, $font-size-20);
+    font-size: clamp($font-size-12, 2vw, $font-size-18);
     font-weight: $fw-semibold;
     letter-spacing: 0.01em;
     text-transform: uppercase;
@@ -67,7 +65,7 @@
   // ---- banner separator icon ----
   &__separator {
     @include flex-center;
-    font-size: clamp($font-size-18, 2vw, $font-size-20);
+    font-size: clamp($font-size-16, 2vw, $font-size-18);
     color: var(--accent);
   }
 }

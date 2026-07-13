@@ -1,8 +1,7 @@
 import Image from "next/image";
-
 import * as motion from "motion/react-client";
-
-import { aboutSteps, aboutMetadata } from "@/data";
+import { aboutMetadata, aboutMePageSteps } from "@/data";
+import { PageHeader, QuoteVerse } from "@/components";
 import {
   fadeUp,
   slideInLeft,
@@ -18,122 +17,89 @@ export const metadata = aboutMetadata;
 
 // ---- about me page ----
 export default function AboutMe() {
+  const { header, steps, quote } = aboutMePageSteps;
+
   return (
     <>
       {/* ---- main container ---- */}
       <main className="about__me">
         {/* ---- header ---- */}
-        <motion.header
-          className="about__me-header"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-        >
-          <motion.span className="about__me-header-eyebrow" variants={fadeUp}>
-            My Story
-          </motion.span>
-          <motion.h1 className="about__me-header-title" variants={fadeUp}>
-            How <span className="about__me-header-title-accent">I</span> Got
-            Here.
-          </motion.h1>
-          <motion.p className="about__me-header-subtitle" variants={fadeUp}>
-            How years of academic and clinical experience slowly shaped the way
-            I understand health and disease.
-          </motion.p>
-        </motion.header>
+        <PageHeader header={header} />
 
         {/* ---- container  ---- */}
         <div className="about__me-container">
           {/* ---- steps list ---- */}
-          <div
-            className="about__me-steps"
-            aria-label="My journey into epidemiology"
-          >
-            {aboutSteps.map((step, i) => {
-              const side = i % 2 === 0 ? "left" : "right";
-              const photoVariant = side === "left" ? slideInLeft : slideInRight;
+          <div className="about__me-steps">
+            {steps.map((step, i) => {
+              const isOdd = i % 2 === 0 ? "odd" : "";
+              const photoVariant = isOdd === "odd" ? slideInRight : slideInLeft;
               const contentVariant =
-                side === "left" ? slideInRight : slideInLeft;
+                isOdd === "odd" ? slideInLeft : slideInRight;
 
               return (
-                // ---- card container ----
                 <motion.section
                   key={step.id}
-                  className={`about__me-step about__me-step--${side} about__me-step--${step.theme}`}
+                  className="about__me--step"
                   variants={staggerContainer}
                   initial="hidden"
                   whileInView="visible"
                   viewport={viewportOnce}
                 >
-                  {/* ---- polaroid photo ---- */}
                   <motion.div
-                    className="about__me-wrapper--photo"
+                    className="about__me--wrapper"
                     variants={photoVariant}
                   >
-                    <figure
-                      className={`about__me-photo about__me-photo--${side}`}
+                    <div
+                      className={`about__me--photo about__me--photo-${isOdd}`}
                     >
-                      {/* ---- left tape ---- */}
-                      <span
-                        className={`about__me-photo-tape about__me-photo-tape--tl about__me-photo-tape--tl-${side}`}
-                        aria-hidden="true"
-                      />
-                      {/* ---- right tape ---- */}
-                      <span
-                        className={`about__me-photo-tape about__me-photo-tape--tr about__me-photo-tape--tr-${side}`}
-                        aria-hidden="true"
-                      />
-                      {/* ---- image ---- */}
                       <Image
                         src={step.image}
-                        className="about__me-photo-img"
+                        className="about__me-img"
                         width={700}
                         height={700}
                         alt={step.alt}
                       />
-                      <figcaption className="about__me-photo-caption">
-                        <svg
-                          className="about__me-photo-caption-curve"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M 4 3 Q 4 20 21 20"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            fill="none"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                        <span className="about__me-photo-caption-text">
-                          {step.caption}
-                        </span>
-                      </figcaption>
-                    </figure>
+                    </div>
                   </motion.div>
 
                   {/* ---- content ---- */}
-                  <motion.article
-                    className={`about__me-content about__me-content--${side}`}
+                  <motion.div
+                    className="about__me--content"
                     variants={contentVariant}
                   >
-                    <h2 className="about__me-content-title">
+                    <motion.h2
+                      variants={fadeUp}
+                      className={`about__me--content-title about__me--content-title-${isOdd}`}
+                    >
                       <span
-                        className="about__me-content-icon"
+                        className={`about__me--content-icon about__me--content-icon-${isOdd}`}
                         aria-hidden="true"
                       >
                         <step.icon />
                       </span>
                       {step.title}
-                    </h2>
+                    </motion.h2>
 
-                    <p className="about__me-content-body">{step.body}</p>
-                  </motion.article>
+                    <motion.p
+                      variants={fadeUp}
+                      className="about__me--content-body"
+                    >
+                      {step.body}
+                    </motion.p>
+                  </motion.div>
                 </motion.section>
               );
             })}
           </div>
+
+          {/* ---- Quran verse ---- */}
+          <QuoteVerse
+            arabic={quote.arabic}
+            translation={quote.translation}
+            source={quote.source}
+            href={quote.href}
+            variant="secondary"
+          />
         </div>
       </main>
     </>

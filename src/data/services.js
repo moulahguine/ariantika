@@ -1,19 +1,5 @@
 // ---- react-icons imports ----
-import {
-  FaPenNib,
-  FaMagnifyingGlass,
-  FaCommentDots,
-  FaPaperPlane,
-  FaClipboardList,
-  FaUsers,
-  FaBroom,
-  FaChartColumn,
-  FaFileLines,
-  FaBookOpen,
-  FaPenRuler,
-  FaLanguage,
-  FaCircleCheck,
-} from "react-icons/fa6";
+import { FaCircleCheck } from "react-icons/fa6";
 import {
   LuBadgeCheck,
   LuBookOpenCheck,
@@ -23,6 +9,7 @@ import {
 } from "react-icons/lu";
 import { GrCertificate } from "react-icons/gr";
 import { BsArrowUpRight } from "react-icons/bs";
+import { GoArrowUpRight } from "react-icons/go";
 
 // ---- duration ----
 import { getExperienceDuration } from "@/lib";
@@ -35,14 +22,14 @@ import copyEditingImg from "@/assets/images/services/copy-editing.svg";
 import scientificWritingImgPage from "@/assets/images/services_page/scientific-writing.png";
 import researchDesignImgPage from "@/assets/images/services_page/research-design.png";
 import copyEditingImgPage from "@/assets/images/services_page/copy-editing.png";
+import heroPortrait from "@/assets/images/hero/ariantika-hero-portrait.jpeg";
 
 // ---- headings ----
-const processHeading = "How This Service Works";
 const listHeading = "What's Included";
 const figcaption = "photo by @storyset";
 
 // ---- services meta data ----
-export const servicesMeta = {
+export const servicesMetaData = {
   title: "Services",
   description:
     "Publish with confidence: research design, SPSS biostatistics, manuscript writing, and English-Indonesian editing for Scopus and Web of Science indexed journals.",
@@ -53,12 +40,15 @@ export const servicesPage = {
   // ---- services page header ----
   header: {
     eyebrow: "What I Offer",
-    prefix: "Research",
-    accent: "Services",
+    title: {
+      prefix: "Research",
+      accent: "Services",
+    },
     subtitle:
       "End-to-end research support to help you design stronger studies, analyze data accurately, and publish in high-impact journals.",
   },
 
+  // ---- here are services page ----
   services: [
     {
       id: "scientific-writing",
@@ -85,33 +75,6 @@ export const servicesPage = {
           "Submission, resubmission, and follow-through to acceptance",
         ],
       },
-
-      // ---- how this service works ----
-      steps: {
-        heading: processHeading,
-        items: [
-          {
-            number: "01",
-            title: "Manuscript Drafting",
-            icon: FaPenNib,
-          },
-          {
-            number: "02",
-            title: "Journal Selection",
-            icon: FaMagnifyingGlass,
-          },
-          {
-            number: "03",
-            title: "Peer Review & Revision",
-            icon: FaCommentDots,
-          },
-          {
-            number: "04",
-            title: "Submission & Publication",
-            icon: FaPaperPlane,
-          },
-        ],
-      },
     },
     {
       id: "research-design",
@@ -134,37 +97,6 @@ export const servicesPage = {
           "Data management, cleaning, and preparation in SPSS",
           "Descriptive, inferential, and regression analysis",
           "Publication-ready tables, figures, and written interpretation",
-        ],
-      },
-      // ---- how this service works ----
-      steps: {
-        heading: processHeading,
-        items: [
-          {
-            number: "01",
-            title: "Research Question & Design",
-            icon: FaClipboardList,
-          },
-          {
-            number: "02",
-            title: "Sample & Data Collection",
-            icon: FaUsers,
-          },
-          {
-            number: "03",
-            title: "Data Cleaning & Preparation",
-            icon: FaBroom,
-          },
-          {
-            number: "04",
-            title: "Statistical Analysis",
-            icon: FaChartColumn,
-          },
-          {
-            number: "05",
-            title: "Reporting & Interpretation",
-            icon: FaFileLines,
-          },
         ],
       },
     },
@@ -191,46 +123,44 @@ export const servicesPage = {
           "Suitable for manuscripts, theses, reports, and scholarly books",
         ],
       },
-      // ---- how this service works ----
-      steps: {
-        heading: processHeading,
-        items: [
-          {
-            number: "01",
-            title: "Initial Review",
-            icon: FaBookOpen,
-          },
-          {
-            number: "02",
-            title: "Copy Editing & Proofreading",
-            icon: FaPenRuler,
-          },
-          {
-            number: "03",
-            title: "Academic Editing",
-            icon: FaFileLines,
-          },
-          {
-            number: "04",
-            title: "Translation (if needed)",
-            icon: FaLanguage,
-          },
-          {
-            number: "05",
-            title: "Final Quality Check",
-            icon: FaCircleCheck,
-          },
-        ],
-      },
     },
   ],
+
+  // ---- contact cta ----
+  contactCta: {
+    title: "Still Have Questions?",
+    subtitle:
+      "If anything is unclear about services, timelines, or how we can work together, I'd be happy to hear from you.",
+    image: {
+      src: heroPortrait,
+      alt: "Ariantika smiling in an outdoor graduation portrait.",
+    },
+    cta: {
+      label: "Get In Touch",
+      href: "/contact",
+      icon: <GoArrowUpRight />,
+      variant: "primary",
+      size: "default",
+      ariaLabel: "Go to contact page.",
+    },
+  },
+
+  // ---- Quran verse ----
+  quran: {
+    arabic: "وَٱلَّذِينَ هُمْ لِأَمَـٰنَـٰتِهِمْ وَعَهْدِهِمْ رَٰعُونَ",
+    translation:
+      "˹the believers are also˺ those who are true to their trusts and covenants",
+    source: "Quran 23:8",
+    href: "https://quran.com/al-muminun/8",
+  },
 };
 
 // ---- services section data ----
 export const servicesSection = {
+  servicesHeadingId: "services-heading",
+
   // ---- services section header ----
   header: {
-    id: "services-heading",
     prefix: "Research",
     accent: "Services",
     subtitle:
@@ -242,8 +172,7 @@ export const servicesSection = {
     {
       href: `/services#${servicesPage.services[0].id}`,
       image: scientificWritingImg,
-      imageAlt:
-        "Illustration of hands typing on a laptop beside a notepad and pen, representing scientific writing and manuscript preparation.",
+      imageAlt: "Illustration of a person working at a laptop.",
       title: "Scientific Writing & Publication",
       description:
         "Supporting academic writing and journal submission in line with publication standards.",
@@ -259,8 +188,7 @@ export const servicesSection = {
     {
       href: `/services#${servicesPage.services[1].id}`,
       image: researchDesignImg,
-      imageAlt:
-        "Illustration of researchers reviewing charts, graphs, and data dashboards, representing study design and statistical analysis.",
+      imageAlt: "Illustration of a browser dashboard with bar charts.",
       title: "Research Design & Data Analysis",
       description:
         "Building reliable research through stronger methodology, data analysis, and statistical interpretation.",
@@ -277,8 +205,7 @@ export const servicesSection = {
     {
       href: `/services#${servicesPage.services[2].id}`,
       image: copyEditingImg,
-      imageAlt:
-        "Illustration of an editor at a laptop with greetings in multiple languages and a world map, representing copy editing and translation.",
+      imageAlt: "Illustration of a document with editing marks.",
       title: "Copy Editing & Translation",
       description:
         "Improving clarity, consistency, and readability for international academic communication.",
@@ -300,6 +227,59 @@ export const servicesSection = {
   },
 };
 
+// ---- faq data (services page) ----
+export const faq = {
+  header: {
+    prefix: "FA",
+    accent: "Q",
+    subtitle:
+      "Common questions about working together, timelines, confidentiality, and how I support your research.",
+  },
+
+  items: [
+    {
+      question: "How do we get started?",
+      answer:
+        "Simply contact me with your research topic, objectives, and any available materials. I'll review your project and recommend the best way to proceed.",
+    },
+    {
+      question: "What types of research do you support?",
+      answer:
+        "I primarily support epidemiology, public health, and medical research, but I also assist with other academic disciplines depending on the project's requirements.",
+    },
+    {
+      question: "Do you write the research for clients?",
+      answer:
+        "No. My role is to provide professional guidance, editing, statistical analysis, and publication support while maintaining academic integrity and ethical research practices.",
+    },
+    {
+      question: "Which statistical software do you use?",
+      answer:
+        "SPSS is my primary statistical software, and I can assist with descriptive, inferential, and regression analyses.",
+    },
+    {
+      question: "Can you help prepare a manuscript for journal submission?",
+      answer:
+        "Yes. I assist with formatting, journal selection, responding to reviewers, and ensuring manuscripts meet submission requirements.",
+    },
+    {
+      question: "Do you offer revisions?",
+      answer:
+        "Yes. Revisions are included according to the agreed scope to ensure the final work meets your expectations.",
+    },
+    {
+      question: "Is my research confidential?",
+      answer:
+        "Absolutely. All client information and research materials are treated with strict confidentiality.",
+    },
+    {
+      question: "How long does a project take?",
+      answer:
+        "Project timelines vary depending on complexity and scope. After reviewing your requirements, I'll provide an estimated delivery schedule.",
+    },
+  ],
+};
+
 // ---- why choose me data (services page) ----
 export const whyChooseMe = {
   // ---- why choose me header ----
@@ -307,8 +287,8 @@ export const whyChooseMe = {
     prefix: "Why Choose",
     accent: "Me",
     suffix: "?",
-    description:
-      "Every research project deserves a rigorous and thoughtful approach. By combining academic training, practical research experience, and ethical standards, I help ensure your work is methodologically sound and publication-ready.",
+    subtitle:
+      "Choosing the right research partner matters. Here's what you can expect when working with me.",
   },
 
   // ---- why choose me items ----

@@ -1,15 +1,8 @@
 "use client";
 
-import { forwardRef, useRef } from "react";
-import Link from "next/link";
-import { mergeProps } from "react-aria";
-import ButtonContent from "./ButtonContent";
-import {
-  useInteractiveBase,
-  mergeRefs,
-  buildButtonClassName,
-  buildDataState,
-} from "./useButtonBase";
+import { forwardRef } from "react";
+import NextLink from "next/link";
+import { Link as RACLink } from "react-aria-components";
 import "./Button.scss";
 
 const ButtonLink = forwardRef(function ButtonLink(
@@ -17,7 +10,6 @@ const ButtonLink = forwardRef(function ButtonLink(
     children,
     variant = "primary",
     size = "default",
-    loading = false,
     disabled = false,
     icon,
     iconPosition = "left",
@@ -26,69 +18,45 @@ const ButtonLink = forwardRef(function ButtonLink(
     rel,
     onPress,
     className = "",
-    classNameContent = "",
-    ariaLabel,
     ...rest
   },
-  forwardedRef,
+  ref,
 ) {
-  const internalRef = useRef(null);
-  const ref = mergeRefs(internalRef, forwardedRef);
-
-  const isDisabled = disabled || loading;
-
-  const { mergedProps, state } = useInteractiveBase({ onPress, isDisabled });
-
-  const classes = buildButtonClassName({ variant, size, className });
-  const dataState = buildDataState({
-    variant,
-    size,
-    state,
-    isDisabled,
-    loading,
-  });
-
-  if (isDisabled) {
-    return (
-      <span
-        ref={ref}
-        role="link"
-        aria-disabled="true"
-        className={classes}
-        {...dataState}
-      >
-        <ButtonContent
-          icon={icon}
-          iconPosition={iconPosition}
-          loading={loading}
-          classNameContent={classNameContent}
-        >
-          {children}
-        </ButtonContent>
-      </span>
-    );
-  }
+  const showLeftIcon = icon && iconPosition === "left";
+  const showRightIcon = icon && iconPosition === "right";
 
   return (
-    <Link
+    <RACLink
       ref={ref}
       href={href}
       target={target}
       rel={rel}
-      className={classes}
-      aria-label={ariaLabel}
-      {...mergeProps(mergedProps, rest)}
-      {...dataState}
+      isDisabled={disabled}
+      onPress={onPress}
+      className={["btn", `btn--${variant}`, `btn--${size}`, className]
+        .filter(Boolean)
+        .join(" ")}
+      render={(props) =>
+        "href" in props ? <NextLink {...props} /> : <span {...props} />
+      }
+      {...rest}
     >
-      <ButtonContent
-        icon={icon}
-        iconPosition={iconPosition}
-        loading={loading}
-        classNameContent={classNameContent}
-      >
-        {children}
-      </ButtonContent>
-    </Link>
+      <span className="btn__content">
+        {showLeftIcon ? (
+          <span className="btn__icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+
+        {children ? <span className="btn__label">{children}</span> : null}
+
+        {showRightIcon ? (
+          <span className="btn__icon" aria-hidden="true">
+            {icon}
+          </span>
+        ) : null}
+      </span>
+    </RACLink>
   );
 });
 

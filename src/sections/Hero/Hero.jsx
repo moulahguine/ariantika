@@ -21,15 +21,14 @@ export default function Hero() {
     title,
     location,
     description,
-    actions,
+    actions: { contact, resume },
     image,
     badge,
-    figureCaption,
   } = hero;
 
   return (
     // ---- hero section ----
-    <section className="hero" aria-labelledby="hero-heading">
+    <section className="hero" aria-label="Introduction">
       <div className="hero__container">
         {/* ---- hero content ---- */}
         <motion.div
@@ -49,16 +48,15 @@ export default function Hero() {
 
           {/* ---- title ---- */}
           <motion.h1
-            id="hero-heading"
             className="hero__title"
             variants={fadeUp}
+            aria-label={`${title.name}${title.highlightSrOnly} ${title.highlight}`}
           >
-            <span className="hero__title-name">{title.name}</span>
+            <span className="hero__title-name" aria-hidden="true">
+              {title.name}
+            </span>
 
-            <span className="hero__title-line">
-              <span className="hero__title-highlight-sronly">
-                {title.highlightSrOnly}
-              </span>
+            <span className="hero__title-line" aria-hidden="true">
               <mark className="hero__title-highlight">{title.highlight}</mark>
             </span>
           </motion.h1>
@@ -68,8 +66,9 @@ export default function Hero() {
             <motion.span
               className="hero__location-icon"
               variants={rotateSettle}
+              aria-hidden="true"
             >
-              {location.icon}
+              <location.icon />
             </motion.span>
             <span className="hero__location-text">{location.text}</span>
           </motion.address>
@@ -79,10 +78,9 @@ export default function Hero() {
             {description.beforeAbbr}
             <abbr
               title={description.abbr.title}
-              className="hero__description-abbreviation"
-              tabIndex={0}
-              data-tooltip={description.abbr.tooltip}
-              aria-label={description.abbr.tooltip}
+              className="hero__description-abbr"
+              tabIndex={-1}
+              data-tooltip={description.abbr.title}
             >
               {description.abbr.label}
             </abbr>
@@ -91,57 +89,58 @@ export default function Hero() {
 
           {/* ---- actions ---- */}
           <motion.div className="hero__actions" variants={springPopUp}>
-            {actions.map((link) => {
-              const Button = link.download ? ButtonDownload : ButtonLink;
-
-              return (
-                <Button
-                  key={link.id}
-                  className="hero__actions-button"
-                  variant={link.variant}
-                  size={link.size}
-                  href={link.href}
-                  icon={link.icon}
-                  ariaLabel={link.ariaLabel}
-                >
-                  {link.label}
-                </Button>
-              );
-            })}
+            {/* ---- contact button ---- */}
+            <ButtonLink
+              className="hero__actions-button"
+              variant={contact.variant}
+              size={contact.size}
+              href={contact.href}
+              icon={contact.icon}
+              aria-label={contact.ariaLabel}
+            >
+              {contact.label}
+            </ButtonLink>
+            {/* ---- resume button ---- */}
+            <ButtonDownload
+              className="hero__actions-button"
+              variant={resume.variant}
+              size={resume.size}
+              href={resume.href}
+              icon={resume.icon}
+              aria-label={resume.ariaLabel}
+              download={resume.download}
+            >
+              {resume.label}
+            </ButtonDownload>
           </motion.div>
         </motion.div>
 
         {/* ---- media ---- */}
-        <div className="hero__media">
-          {/* ---- images ---- */}
-          <motion.figure
-            className="hero__images"
+        <div className="hero__visual">
+          <motion.div
+            className="hero__image"
             variants={mediaReveal}
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnce}
           >
+            {/* ---- images ---- */}
             <Image
-              className="hero__images-image"
               src={image.src}
               alt={image.alt}
               width={image.width}
               height={image.height}
-              priority
               sizes={image.sizes}
+              priority
             />
 
             {/* ---- badge ---- */}
             <motion.span
               className="hero__badge"
-              aria-label={badge.experienceAriaLabel}
               variants={springPopDelayed}
+              aria-hidden="true"
             >
-              <svg
-                className="hero__badge-svg"
-                viewBox="0 0 200 200"
-                aria-hidden="true"
-              >
+              <svg className="hero__badge-svg" viewBox="0 0 200 200">
                 <defs>
                   <path
                     id="hero-badge-curve"
@@ -161,12 +160,7 @@ export default function Hero() {
                 <span className="hero__badge-label">{badge.yearsLabel}</span>
               </div>
             </motion.span>
-
-            {/* ---- figure caption ---- */}
-            <figcaption className="hero__image-caption">
-              {figureCaption}
-            </figcaption>
-          </motion.figure>
+          </motion.div>
 
           {/* ---- social links ---- */}
           <SocialLinks direction="vertical" className="hero__social" />

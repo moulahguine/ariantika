@@ -1,13 +1,13 @@
-import { ButtonLink, ImageCarousel, SectionHeader } from "@/components";
-import { aboutCarousel, aboutSection } from "@/data";
-import { fadeUp, mediaReveal, viewportOnce } from "@/lib";
 import * as motion from "motion/react-client";
+import { ButtonLink, ImageCarousel, SectionHeader } from "@/components";
+import { aboutMePageCarousel, aboutSection } from "@/data";
+import { fadeUp, springPopUp, viewportOnce } from "@/lib";
 
 import "./About.scss";
 
 export default function About() {
   // ---- about data ----
-  const { id, header, carousel, paragraphs, cta } = aboutSection;
+  const { aboutHeadingId, header, carousel, paragraphs, cta } = aboutSection;
 
   // ---- intro paragraphs ----
   const introParagraphs = paragraphs.slice(0, -1);
@@ -15,10 +15,14 @@ export default function About() {
 
   return (
     // ---- about section ----
-    <section className="about" id={id} aria-labelledby="about-heading">
+    <section
+      className="about"
+      id={aboutHeadingId}
+      aria-labelledby={aboutHeadingId}
+    >
       {/* ---- section header ---- */}
       <SectionHeader
-        headingId={header.titleId}
+        headingId={aboutHeadingId}
         prefix={header.prefix}
         accent={header.accent}
         accentTag={header.accentTag}
@@ -30,46 +34,44 @@ export default function About() {
         {/* ---- media container ---- */}
         <motion.div
           className="about__media"
-          variants={mediaReveal}
+          variants={springPopUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
         >
           <ImageCarousel
-            images={aboutCarousel}
+            images={aboutMePageCarousel}
             ariaLabel={carousel.ariaLabel}
           />
         </motion.div>
 
         {/* ---- content container ---- */}
-        <motion.div
-          className="about__content"
+        <motion.p
+          className="about__paragraphs"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
         >
-          <p className="about__paragraphs">
-            {introParagraphs.map((paragraph, index) => (
-              <span key={index}>
-                {index > 0 && <span className="about__paragraphs-space" />}
-                {paragraph}
-              </span>
-            ))}
-            <span className="about__paragraphs-space" />
-            {closingParagraph}{" "}
-            <ButtonLink
-              className="about__paragraphs-link"
-              href={cta.href}
-              variant="link"
-              size="small"
-              icon={<cta.icon />}
-              iconPosition="right"
-            >
-              {cta.label}
-            </ButtonLink>
-          </p>
-        </motion.div>
+          {introParagraphs.map((paragraph, index) => (
+            <span key={index}>
+              {index > 0 && <span className="about__paragraphs-space" />}
+              {paragraph}
+            </span>
+          ))}
+          <span className="about__paragraphs-space" />
+          {closingParagraph}{" "}
+          <ButtonLink
+            className="about__paragraphs-link"
+            href={cta.href}
+            variant="link"
+            size="small"
+            icon={<cta.icon />}
+            iconPosition="right"
+          >
+            {cta.label}
+          </ButtonLink>
+        </motion.p>
       </div>
     </section>
   );

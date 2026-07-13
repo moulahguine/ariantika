@@ -47,6 +47,7 @@ export default function SectionHeader({
           <Accent className="section__header-title-accent">{accent}</Accent>
         ) : null}
         {suffix ? ` ${suffix}` : null}
+        <span className="sr-only">.</span>
       </motion.h2>
 
       {/* ---- subtitle ---- */}
