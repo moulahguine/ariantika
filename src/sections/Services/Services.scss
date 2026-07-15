@@ -28,7 +28,7 @@
     position: relative;
     max-width: 420px;
     margin-inline: auto;
-    border-radius: $radius-xl;
+    border-radius: clamp($radius-lg, 3vw, $radius-xl);
     will-change: transform;
     transition:
       scale 0.3s ease-in-out,
@@ -189,8 +189,8 @@
     }
 
     svg {
-      font-size: $font-size-20;
-      stroke-width: 0.5px;
+      font-size: $font-size-24;
+      stroke-width: 3px;
       color: var(--text-inverse);
     }
   }

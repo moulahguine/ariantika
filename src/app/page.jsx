@@ -1,4 +1,12 @@
-import { Hero, Banner, About, Experience, Services, Contact } from "@/sections";
+import {
+  Hero,
+  Banner,
+  About,
+  Experience,
+  Research,
+  Services,
+  Contact,
+} from "@/sections";
 import { QuoteVerse } from "@/components";
 
 import "./page.scss";
@@ -41,6 +49,9 @@ export default function Home() {
 
         {/* ---- experience section ---- */}
         <Experience />
+
+        {/* ---- research section ---- */}
+        <Research />
 
         {/* ---- contact section ---- */}
         <Contact />

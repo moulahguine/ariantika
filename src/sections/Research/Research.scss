@@ -1,0 +1,36 @@
+@use "../../assets/styles" as *;
+
+// ---- research section ----
+.research {
+  @include section;
+
+  // ---- container ----
+  &__container {
+    @include container;
+    @include flex-center;
+
+    gap: clamp($space-8, 1.5vw, $space-12);
+    max-width: 54ch;
+    margin-inline: auto;
+    text-align: center;
+    height: 200px;
+    padding-block-end: clamp($space-16, 4vw, $space-40);
+  }
+
+  // ---- status ----
+  &__status {
+    font-family: $font-display;
+    font-size: clamp($font-size-18, 2.4vw, $font-size-24);
+    font-weight: $fw-semibold;
+    color: var(--secondary);
+    letter-spacing: 0.02em;
+  }
+
+  // ---- message ----
+  &__message {
+    font-size: clamp($font-size-16, 1.5vw, $font-size-18);
+    line-height: $line-height-relaxed;
+    color: var(--text);
+    text-wrap: pretty;
+  }
+}

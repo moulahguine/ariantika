@@ -1,7 +1,7 @@
 @use "../../assets/styles" as *;
 
 .quote-verse {
-  width: 100%;
+  @include section;
   position: relative;
 
   &--primary {
@@ -18,9 +18,9 @@
 
   &__icon {
     position: absolute;
-    color: var(--quote-verse-color);
+    color: rgb(from var(--quote-verse-color) r g b / 0.7);
     filter: drop-shadow(
-      2px 2px 5px rgb(from var(--quote-verse-color) r g b / 0.2)
+      3px 3px 0 rgb(from var(--quote-verse-color) r g b / 0.2)
     );
     font-size: clamp($font-size-32, 5vw, $font-size-48);
 
@@ -38,21 +38,23 @@
   }
 
   &__card {
+    align-content: center;
     position: relative;
     margin-inline: auto;
-    max-width: 1100px;
+    max-width: $container-width;
     padding: clamp($space-48, 10vw, $space-96) clamp($space-24, 6vw, $space-40);
     text-align: center;
+    height: 250px;
     background: linear-gradient(
-      -45deg,
-      rgb(from var(--quote-verse-color) r g b / 0.11) 0%,
-      rgb(from var(--quote-verse-color) r g b / 0.05) 25%,
-      rgb(from var(--quote-verse-color) r g b / 0.11) 50%,
-      rgb(from var(--quote-verse-color) r g b / 0.05) 75%,
-      rgb(from var(--quote-verse-color) r g b / 0.11) 100%
+      -50deg,
+      rgb(from var(--quote-verse-color) r g b / 0.2) 0%,
+      rgb(from var(--background) r g b) 25%,
+      rgb(from var(--quote-verse-color) r g b / 0.1) 50%,
+      rgb(from var(--background) r g b) 75%,
+      rgb(from var(--quote-verse-color) r g b / 0.05) 100%
     );
-    background-size: 200% 200%;
-    animation: quote-verse-gradient 12s ease-in-out infinite;
+    background-size: 150% 150%;
+    animation: quote-verse-gradient 9s ease-in-out infinite;
     border-radius: clamp($radius-lg, 5vw, $radius-xl);
 
     @media (prefers-reduced-motion: reduce) {
@@ -107,6 +109,6 @@
   }
 
   50% {
-    background-position: 100% 100%;
+    background-position: 50% 50%;
   }
 }

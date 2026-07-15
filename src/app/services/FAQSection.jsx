@@ -1,6 +1,5 @@
 "use client";
 
-import { LuMinus, LuPlus } from "react-icons/lu";
 import {
   Button,
   Disclosure,
@@ -9,8 +8,16 @@ import {
   Heading,
 } from "react-aria-components";
 
-export default function FAQSection({ faqItems }) {
+import { servicesPage } from "@/data";
+
+export default function FAQSection() {
+  const {
+    faq: { icons: faqIcons, items: faqItems },
+  } = servicesPage;
+
   const defaultExpandedKey = faqItems[0]?.question;
+  const PlusIcon = faqIcons.plus;
+  const MinusIcon = faqIcons.minus;
 
   return (
     <DisclosureGroup
@@ -29,8 +36,8 @@ export default function FAQSection({ faqItems }) {
             <Button slot="trigger" className="services__page--faq-trigger">
               <span className="services__page--faq-question">{question}</span>
               <span className="services__page--faq-icon" aria-hidden="true">
-                <LuPlus className="services__page--faq-icon-plus" />
-                <LuMinus className="services__page--faq-icon-minus" />
+                <PlusIcon className="services__page--faq-icon-plus" />
+                <MinusIcon className="services__page--faq-icon-minus" />
               </span>
             </Button>
           </Heading>

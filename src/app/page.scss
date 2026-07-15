@@ -6,5 +6,8 @@
   overflow-x: clip;
   position: relative;
   background-color: var(--background);
-  padding-inline: $space-4;
+
+  @media (width <= $breakpoint-md) {
+    padding-inline: $space-4;
+  }
 }

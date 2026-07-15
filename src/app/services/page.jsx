@@ -1,12 +1,12 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
 import {
-  ButtonLink,
   PageHeader,
-  QuoteVerse,
   SectionHeader,
+  QuoteVerse,
+  ButtonLink,
 } from "@/components";
-import { faq, whyChooseMe, servicesPage, servicesMetaData } from "@/data";
+import { servicesPage, servicesMetaData } from "@/data";
 import {
   fadeUp,
   fadeUpLight,
@@ -18,7 +18,7 @@ import {
   staggerContainerFast,
   viewportOnce,
 } from "@/lib";
-import FAQSection from "./FAQ__section";
+import FAQSection from "./FAQSection";
 
 import "./page.scss";
 
@@ -26,10 +26,14 @@ import "./page.scss";
 export const metadata = servicesMetaData;
 
 export default function ServicesPage() {
-  const { header, services, quran, contactCta } = servicesPage;
-
-  const { header: whyChooseHeader, items: whyChooseItems } = whyChooseMe;
-  const { header: faqHeader, items: faqItems } = faq;
+  const {
+    header,
+    services,
+    quran,
+    whyChooseMe: { header: whyChooseHeader, items: whyChooseItems },
+    faq: { header: faqHeader, icons: faqIcons, items: faqItems },
+    contactCta,
+  } = servicesPage;
 
   return (
     <>
@@ -41,8 +45,8 @@ export default function ServicesPage() {
         <div className="services__page-container">
           {services.map((service, i) => {
             const isReversed = i % 2 === 0;
-            const imageVariant = isReversed ? slideInRight : slideInLeft;
-            const contentVariant = isReversed ? slideInLeft : slideInRight;
+            const imageVariant = isReversed ? slideInLeft : slideInRight;
+            const contentVariant = isReversed ? slideInRight : slideInLeft;
 
             return (
               <motion.section
@@ -55,7 +59,7 @@ export default function ServicesPage() {
                 whileInView="visible"
                 viewport={viewportOnce}
               >
-                <motion.div
+                <motion.figure
                   className="services__page--wrapper"
                   variants={imageVariant}
                 >
@@ -67,7 +71,9 @@ export default function ServicesPage() {
                     height={1000}
                     sizes="(max-width: 1024px) 80vw, 420px"
                   />
-                </motion.div>
+
+                  <figcaption>{service.figcaption}</figcaption>
+                </motion.figure>
 
                 <motion.div
                   className="services__page--content"
@@ -179,10 +185,11 @@ export default function ServicesPage() {
               whileInView="visible"
               viewport={viewportOnce}
             >
-              <FAQSection faqItems={faqItems} />
+              <FAQSection />
             </motion.div>
           </section>
 
+          {/* contact section */}
           <section
             className="services__page--contact"
             aria-labelledby="services-contact-heading"
@@ -194,13 +201,16 @@ export default function ServicesPage() {
               whileInView="visible"
               viewport={viewportOnce}
             >
-              <motion.div variants={scaleIn}>
+              <motion.div
+                variants={scaleIn}
+                className="services__page--contact-avatar"
+              >
                 <Image
-                  className="services__page--contact-avatar"
+                  className="services__page--contact-avatar-img"
                   src={contactCta.image.src}
                   alt={contactCta.image.alt}
-                  width={72}
-                  height={72}
+                  width={100}
+                  height={100}
                 />
               </motion.div>
 

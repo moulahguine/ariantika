@@ -2,7 +2,7 @@
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
 
 // default viewport config: reveal once, when ~20% is in view
-export const viewportOnce = { once: true, amount: 0.3 };
+export const viewportOnce = { once: true, amount: 0.5 };
 
 // orchestrates a staggered reveal of children
 export const staggerContainer = {

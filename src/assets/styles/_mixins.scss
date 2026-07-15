@@ -24,7 +24,7 @@
 @mixin section {
   width: 100%;
   background-color: var(--background);
-  padding-block: clamp(50px, 10vw, 100px);
+  padding-block: clamp(50px, 10vw, 80px);
 }
 
 // page

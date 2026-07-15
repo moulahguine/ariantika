@@ -1,6 +1,9 @@
 // ---- hero data ----
 export { hero } from "./hero";
 
+// ---- banner data ----
+export { banner } from "./banner";
+
 // ---- about data ----
 export {
   aboutMetadata,
@@ -14,23 +17,17 @@ export {
 // ---- social links data ----
 export { socialLinks } from "./socialLinks";
 
+// ---- services data ----
+export { servicesMetaData, servicesPage, servicesSection } from "./services";
+
 // ---- experience data ----
 export { experienceSection } from "./experience";
 
-// ---- services data ----
-export {
-  servicesMetaData,
-  servicesSection,
-  servicesPage,
-  whyChooseMe,
-  faq,
-} from "./services";
+// ---- research data ----
+export { researchSection } from "./research";
 
 // ---- contact data ----
 export { contact } from "./contact";
 
 // ---- footer data ----
 export { footer } from "./footer";
-
-// ---- banner data ----
-export { banner } from "./banner";

@@ -3,7 +3,7 @@
 // ---- banner section ----
 .banner {
   width: 100%;
-  transform: rotate(-2.5deg);
+  // transform: rotate(-2.5deg);
   position: relative;
   z-index: $z-elevated;
 
@@ -13,19 +13,60 @@
     position: absolute;
     inset: 0;
     z-index: $z-base;
-    background-color: var(--primary);
-    transform: rotate(2.5deg) scale(1.05);
+    // background-color: var(--primary);
+    // transform: rotate(2.5deg) scale(1.05);
     pointer-events: none;
     overflow: hidden;
   }
 
   // ---- banner surface ----
   &__surface {
-    width: 100svw;
+    margin-inline: auto;
+    width: 90svw;
     position: relative;
     z-index: $z-base;
-    left: -$space-4;
-    background-color: var(--primary-soft);
+    // left: -$space-4;
+    border-radius: clamp($radius-lg, 3vw, $radius-xl);
+    background-color: var(--background);
+    // border: 1px solid var(--primary-soft);
+    overflow: hidden;
+
+    @media (width <= $breakpoint-md) {
+      width: 100svw;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 100%;
+      z-index: $z-base;
+
+      @media (width <= $breakpoint-md) {
+        width: 30px;
+      }
+    }
+
+    &::before {
+      top: 0;
+      left: 0;
+      background: linear-gradient(
+        to right,
+        var(--background) 50%,
+        transparent 100%
+      );
+    }
+
+    &::after {
+      top: 0;
+      right: 0;
+      background: linear-gradient(
+        to left,
+        var(--background) 50%,
+        transparent 100%
+      );
+    }
   }
 
   // ---- banner track ----
@@ -58,8 +99,8 @@
     font-weight: $fw-semibold;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    color: var(--text);
-    padding-inline: $space-4;
+    color: var(--text-light);
+    padding: $space-4;
   }
 
   // ---- banner separator icon ----

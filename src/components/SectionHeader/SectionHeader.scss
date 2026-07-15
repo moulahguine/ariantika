@@ -12,10 +12,11 @@
 
   // ---- section header title ----
   &-title {
-    font-size: clamp($font-size-40, 8vw, $font-size-64);
+    font-size: clamp($font-size-36, 8vw, $font-size-64);
     font-weight: $fw-bold;
     font-family: $font-display;
     color: var(--primary);
+    text-wrap: nowrap;
 
     // ---- section header title accent ----
     &-accent {
