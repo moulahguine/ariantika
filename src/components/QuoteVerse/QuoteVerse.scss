@@ -44,7 +44,7 @@
     max-width: $container-width;
     padding: clamp($space-48, 10vw, $space-96) clamp($space-24, 6vw, $space-40);
     text-align: center;
-    height: 250px;
+    min-height: 250px;
     background: linear-gradient(
       -50deg,
       rgb(from var(--quote-verse-color) r g b / 0.2) 0%,
