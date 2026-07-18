@@ -2,9 +2,9 @@ import {
   Hero,
   Banner,
   About,
+  Services,
   Experience,
   Research,
-  Services,
   Contact,
 } from "@/sections";
 import { QuoteVerse } from "@/components";
@@ -35,15 +35,6 @@ export default function Home() {
         {/* ---- about section ---- */}
         <About />
 
-        {/* ---- quote verse section ---- */}
-        <QuoteVerse
-          arabic={QuranVerse.arabic}
-          translation={QuranVerse.translation}
-          source={QuranVerse.source}
-          href={QuranVerse.href}
-          variant="primary"
-        />
-
         {/* ---- services section ---- */}
         <Services />
 
@@ -52,6 +43,15 @@ export default function Home() {
 
         {/* ---- research section ---- */}
         <Research />
+
+        {/* ---- quote verse section ---- */}
+        <QuoteVerse
+          arabic={QuranVerse.arabic}
+          translation={QuranVerse.translation}
+          source={QuranVerse.source}
+          href={QuranVerse.href}
+          variant="primary"
+        />
 
         {/* ---- contact section ---- */}
         <Contact />

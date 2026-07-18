@@ -17,6 +17,7 @@
     // transform: rotate(2.5deg) scale(1.05);
     pointer-events: none;
     overflow: hidden;
+    display: none;
   }
 
   // ---- banner surface ----
@@ -28,7 +29,7 @@
     // left: -$space-4;
     border-radius: clamp($radius-lg, 3vw, $radius-xl);
     background-color: var(--background);
-    // border: 1px solid var(--primary-soft);
+    border: 1px solid var(--primary-soft);
     overflow: hidden;
 
     @media (width <= $breakpoint-md) {
