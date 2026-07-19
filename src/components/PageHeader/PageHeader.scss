@@ -5,13 +5,13 @@
   @include flex-column;
   align-items: center;
   gap: clamp($space-4, 2vw, $space-8);
-  padding-block: clamp($space-48, 10vw, $space-64);
+  padding-block: clamp($space-24, 10vw, $space-64);
   width: 100%;
 
   // ---- page header eyebrow ----
   &-eyebrow {
     font-family: $font-brush;
-    font-size: clamp($font-size-18, 2vw, $font-size-24);
+    font-size: clamp($font-size-20, 2vw, $font-size-24);
     color: var(--accent);
     letter-spacing: 0.02em;
     margin-bottom: $space-8;
@@ -34,7 +34,7 @@
 
   // ---- section header subtitle ----
   &-subtitle {
-    font-size: clamp($font-size-14, 3vw, $font-size-20);
+    font-size: clamp($font-size-16 - 1px, 3vw, $font-size-20);
     color: var(--text-muted);
     font-family: $font-display;
     text-wrap: pretty;

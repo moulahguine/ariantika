@@ -60,7 +60,7 @@ export default function Banner() {
   useAnimationFrame((_, delta) => {
     if (prefersReducedMotion || loopWidth === 0) return;
 
-    const moveBy = (scrollSpeed * delta) / 1000;
+    const moveBy = (scrollSpeed * delta) / 2000;
     const next = x.get() - moveBy;
     x.set(next <= -loopWidth ? next + loopWidth : next);
   });

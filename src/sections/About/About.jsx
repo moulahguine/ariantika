@@ -1,5 +1,5 @@
 import * as motion from "motion/react-client";
-import { ButtonLink, ImageCarousel, SectionHeader } from "@/components";
+import { Button, ImageCarousel, SectionHeader } from "@/components";
 import { aboutMePageCarousel, aboutSection } from "@/data";
 import { fadeUp, springPopUp, viewportOnce } from "@/lib";
 
@@ -61,7 +61,7 @@ export default function About() {
           ))}
           <span className="about__paragraphs-space" />
           {closingParagraph}{" "}
-          <ButtonLink
+          <Button
             className="about__paragraphs-link"
             href={cta.href}
             variant="link"
@@ -70,7 +70,7 @@ export default function About() {
             iconPosition="right"
           >
             {cta.label}
-          </ButtonLink>
+          </Button>
         </motion.p>
       </div>
     </section>

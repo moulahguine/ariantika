@@ -42,7 +42,6 @@
   }
 
   // ---- image wrapper ----
-
   &--wrapper {
     width: fit-content;
 
@@ -58,9 +57,9 @@
     aspect-ratio: 1;
     background-color: var(--image-bg);
     padding: clamp($space-4, 6vw, $space-8) clamp($space-4, 6vw, $space-8)
-      clamp($space-24, 6vw, $space-40);
+      clamp($space-32, 6vw, $space-40);
     transform: rotate(2.2deg);
-    border: 2px dashed rgb(from var(--primary) r g b / 0.2);
+    border: 1.5px dashed rgb(from var(--primary) r g b / 0.2);
 
     &-odd {
       transform: rotate(-2.2deg);

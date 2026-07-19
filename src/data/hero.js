@@ -1,7 +1,8 @@
-import heroPortrait from "@/assets/images/hero/ariantika-hero-portrait.jpeg";
 import { GoArrowUpRight } from "react-icons/go";
 import { FaFileAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { getExperienceDuration } from "@/lib";
+
+import heroPortrait from "@/assets/images/hero/ariantika-hero-portrait.jpeg";
 
 // ---- duration ----
 const duration = getExperienceDuration();
@@ -42,18 +43,17 @@ export const hero = {
   },
 
   // ---- actions ----
-  actions: {
-    contact: {
+  actions: [
+    {
       id: "contact",
       label: "Contact",
       href: "/contact",
       icon: <GoArrowUpRight />,
       variant: "primary",
       size: "default",
-      download: false,
       ariaLabel: "contact page.",
     },
-    resume: {
+    {
       id: "resume",
       label: "Resume",
       href: "/documents/ARIANTIKA_PUBLIC_HEALTH_RESUME.pdf",
@@ -63,7 +63,7 @@ export const hero = {
       download: true,
       ariaLabel: "download my resume PDF.",
     },
-  },
+  ],
 
   // ---- image ----
   image: {

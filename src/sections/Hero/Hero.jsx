@@ -1,6 +1,6 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
-import { ButtonLink, ButtonDownload, SocialLinks } from "@/components";
+import { AbbrTooltip, Button, SocialLinks } from "@/components";
 import { hero } from "@/data";
 import {
   fadeUp,
@@ -16,15 +16,8 @@ import "./Hero.scss";
 
 export default function Hero() {
   // ---- hero data ----
-  const {
-    greeting,
-    title,
-    location,
-    description,
-    actions: { contact, resume },
-    image,
-    badge,
-  } = hero;
+  const { greeting, title, location, description, actions, image, badge } =
+    hero;
 
   return (
     // ---- hero section ----
@@ -76,42 +69,32 @@ export default function Hero() {
           {/* ---- description ---- */}
           <motion.p className="hero__description" variants={fadeUp}>
             {description.beforeAbbr}
-            <abbr
-              title={description.abbr.title}
+            <AbbrTooltip
               className="hero__description-abbr"
-              tabIndex={-1}
-              data-tooltip={description.abbr.title}
+              content={description.abbr.title}
             >
               {description.abbr.label}
-            </abbr>
+            </AbbrTooltip>
             {description.afterAbbr}
           </motion.p>
 
           {/* ---- actions ---- */}
           <motion.div className="hero__actions" variants={springPopUp}>
             {/* ---- contact button ---- */}
-            <ButtonLink
-              className="hero__actions-button"
-              variant={contact.variant}
-              size={contact.size}
-              href={contact.href}
-              icon={contact.icon}
-              aria-label={contact.ariaLabel}
-            >
-              {contact.label}
-            </ButtonLink>
-            {/* ---- resume button ---- */}
-            <ButtonDownload
-              className="hero__actions-button"
-              variant={resume.variant}
-              size={resume.size}
-              href={resume.href}
-              icon={resume.icon}
-              aria-label={resume.ariaLabel}
-              download={resume.download}
-            >
-              {resume.label}
-            </ButtonDownload>
+            {actions.map((action) => (
+              <Button
+                key={action.id}
+                className="hero__actions-button"
+                variant={action.variant}
+                size={action.size}
+                href={action.href}
+                icon={action.icon}
+                aria-label={action.ariaLabel}
+                download={action.download}
+              >
+                {action.label}
+              </Button>
+            ))}
           </motion.div>
         </motion.div>
 

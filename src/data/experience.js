@@ -1,8 +1,9 @@
+import { getExperienceDuration } from "@/lib";
+import { FaChevronDown } from "react-icons/fa6";
+
 import adamMalikGeneralHospitalLogo from "@/assets/images/experience/adam-malik-general-hospital.png";
 import universitasSumateraUtaraLogo from "@/assets/images/experience/universitas-sumatera-utara.png";
 import universitasSumateraUtaraHospitalLogo from "@/assets/images/experience/universitas-sumatera-utara-hospital.png";
-import { getExperienceDuration } from "@/lib";
-import { FaChevronDown } from "react-icons/fa6";
 
 const duration = getExperienceDuration();
 
@@ -21,7 +22,7 @@ export const experienceSection = {
   // ---- container content ----
   items: [
     {
-      id: "01",
+      id: 1,
       type: "work",
       logo: universitasSumateraUtaraHospitalLogo,
       logoAlt: "Universitas Sumatera Utara Hospital Logo",
@@ -43,7 +44,7 @@ export const experienceSection = {
       ],
     },
     {
-      id: "02",
+      id: 2,
       type: "education",
       logo: universitasSumateraUtaraLogo,
       logoAlt: "Universitas Sumatera Utara Logo",
@@ -60,7 +61,7 @@ export const experienceSection = {
       ],
     },
     {
-      id: "03",
+      id: 3,
       type: "work",
       logo: adamMalikGeneralHospitalLogo,
       logoAlt: "Adam Malik General Hospital Logo",
@@ -79,7 +80,7 @@ export const experienceSection = {
       ],
     },
     {
-      id: "04",
+      id: 4,
       type: "education",
       logo: universitasSumateraUtaraLogo,
       logoAlt: "Universitas Sumatera Utara Logo",

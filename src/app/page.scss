@@ -3,9 +3,10 @@
 // ---- home page ----
 .home__main {
   @include flex-column;
+  @include page;
   overflow-x: clip;
   position: relative;
-  background-color: var(--background);
+  padding: 0;
 
   @media (width <= $breakpoint-md) {
     padding-inline: $space-4;

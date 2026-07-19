@@ -4,7 +4,7 @@ import {
   PageHeader,
   SectionHeader,
   QuoteVerse,
-  ButtonLink,
+  Button,
 } from "@/components";
 import { servicesPage, servicesMetaData } from "@/data";
 import {
@@ -230,7 +230,7 @@ export default function ServicesPage() {
               </motion.p>
 
               <motion.div variants={springPopUp}>
-                <ButtonLink
+                <Button
                   className="services__page--contact-button"
                   href={contactCta.cta.href}
                   variant={contactCta.cta.variant}
@@ -240,7 +240,7 @@ export default function ServicesPage() {
                   aria-label={contactCta.cta.ariaLabel}
                 >
                   {contactCta.cta.label}
-                </ButtonLink>
+                </Button>
               </motion.div>
             </motion.div>
           </section>

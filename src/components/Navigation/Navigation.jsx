@@ -1,7 +1,9 @@
 "use client";
 
+import * as motion from "motion/react-client";
 import { usePathname } from "next/navigation";
-import { ButtonLink } from "@/components";
+import { Button } from "@/components";
+import { fadeUpLight, staggerContainer } from "@/lib";
 import "./Navigation.scss";
 
 const links = [
@@ -13,51 +15,48 @@ const links = [
 
 export default function Navigation({
   className = "",
-  variant = "desktop",
+  direction = "horizontal",
   onNavigate,
 }) {
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
-  const isMobile = variant === "mobile";
+  const isVertical = direction === "vertical";
 
   return (
-    <nav
-      className={`navigation ${
-        isMobile ? "navigation--mobile" : ""
-      } ${className}`}
-      aria-label="Primary"
-    >
-      <ul
+    <nav className={`navigation navigation--${direction} ${className}`.trim()}>
+      <motion.ul
         className={`navigation__list ${
-          isMobile ? "navigation__list--mobile" : ""
+          isVertical ? "navigation__list--vertical" : ""
         }`}
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
       >
         {links.map((link) => {
           const active = isActive(link.href);
 
           return (
-            <li
-              className={`navigation__list-item ${active ? "active" : ""}`}
+            <motion.li
+              className="navigation__list--item"
               key={link.href}
+              variants={fadeUpLight}
             >
-              <ButtonLink
+              <Button
                 href={link.href}
                 variant="ghost"
-                className={`navigation__list-item--link ${
-                  active ? "active" : ""
+                size="default"
+                className={`navigation__list--link ${
+                  active ? "navigation__list--link--active" : ""
                 }`}
-                size="small"
                 aria-current={active ? "page" : undefined}
                 onPress={onNavigate}
               >
-                <span className="navigation__list-item--link-text">
-                  {link.label}
-                </span>
-              </ButtonLink>
-            </li>
+                {link.label}
+              </Button>
+            </motion.li>
           );
         })}
-      </ul>
+      </motion.ul>
     </nav>
   );
 }

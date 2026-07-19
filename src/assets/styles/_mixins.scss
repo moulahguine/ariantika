@@ -23,7 +23,6 @@
 // Section mixin
 @mixin section {
   width: 100%;
-  background-color: var(--background);
   padding-block: clamp(50px, 10vw, 80px);
 }
 
@@ -31,8 +30,14 @@
 
 @mixin page {
   width: 100%;
+  padding-block: clamp($space-40, 5vw, $space-48);
   background-color: var(--background);
-  padding-block: clamp($space-18, 3.5vw, $space-40);
+  background: linear-gradient(
+    to bottom,
+    var(--primary-softer),
+    var(--background) 400px,
+    var(--background) 100%
+  );
 }
 
 @mixin page-header-lead {
@@ -147,5 +152,16 @@
   @media (width <= $breakpoint-md) {
     max-width: var(--tablet-width);
     padding-inline: $space-4;
+  }
+}
+
+// Hover only when not pressed, expanded or current page.
+@mixin button-hover {
+  @media (hover: hover) {
+    &:not([data-pressed]):not([aria-expanded="true"]):not(
+        [aria-current]
+      )[data-hovered] {
+      @content;
+    }
   }
 }

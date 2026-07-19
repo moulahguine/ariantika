@@ -26,7 +26,7 @@
   // ---- card ----
   &__card {
     position: relative;
-    max-width: 420px;
+    max-width: 400px;
     margin-inline: auto;
     border-radius: clamp($radius-lg, 3vw, $radius-xl);
     will-change: transform;
@@ -41,14 +41,16 @@
     @media (width >= $breakpoint-lg) {
       &:nth-child(1) {
         rotate: -1deg;
+        z-index: 1;
       }
       &:nth-child(2) {
         scale: 1.04;
         rotate: 0;
-        z-index: $z-above;
+        z-index: 5;
       }
       &:nth-child(3) {
         rotate: 1deg;
+        z-index: 1;
       }
     }
 

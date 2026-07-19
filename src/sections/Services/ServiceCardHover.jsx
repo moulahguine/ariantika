@@ -18,7 +18,7 @@ export default function ServiceCardHover({ children, index = 0 }) {
   const y = useMotionValue(0);
 
   // ---- spring config ----
-  const springConfig = { stiffness: 500, damping: 30, mass: 0.7 };
+  const springConfig = { stiffness: 300, damping: 30, mass: 0.7 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 

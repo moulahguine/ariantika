@@ -2,23 +2,8 @@
 
 // ---- banner section ----
 .banner {
-  width: 100%;
-  // transform: rotate(-2.5deg);
   position: relative;
-  z-index: $z-elevated;
-
-  // ---- banner background behind the banner ----
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: $z-base;
-    // background-color: var(--primary);
-    // transform: rotate(2.5deg) scale(1.05);
-    pointer-events: none;
-    overflow: hidden;
-    display: none;
-  }
+  width: 100%;
 
   // ---- banner surface ----
   &__surface {
@@ -26,14 +11,12 @@
     width: 90svw;
     position: relative;
     z-index: $z-base;
-    // left: -$space-4;
-    border-radius: clamp($radius-lg, 3vw, $radius-xl);
     background-color: var(--background);
-    border: 1px solid var(--primary-soft);
     overflow: hidden;
 
     @media (width <= $breakpoint-md) {
-      width: 100svw;
+      width: calc(100svw - $space-4 * 2);
+      margin-top: 50px;
     }
 
     &::before,
@@ -96,11 +79,11 @@
 
   // ---- banner label ----
   &__label {
-    font-size: clamp($font-size-12, 2vw, $font-size-18);
+    font-size: clamp($font-size-14, 2vw, $font-size-18);
     font-weight: $fw-semibold;
     letter-spacing: 0.01em;
     text-transform: uppercase;
-    color: var(--text-light);
+    color: var(--text-muted);
     padding: $space-4;
   }
 

@@ -1,57 +1,65 @@
 "use client";
 
-import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { RemoveScroll } from "react-remove-scroll";
+import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { Navigation, SocialLinks } from "@/components";
 
 import "./Menu.scss";
 
-export default function Menu({ isOpen, onClose, headerHeight = 0 }) {
-  useEffect(() => {
-    if (!isOpen) return undefined;
+const MotionModalOverlay = motion.create(ModalOverlay);
+const MotionModal = motion.create(Modal);
 
-    const onKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
-    };
+const menuTransition = { duration: 0.3, ease: "easeInOut" };
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [isOpen, onClose]);
-
+export default function Menu({ isOpen, onClose }) {
   return (
-    <RemoveScroll enabled={isOpen}>
-      <AnimatePresence mode="wait">
-        {isOpen ? (
-          <motion.aside
-            className="menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site navigation"
-            style={{ "--header-height": `${headerHeight}px` }}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+    <AnimatePresence mode="wait">
+      {isOpen ? (
+        <MotionModalOverlay
+          isOpen
+          onOpenChange={(open) => {
+            if (!open) onClose();
+          }}
+          isDismissable
+          shouldCloseOnInteractOutside={(element) =>
+            !element.closest(".header__menu-open")
+          }
+          className="menu__overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={menuTransition}
+        >
+          <MotionModal
+            className="menu__modal"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={menuTransition}
+            style={{ originY: 0 }}
           >
-            <Navigation
-              className={`menu__navigation ${
-                isOpen ? "menu__navigation--open" : ""
-              }`}
-              variant="mobile"
-              onNavigate={onClose}
-            />
+            <Dialog
+              id="site-navigation-menu"
+              aria-label="Site navigation"
+              className="menu__dialog"
+            >
+              <Navigation
+                className={`menu__navigation ${
+                  isOpen ? "menu__navigation--open" : ""
+                }`}
+                direction="vertical"
+                onNavigate={onClose}
+              />
 
-            <SocialLinks
-              direction="horizontal"
-              className="menu__social"
-              onItemClick={onClose}
-            />
-          </motion.aside>
-        ) : null}
-      </AnimatePresence>
-    </RemoveScroll>
+              <SocialLinks
+                direction="horizontal"
+                className="menu__social"
+                onItemClick={onClose}
+              />
+            </Dialog>
+          </MotionModal>
+        </MotionModalOverlay>
+      ) : null}
+    </AnimatePresence>
   );
 }

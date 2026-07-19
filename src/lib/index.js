@@ -20,6 +20,7 @@ export {
   deckSpreadCard,
   DECK_SPREAD_DESKTOP_MEDIA,
   stickyBarReveal,
+  socialLinksStagger,
   stickyBarTransition,
 } from "./motion";
 export { useHideOnScrollDown } from "./use-hide-on-scroll-down";

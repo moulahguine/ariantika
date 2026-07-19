@@ -2,14 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import * as motion from "motion/react-client";
 import { useMediaQuery } from "react-responsive";
-import { Logo, Navigation, Menu } from "@/components";
+import { Logo, Navigation, Menu, Button } from "@/components";
 import {
   stickyBarReveal,
   stickyBarTransition,
   useHideOnScrollDown,
 } from "@/lib";
-import { motion } from "motion/react";
 
 import "./Header.scss";
 
@@ -18,24 +18,20 @@ const MOBILE_NAV_MEDIA = "(max-width: 767px)";
 export default function Header() {
   const pathname = usePathname();
   const isMobileNav = useMediaQuery({ query: MOBILE_NAV_MEDIA });
+
   const [isMounted, setIsMounted] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef(null);
   const hidden = useHideOnScrollDown();
 
-  // close and toggle the menu
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((open) => !open), []);
   const isMobileMenuOpen = isMobileNav && menuOpen;
 
   useEffect(() => {
-    setTimeout(() => {
-      setMenuOpen(false);
-    }, 100);
+    setMenuOpen(false);
   }, [pathname]);
 
-  // mount the header
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       setIsMounted(true);
@@ -43,55 +39,42 @@ export default function Header() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // update the header height
-  useEffect(() => {
-    if (!headerRef.current) return undefined;
-
-    const updateHeight = () => {
-      setHeaderHeight(headerRef.current?.offsetHeight ?? 0);
-    };
-
-    updateHeight();
-
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(headerRef.current);
-
-    window.addEventListener("resize", updateHeight);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateHeight);
-    };
-  }, []);
-
   return (
-    // ---- header ----
     <motion.header
       ref={headerRef}
+      data-react-aria-top-layer=""
       variants={stickyBarReveal}
       initial="hidden"
       animate={hidden ? "hidden" : "visible"}
       transition={stickyBarTransition}
       className={`header ${isMobileMenuOpen ? "header--mobile-menu-open" : ""}`}
     >
-      <div className="header__container">
+      <div
+        className={`header__container ${isMobileMenuOpen ? "header__container--mobile-menu-open" : ""}`}
+      >
         {/* logo */}
         <Logo />
 
         {/* menu open button */}
         {isMounted && isMobileNav ? (
-          <button
+          <Button
             type="button"
+            variant="secondary"
             className={`header__menu-open ${
               isMobileMenuOpen ? "header__menu-open--active" : ""
             }`}
             aria-expanded={isMobileMenuOpen}
+            aria-haspopup="dialog"
+            aria-controls={
+              isMobileMenuOpen ? "site-navigation-menu" : undefined
+            }
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            onClick={toggleMenu}
+            onPress={toggleMenu}
           >
             <span className="header__menu-line" aria-hidden="true" />
             <span className="header__menu-line" aria-hidden="true" />
             <span className="header__menu-line" aria-hidden="true" />
-          </button>
+          </Button>
         ) : null}
 
         {/* navigation */}
@@ -101,11 +84,7 @@ export default function Header() {
       </div>
 
       {/* mobile menu */}
-      <Menu
-        isOpen={isMobileMenuOpen}
-        onClose={closeMenu}
-        headerHeight={headerHeight}
-      />
+      <Menu isOpen={isMobileMenuOpen} onClose={closeMenu} />
     </motion.header>
   );
 }

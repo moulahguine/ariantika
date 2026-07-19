@@ -1,5 +1,7 @@
 export { default as Header } from "./Header/Header";
-export { Button, ButtonLink, ButtonDownload } from "./Button";
+export { default as Button } from "./Button/Button";
+export { Focusable, Tooltip, TooltipTrigger } from "./Tooltip/Tooltip";
+export { AbbrTooltip } from "./Tooltip/AbbrTooltip";
 export { default as Logo } from "./Logo/Logo";
 export { default as Navigation } from "./Navigation/Navigation";
 export { default as Menu } from "./Menu/Menu";

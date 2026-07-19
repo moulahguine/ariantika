@@ -1,28 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import Image from "next/image";
+import {
+  Button,
+  Disclosure,
+  DisclosureGroup,
+  DisclosurePanel,
+  Heading,
+} from "react-aria-components";
 import { SectionHeader } from "@/components";
 import { experienceSection } from "@/data";
 import { fadeUp, staggerContainerFast, viewportOnce } from "@/lib";
 
 import "./Experience.scss";
 
-/*
-I originally wanted to use the <details> and <summary> elements to handle 
-expanding and collapsing each experience item. However, there's a CSS feature
-called calc-size() that allows animating elements to their intrinsic size without
-relying on JavaScript.
-
-Combined with transition-behavior: allow-discrete, this would provide a smoother
-and more modern solution. Since transition-behavior: allow-discrete is now
-supported across major browsers, I'd like to take advantage of it where possible.
-
-Could you check whether the browser supports the calc-size() function? 
-If it does, keep the current implementation and use CSS-based animations. If it
-doesn't, fall back to using <details> and <summary> for the expand/collapse behavior.
-*/
+const MotionDisclosureGroup = motion.create(DisclosureGroup);
+const MotionDisclosure = motion.create(Disclosure);
 
 export default function Experience() {
   const {
@@ -31,11 +25,8 @@ export default function Experience() {
     icon: ChevronIcon,
     items,
   } = experienceSection;
-  const [openId, setOpenId] = useState(items[0]?.id ?? null);
 
-  const handleToggle = (id) => {
-    setOpenId((current) => (current === id ? null : id));
-  };
+  const defaultExpandedKey = items[0]?.id;
 
   return (
     // ---- experience section ----
@@ -51,146 +42,134 @@ export default function Experience() {
         />
 
         {/* ---- container ---- */}
-        <motion.ul
+        <MotionDisclosureGroup
           className="experience__container"
           aria-label="Experience list"
+          defaultExpandedKeys={
+            defaultExpandedKey ? [defaultExpandedKey] : undefined
+          }
           variants={staggerContainerFast}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
         >
-          {items.map((item) => {
-            const isOpen = openId === item.id;
-
+          {items.map((item) => (
             // ---- item ----
-            return (
-              <motion.li
-                key={item.id}
-                className={`experience__item ${
-                  isOpen ? "experience__item--open" : ""
-                }`}
-                variants={fadeUp}
-              >
-                {/* ---- head summary ---- */}
-                <button
-                  className="experience__head"
-                  onClick={() => handleToggle(item.id)}
-                  aria-expanded={isOpen}
-                  aria-label={`Experience ${item.role} at ${item.company}`}
-                  aria-controls={`experience-content-${item.id}`}
-                >
-                  {/* ---- image ---- */}
-                  <div className="experience__image" aria-hidden="true">
-                    {item.logo ? (
-                      <Image
-                        className="experience__image-logo"
-                        src={item.logo}
-                        alt={item.logoAlt}
-                        width={56}
-                        height={56}
-                      />
-                    ) : (
-                      // ---- initial is for fallback ----
-                      <span
-                        className="experience__image-initials"
-                        aria-hidden="true"
-                      >
-                        {item.initials}
-                      </span>
-                    )}
-                  </div>
-                  {/* ---- info ---- */}
-                  <div className="experience__info">
-                    {/* ---- identity ---- */}
-                    <div className="experience__identity">
-                      {/* ---- role ---- */}
-                      <h3 className="experience__role">{item.role}</h3>
-
-                      {/* ---- company ---- */}
-                      <p className="experience__company">{item.company}</p>
-
-                      {/* ---- employment ---- */}
-                      {item.employmentType && (
-                        <div className="experience__employment">
-                          {/* ---- type ---- */}
-                          <span className="experience__employment-type">
-                            {item.employmentType},
+            <MotionDisclosure
+              key={item.id}
+              id={item.id}
+              className={({ isExpanded }) =>
+                `experience__item${isExpanded ? " experience__item--open" : ""}`
+              }
+              variants={fadeUp}
+            >
+              {({ isExpanded }) => (
+                <>
+                  {/* ---- head summary ---- */}
+                  <Heading>
+                    <Button
+                      slot="trigger"
+                      className="experience__head"
+                      aria-label={`Experience ${item.role} at ${item.company}`}
+                    >
+                      {/* ---- image ---- */}
+                      <div className="experience__image" aria-hidden="true">
+                        {item.logo ? (
+                          <Image
+                            className="experience__image-logo"
+                            src={item.logo}
+                            alt={item.logoAlt}
+                            width={56}
+                            height={56}
+                          />
+                        ) : (
+                          // ---- initial is for fallback ----
+                          <span
+                            className="experience__image-initials"
+                            aria-hidden="true"
+                          >
+                            {item.initials}
                           </span>
+                        )}
+                      </div>
+                      {/* ---- info ---- */}
+                      <div className="experience__info">
+                        {/* ---- identity ---- */}
+                        <div className="experience__identity">
+                          {/* ---- role ---- */}
+                          <span className="experience__role">{item.role}</span>
 
-                          {/* ---- duration ---- */}
-                          {item.duration && (
-                            <span className="experience__employment-duration">
-                              {` (+${item.duration.years} years)`}
-                            </span>
+                          {/* ---- company ---- */}
+                          <p className="experience__company">{item.company}</p>
+
+                          {/* ---- employment ---- */}
+                          {item.employmentType && (
+                            <div className="experience__employment">
+                              {/* ---- type ---- */}
+                              <span className="experience__employment-type">
+                                {item.employmentType},
+                              </span>
+
+                              {/* ---- duration ---- */}
+                              {item.duration && (
+                                <span className="experience__employment-duration">
+                                  {` (+${item.duration.years} years)`}
+                                </span>
+                              )}
+                            </div>
                           )}
                         </div>
-                      )}
-                    </div>
-                    {/* ---- meta ---- */}
-                    <div className="experience__meta">
-                      {/* ---- head summary -> meta - period ---- */}
-                      <p className="experience__period">{item.period}</p>
+                        {/* ---- meta ---- */}
+                        <div className="experience__meta">
+                          {/* ---- head summary -> meta - period ---- */}
+                          <p className="experience__period">{item.period}</p>
 
-                      {/* ---- head summary -> meta - location ---- */}
-                      <p className="experience__location">{item.location}</p>
-                    </div>
-                  </div>
+                          {/* ---- head summary -> meta - location ---- */}
+                          <p className="experience__location">
+                            {item.location}
+                          </p>
+                        </div>
+                      </div>
 
-                  {/* ---- chevron ---- */}
-                  <motion.div
-                    className="experience__chevron-container"
-                    aria-hidden="true"
-                    animate={{
-                      rotate: isOpen ? 180 : 0,
-                    }}
-                    transition={{
-                      duration: 0.35,
-                    }}
-                  >
-                    <ChevronIcon className="experience__chevron" />
-                  </motion.div>
-                </button>
+                      {/* ---- chevron ---- */}
+                      <motion.div
+                        className="experience__chevron-container"
+                        aria-hidden="true"
+                        animate={{
+                          rotate: isExpanded ? 180 : 0,
+                        }}
+                        transition={{
+                          duration: 0.35,
+                        }}
+                      >
+                        <ChevronIcon className="experience__chevron" />
+                      </motion.div>
+                    </Button>
+                  </Heading>
 
-                {/* ---- content ---- */}
-                <motion.div
-                  className="experience__content"
-                  initial={false}
-                  animate={{
-                    height: isOpen ? "auto" : 0,
-                    opacity: isOpen ? 1 : 0,
-                  }}
-                  transition={{
-                    height: {
-                      duration: 0.35,
-                    },
-                    opacity: {
-                      duration: 0.2,
-                    },
-                  }}
-                  style={{
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* ---- details ---- */}
-                  {item.details?.length > 0 ? (
-                    <ul className="experience__details">
-                      {item.details.map((detail, detailIndex) => (
-                        // ---- list ----
-                        <motion.li
-                          key={`${item.id}-detail-${detailIndex}`}
-                          className="experience__detail"
-                          variants={fadeUp}
-                        >
-                          {detail}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </motion.div>
-              </motion.li>
-            );
-          })}
-        </motion.ul>
+                  {/* ---- content ---- */}
+                  <DisclosurePanel className="experience__content">
+                    {/* ---- details ---- */}
+                    {item.details?.length > 0 ? (
+                      <ul className="experience__details">
+                        {item.details.map((detail, detailIndex) => (
+                          // ---- list ----
+                          <motion.li
+                            key={`${item.id}-detail-${detailIndex}`}
+                            className="experience__detail"
+                            variants={fadeUp}
+                          >
+                            {detail}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </DisclosurePanel>
+                </>
+              )}
+            </MotionDisclosure>
+          ))}
+        </MotionDisclosureGroup>
       </div>
     </section>
   );

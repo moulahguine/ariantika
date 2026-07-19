@@ -12,6 +12,13 @@ export const staggerContainer = {
   },
 };
 
+export const socialLinksStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 1 },
+  },
+};
+
 // tighter stagger for dense lists / grids
 export const staggerContainerFast = {
   hidden: {},
@@ -283,8 +290,8 @@ export const deckSpreadCard = {
 
 // sticky bars (header, toolbar) — slide up and fade out when hidden
 export const stickyBarReveal = {
-  hidden: { opacity: 0, y: -100 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { y: -150 },
+  visible: { y: 0 },
 };
 
 export const stickyBarTransition = { duration: 0.7, ease: "easeInOut" };

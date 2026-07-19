@@ -4,7 +4,7 @@
 .experience {
   @include section;
 
-  // ---- wrapper ----
+  // ---- container wrapper ----
   &__wrapper {
     --experience-width: 95%;
     background-color: var(--primary-softer);
@@ -74,7 +74,7 @@
     border-radius: $radius-lg;
     background-color: rgb(from var(--surface) r g b / 0.2);
     transition: background-color 0.3s ease-in-out;
-    box-shadow: 0 0 5px 0 rgb(from var(--primary-focus-ring) r g b / 0.09);
+    border: 1px solid rgb(from var(--primary-focus-ring) r g b / 0.1);
 
     // ---- item -> open ----
     &--open {
@@ -228,6 +228,20 @@
   &__content {
     display: grid;
     grid-template-columns: clamp($space-24, 6vw, $space-64) 1fr;
+    height: var(--disclosure-panel-height);
+    opacity: 0;
+    overflow: clip;
+    transition:
+      height 0.35s ease,
+      opacity 0.2s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &__item--open &__content {
+    opacity: 1;
   }
 
   // ---- details list ----
@@ -242,7 +256,7 @@
   &__detail {
     width: fit-content;
     list-style: disc;
-    font-size: clamp($font-size-12 - 1px, 2vw, $font-size-16 - 1px);
+    font-size: clamp($font-size-12 - 1px, 1.5vw, $font-size-16 - 1px);
     line-height: 1.6;
     color: var(--text-light);
     max-width: 75ch;

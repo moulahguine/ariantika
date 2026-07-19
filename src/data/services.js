@@ -247,6 +247,7 @@ export const servicesSection = {
   },
   cards: [
     {
+      id: 0,
       href: `/services#${servicesPage.services[0].id}`,
       image: scientificWritingImg,
       imageAlt: "Illustration of a person working at a laptop.",
@@ -263,6 +264,7 @@ export const servicesSection = {
       ],
     },
     {
+      id: 1,
       href: `/services#${servicesPage.services[1].id}`,
       image: researchDesignImg,
       imageAlt: "Illustration of a browser dashboard with bar charts.",
@@ -279,6 +281,7 @@ export const servicesSection = {
       ],
     },
     {
+      id: 2,
       href: `/services#${servicesPage.services[2].id}`,
       image: copyEditingImg,
       imageAlt: "Illustration of a document with editing marks.",

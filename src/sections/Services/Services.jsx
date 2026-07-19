@@ -21,8 +21,8 @@ export default function Services() {
 
       {/* ---- services container ---- */}
       <ul className="services__container">
-        {cards.map((card, index) => (
-          <ServiceCardHover key={index} index={index}>
+        {cards.map((card) => (
+          <ServiceCardHover key={card.id} index={card.id}>
             {/* ---- service card link ---- */}
             <Link
               href={card.href}
@@ -55,7 +55,7 @@ export default function Services() {
                         className="services__bullet-icon"
                         aria-hidden="true"
                       >
-                        <card.icon aria-hidden="true" />
+                        <card.icon />
                       </span>
                       {bullet}
                     </li>

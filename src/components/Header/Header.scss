@@ -1,27 +1,29 @@
 @use "../../assets/styles" as *;
 
 .header {
-  position: fixed;
   width: 100%;
+  position: fixed;
   z-index: $z-header;
-  background-color: color-mix(in srgb, var(--background) 80%, transparent);
-  backdrop-filter: blur(8px);
-
-  &--mobile-menu-open {
-    background-color: var(--surface);
-    backdrop-filter: none;
-    position: fixed;
-  }
 
   &__container {
     @include container;
     @include flex-between;
-    border-radius: 0;
-    padding: clamp($space-8, 2vw, $space-12);
-    background-color: transparent;
+    margin-top: clamp($space-8, 2vw, $space-14);
+    margin-inline: auto;
+    padding: clamp($space-4 + 3px, 0.5vw, $space-10)
+      clamp($space-12, 0.8vw, $space-16);
+    background-color: rgb(from var(--surface) r g b / 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: $radius-2xl;
+    border: solid 1px var(--primary-soft);
 
-    @media (width <= $breakpoint-xl) {
-      width: 100%;
+    @media (width <= $breakpoint-2md) {
+      max-width: calc(100% - $space-12 * 2);
+    }
+
+    &--mobile-menu-open {
+      background-color: var(--surface);
+      backdrop-filter: none;
     }
   }
 
@@ -29,13 +31,19 @@
     @include flex-center;
     flex-direction: column;
     width: $space-24;
-    height: $space-24;
-    gap: $space-8;
-    padding: $space-8;
+    aspect-ratio: 1;
+    padding: $space-4;
     border: none;
-    border-radius: $radius-md;
     background: transparent;
-    cursor: pointer;
+
+    .button__content,
+    .button__label {
+      @include flex-center;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      gap: $space-8;
+    }
 
     &--active {
       .header__menu-line:nth-child(1) {
@@ -53,7 +61,7 @@
     }
 
     @media (hover: hover) {
-      &:not(&--active):hover {
+      &:not(&--active)[data-hovered] {
         background-color: var(--primary-softer);
 
         .header__menu-line {

@@ -38,7 +38,7 @@
   &__card {
     position: absolute;
     width: var(--ic-card-width);
-    border-radius: clamp($radius-lg, 2vw, $radius-xl);
+    border-radius: $radius-xl;
     background-color: var(--image-bg);
     overflow: hidden;
     user-select: none;
