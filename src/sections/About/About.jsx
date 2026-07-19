@@ -15,11 +15,7 @@ export default function About() {
 
   return (
     // ---- about section ----
-    <section
-      className="about"
-      id={aboutHeadingId}
-      aria-labelledby={aboutHeadingId}
-    >
+    <section className="about" aria-labelledby={aboutHeadingId}>
       {/* ---- section header ---- */}
       <SectionHeader
         headingId={aboutHeadingId}
