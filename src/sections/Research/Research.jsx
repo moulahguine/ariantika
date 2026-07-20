@@ -4,6 +4,9 @@ import { researchSection } from "@/data";
 import { fadeUp, viewportOnce } from "@/lib";
 
 import "./Research.scss";
+import Image from "next/image";
+
+import image from "../../assets/images/projects/comin-soon-illustrator.svg";
 
 export default function Research() {
   const { researchHeadingId, header, placeholder } = researchSection;
@@ -28,8 +31,14 @@ export default function Research() {
         whileInView="visible"
         viewport={viewportOnce}
       >
-        {/* <p className="research__status">{placeholder.status}</p> */}
-        <p className="research__message">{placeholder.message}</p>
+        <Image
+          src={image}
+          alt="comming soon illstrator."
+          width={450}
+          height={450}
+          priority
+        />
+        <p className="research__status">{placeholder.status}</p>
       </motion.div>
     </section>
   );

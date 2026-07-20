@@ -98,7 +98,7 @@ export default function AboutMe() {
             translation={quote.translation}
             source={quote.source}
             href={quote.href}
-            variant="secondary"
+            variant="accent"
           />
         </div>
       </main>

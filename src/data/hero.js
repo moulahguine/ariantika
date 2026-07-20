@@ -1,4 +1,4 @@
-import { GoArrowUpRight } from "react-icons/go";
+import { PiArrowUpRightBold } from "react-icons/pi";
 import { FaFileAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { getExperienceDuration } from "@/lib";
 
@@ -48,7 +48,7 @@ export const hero = {
       id: "contact",
       label: "Contact",
       href: "/contact",
-      icon: <GoArrowUpRight />,
+      icon: <PiArrowUpRightBold />,
       variant: "primary",
       size: "default",
       ariaLabel: "contact page.",

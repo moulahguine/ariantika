@@ -1,11 +1,6 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
-import {
-  PageHeader,
-  SectionHeader,
-  QuoteVerse,
-  Button,
-} from "@/components";
+import { PageHeader, SectionHeader, QuoteVerse, Button } from "@/components";
 import { servicesPage, servicesMetaData } from "@/data";
 import {
   fadeUp,

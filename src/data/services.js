@@ -8,8 +8,8 @@ import {
   LuListChecks,
   LuMessagesSquare,
   LuShieldCheck,
-  LuArrowUpRight,
 } from "react-icons/lu";
+import { PiArrowUpRightBold } from "react-icons/pi";
 
 // ---- duration ----
 import { getExperienceDuration } from "@/lib";
@@ -227,7 +227,7 @@ export const servicesPage = {
     cta: {
       label: "Get In Touch",
       href: "/contact",
-      icon: <LuArrowUpRight />,
+      icon: <PiArrowUpRightBold />,
       variant: "primary",
       size: "small",
       ariaLabel: "Go to contact page.",
@@ -302,6 +302,6 @@ export const servicesSection = {
   // ---- services section cursor ----
   cursor: {
     text: "Click",
-    icon: LuArrowUpRight,
+    icon: PiArrowUpRightBold,
   },
 };

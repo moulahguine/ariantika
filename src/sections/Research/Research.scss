@@ -7,30 +7,21 @@
   // ---- container ----
   &__container {
     @include container;
-    @include flex-center;
-
-    gap: clamp($space-8, 1.5vw, $space-12);
-    max-width: 54ch;
-    margin-inline: auto;
-    text-align: center;
-    height: 200px;
+    @include flex-column;
+    align-items: center;
     padding-block-end: clamp($space-16, 4vw, $space-40);
+
+    img {
+      max-width: 700px;
+      width: 100%;
+      aspect-ratio: 1;
+      margin-inline: auto;
+    }
   }
 
-  // ---- status ----
   &__status {
-    font-family: $font-display;
-    font-size: clamp($font-size-18, 2.4vw, $font-size-24);
-    font-weight: $fw-semibold;
-    color: var(--secondary);
-    letter-spacing: 0.02em;
-  }
-
-  // ---- message ----
-  &__message {
-    font-size: clamp($font-size-16, 1.5vw, $font-size-18);
-    line-height: $line-height-relaxed;
-    color: var(--text);
-    text-wrap: pretty;
+    color: red;
+    font-size: $font-size-18;
+    margin-top: -100px;
   }
 }
