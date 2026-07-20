@@ -115,6 +115,7 @@ export default function Hero() {
               height={image.height}
               sizes={image.sizes}
               priority
+              fetchPriority="high"
             />
 
             {/* ---- badge ---- */}

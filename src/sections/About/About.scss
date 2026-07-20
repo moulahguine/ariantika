@@ -53,12 +53,12 @@
     line-height: 1.6;
     text-wrap: pretty;
     word-break: keep-all;
-    max-width: 50ch;
+    max-width: 54ch;
     margin-inline: auto;
 
     @media (width <= $breakpoint-md) {
       margin-top: $space-8;
-      margin-inline: $space-12;
+      margin-inline: $space-4;
     }
 
     &-space {
