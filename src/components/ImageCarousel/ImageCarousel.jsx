@@ -92,8 +92,7 @@ export default function ImageCarousel({ images = [], ariaLabel }) {
                 <Image
                   src={img.src}
                   alt={img.alt}
-                  width={520}
-                  height={640}
+                  fill
                   className="image-carousel__image"
                   draggable={false}
                   sizes="(max-width: 768px) 80vw, 460px"
